@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<meta http-equiv="Pragma" content="no-cache">
+
+	<meta name="description" content="Login_de_mentira en Servidor">
+	<meta name="author" content="Jorge López">
+
+	<link rel="shortcut icon" href="imagenes/icon.png" />
+
+	<title>Login</title>
+
+	<!-- estilo general de la página -->
+	<link href="ficheros/estilo_pagina.css" rel="stylesheet">
+
+	<!-- estilo barra de menú -->
+	<link href="ficheros/barra_menu.css" rel="stylesheet">
+
+	<!-- estilo formularios-botones -->
+	<link href="ficheros/formularios.css" rel="stylesheet">
+
+	<!-- biblioteca de iconos -->
+	<link href="ficheros/all.css" rel="stylesheet">
+
+	<!-- librería jQuery -->
+	<script type="text/javascript" src="ficheros/jquery.js"></script>
+</head>
+
+<script type="text/javascript">
+	function inicio() {
+
+	}
+	//************************************************************************************************
+	//************************************************************************************************
+	//******************************** Llamo a "verificacion.php" *****************************************
+	//************************************************************************************************
+	//************************************************************************************************
+	function envio_datos() {
+		//VALIDACION
+		// compruebo que las cajas de texto no estén vacías	
+		if ((document.getElementById('dni').value == "")) {
+			document.getElementById('dni').focus();
+			document.getElementById('info').innerHTML = "introduce usuario!";
+		}
+		else if ((document.getElementById('password').value == "")) {
+			document.getElementById('password').focus();
+			document.getElementById('info').innerHTML = "introduce contraseña!";
+		}
+		else {
+			// visualizo estrella
+			document.getElementById('estrella').style.visibility = 'visible';
+			// deshabilito botón
+			document.getElementById('boton1').disabled = true;
+			// borro mensaje etiqueta
+			document.getElementById('info').innerHTML = "";
+
+			// estos 2 valores habría que pasarlos por un filtro de seguridad.
+			var elusuario = document.getElementById('dni').value;
+			var lacontasenia = document.getElementById('password').value;
+
+			var url = "verificacion.php";
+			// hago la llamada AJAX
+			// utilizamos método "$.post" de jQuery
+
+			// aL ENVIAR DATOS TIENES QUE PASAR 3 COSAS -> LA url A LA QUE QUIERES PASARLO, LOS PARÁMETROS QUE QUIERES PASAR Y POR ULTIMO EL CALLBACK
+			//Un callback es una funcion que atiende la finalización de un script en la función
+			//Se devuelve cuando termina de ejecutarse el script
+			// solo se puede poner el nombre de la funcion del callback, no los parametros de entrada
+			$.post(url, { eldni: elusuario.trim(), tcontrasenia: lacontasenia.trim() }, llegadaDatos1);
+		}
+	}
+
+	// callback llamada
+	function llegadaDatos1(datos) {
+		// oculto estrella
+		document.getElementById('estrella').style.visibility = 'hidden';
+		// habilito botón
+		document.getElementById('boton1').disabled = false;
+
+		// trato error de validación
+		if (datos != 0) {
+			//bien
+			document.getElementById('info').innerHTML = "<font face='Calibri' color='green' size='4'>Login CORRECTO</font>";
+			document.getElementById('dni').select();
+		}
+		else {
+			document.getElementById('info').innerHTML = "<font face='Calibri' color='red' size='4'>Login INCORRECTO</font>";
+		}
+	}
+</script>
+
+<body>
+	<!-- **************************** CABECERA ************************************************ -->
+	<!-- **************************** CABECERA ************************************************ -->
+	<!-- **************************** CABECERA ************************************************ -->
+
+	<header>
+		<div class="BarraNavegar">
+			<i class="fas fa-tv fa-2x"></i>
+			<label class="L1">Proyecto 1º DAW</label>
+			<label class="L2"><b>Login</b></label>
+			<label class="L3">de MENTIRA</label>
+		</div>
+	</header>
+
+	<!-- **************************** CUERPO ************************************************ -->
+	<!-- **************************** CUERPO ************************************************ -->
+	<!-- **************************** CUERPO ************************************************ -->
+
+	<div class="contenedor1">
+		<div class="contenedor2">
+			<div class="contenedor3">
+				<div class="form-group">
+					<label>DNI:</label>
+					<input class="input-control" id="dni" name="dni" maxlength="10" style="width: 65%;" required
+						autocomplete="off" autofocus>
+				</div>
+
+				<div class="form-group">
+					<label>Contraseña:</label>
+					<input type="password" class="input-control" id="password" name="password" maxlength="6"
+						style="width: 65%; " required autocomplete="off">
+				</div>
+
+				<label id="info" class="label2"></label>
+
+				<button class="boton" id="boton1" type="button" onclick="envio_datos();">
+					<i class="fas fa-sign-in-alt"></i> Login
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- **************************** FOOTER ************************************************ -->
+	<!-- **************************** FOOTER ************************************************ -->
+	<!-- **************************** FOOTER ************************************************ -->
+
+	<footer class="footer">
+		<img id="estrella" src="imagenes/estrella.gif" height="40" width="40" style="visibility:hidden;" />
+		<i class="fas fa-building fa-2x"></i>
+		<label>© 2026 IES Amparo Sanz</label>
+	</footer>
+
+</body>
+
+</html>

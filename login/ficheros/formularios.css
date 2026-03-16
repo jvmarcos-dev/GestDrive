@@ -1,0 +1,169 @@
+/*************************** MONITOR  GRANDE ***********************************/
+/*************************** MONITOR  GRANDE ***********************************/
+/*************************** MONITOR  GRANDE ***********************************/
+/*************************** MONITOR  GRANDE ***********************************/
+.contenedor-formulario
+{
+	padding: 30px;
+	margin:20px;
+
+	border-style: solid;
+	border-width: 1px;
+	border-color: blue;   
+	font-family: Arial, Helvetica;
+ }
+ 
+ .form-group
+{
+   display: flex;
+   flex-direction: row;
+   border:0px solid red;
+ }
+ 
+ .form-group label
+{
+	width: 100px;
+	height: 25px;
+	font-weight: bold;
+	font-size: 16px;
+	text-align: right;
+	margin-top: 6px;
+}
+
+.form-group .input-control
+{
+	margin-bottom: 10px;
+	margin-right: 8px;
+	margin-left: 3px;
+	height: 15px;
+	
+	font-family: Helvetica;
+	font-size: 16px;
+	text-transform: uppercase;  
+
+	border-radius:8px;
+	padding:7px;	
+}
+
+.input-control
+{
+	text-transform: uppercase;  
+}
+
+
+.input-control:focus
+{
+background-color:#F6CEF5;
+}
+ 
+.boton
+{
+  background-color: DodgerBlue; 
+  border: none; 
+  color: white; 
+  padding: 15px;
+  margin-top:10px;
+  font-size: 16px; 
+  cursor: pointer; 
+  border-radius: 8px;
+}
+
+.boton:hover
+{
+  background-color: RoyalBlue;
+}
+
+.boton:disabled 
+{
+  background-color: red;
+  cursor: not-allowed;
+}
+
+#boton2
+{
+	background-color: green;
+}
+
+
+/**************************** TAMAÑO TABLET ************************************/
+/**************************** TAMAÑO TABLET ************************************/
+/**************************** TAMAÑO TABLET ************************************/
+/**************************** TAMAÑO TABLET ************************************/
+@media (max-width: 1000px)
+{
+	
+.contenedor-formulario
+{
+	border-color: green;
+	margin:20px;
+	padding: 30px;
+}
+
+.form-group .input-control
+{
+	font-size: 16px; 
+}
+
+.form-group label
+{
+	text-align: right;
+	font-size: 14px; 
+}   
+
+}
+
+/**************************** TAMAÑO MÓVIL ************************************/
+/**************************** TAMAÑO MÓVIL ************************************/
+/**************************** TAMAÑO MÓVIL ************************************/
+/**************************** TAMAÑO MÓVIL ************************************/
+@media (max-width: 780px)
+{
+	
+.contenedor-formulario
+{
+	border-color: fuchsia;   
+	padding: 20px;
+	margin:20px;
+}
+
+.form-group
+ {
+	 flex-direction: column;
+	 width:80%;
+ }
+		   
+.form-group .input-control
+{
+	margin-left: 10px;
+	margin-bottom: 3px;
+	margin-top: 3px;
+	width:100%;
+	font-size: 14px; 
+	background-color: initial;
+}
+
+.form-group label
+{
+	margin-left: 10px;
+	text-align: left;
+	margin-top: 0px;
+	height: 15px;
+	font-size: 14px; 
+	font-weight: normal;
+}   
+
+.input-control:focus
+{
+	  background-color:#F6CEF5;
+}
+
+.boton
+{
+
+  font-size: 14px; 
+}
+
+
+}
+
+ 
