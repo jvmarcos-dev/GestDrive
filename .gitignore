@@ -1,0 +1,9 @@
+**/conexion.php
+.vscode/
+fiveserver.config.js
+.DS_Store
+Thumbs.db
+desktop.ini
+erd_autoescuela.html
+db/
+nbproject/
