@@ -2,27 +2,40 @@
 /*************************** MONITOR  GRANDE ***********************************/
 /*************************** MONITOR  GRANDE ***********************************/
 /*************************** MONITOR  GRANDE ***********************************/
-.form-group
+.contenedor-formulario
+{
+	padding: 30px;
+	margin:20px;
+
+	border-style: solid;
+	border-width: 1px;
+	border-color: blue;   
+	font-family: Arial, Helvetica;
+ }
+ 
+ .form-group
 {
    display: flex;
    flex-direction: row;
+   border:0px solid red;
  }
  
  .form-group label
 {
-	border: 0px solid red;
-	width: 150px;
+	width: 100px;
 	height: 25px;
 	font-weight: bold;
 	font-size: 16px;
 	text-align: right;
 	margin-top: 6px;
-	margin-right:3px;
 }
 
 .form-group .input-control
 {
-	height: 35px;
+	margin-bottom: 10px;
+	margin-right: 8px;
+	margin-left: 3px;
+	height: 15px;
 	
 	font-family: Helvetica;
 	font-size: 16px;
@@ -30,9 +43,13 @@
 
 	border-radius:8px;
 	padding:7px;	
-	
-	width:100%;
 }
+
+.input-control
+{
+	text-transform: uppercase;  
+}
+
 
 .input-control:focus
 {
@@ -62,6 +79,11 @@ background-color:#F6CEF5;
   cursor: not-allowed;
 }
 
+#boton2
+{
+	background-color: green;
+}
+
 
 /**************************** TAMAÑO TABLET ************************************/
 /**************************** TAMAÑO TABLET ************************************/
@@ -70,6 +92,23 @@ background-color:#F6CEF5;
 @media (max-width: 1000px)
 {
 	
+.contenedor-formulario
+{
+	border-color: green;
+	margin:20px;
+	padding: 30px;
+}
+
+.form-group .input-control
+{
+	font-size: 16px; 
+}
+
+.form-group label
+{
+	text-align: right;
+	font-size: 14px; 
+}   
 
 }
 
@@ -80,25 +119,49 @@ background-color:#F6CEF5;
 @media (max-width: 780px)
 {
 	
-	.form-group
-	 {
-		 flex-direction: column;
-	 }
-			   
-	.form-group label
-	{
-		text-align: left;
-		height: 15px;
-		font-size: 14px; 
-		font-weight: normal;
-		margin-bottom:3px;
-	}   
+.contenedor-formulario
+{
+	border-color: fuchsia;   
+	padding: 20px;
+	margin:20px;
+}
 
-	.boton
-	{
-	  font-size: 14px; 
-	  align-self:center;
-	}
+.form-group
+ {
+	 flex-direction: column;
+	 width:80%;
+ }
+		   
+.form-group .input-control
+{
+	margin-left: 10px;
+	margin-bottom: 3px;
+	margin-top: 3px;
+	width:100%;
+	font-size: 14px; 
+	background-color: initial;
+}
+
+.form-group label
+{
+	margin-left: 10px;
+	text-align: left;
+	margin-top: 0px;
+	height: 15px;
+	font-size: 14px; 
+	font-weight: normal;
+}   
+
+.input-control:focus
+{
+	  background-color:#F6CEF5;
+}
+
+.boton
+{
+
+  font-size: 14px; 
+}
 
 
 }
