@@ -11,7 +11,7 @@ require('../ficheros/conexion.php');
 $dni = $_POST['eldni'];
 $lacontrasenia = $_POST['tcontrasenia'];
 
-$consulta = "SELECT tipo FROM usuarios WHERE dni='$dni' AND PASSWORD='$lacontrasenia'";
+$consulta = "SELECT * FROM usuarios WHERE dni='$dni' AND PASSWORD='$lacontrasenia'";
 $resultado = mysqli_query($conexion, $consulta);
 
 $nregistros = mysqli_num_rows($resultado);
@@ -21,7 +21,12 @@ if ($nregistros == 0) {
 	echo 0;
 } else {
 	$fila = mysqli_fetch_assoc($resultado);
-	echo $fila['tipo'];
+	$respuesta = array();
+	$respuesta['usuario_tipo'] = $fila['tipo'];
+	$respuesta['usuario_id'] = $fila['id'];
+	//Esto codifica en json la tabla.
+	header("Content-type:application/json; charset=utf-8");
+	echo json_encode($respuesta);
 }
 
 // cerramos la conexión 

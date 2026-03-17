@@ -80,14 +80,14 @@
 		// habilito botón
 		document.getElementById('boton1').disabled = false;
 
-		// trato error de validación
-		if (datos == "alumno") {
-			window.location.href = "../alumno/index.html";
-		} else if (datos == "profesor") {
-			window.location.href = "../profesor/index.html";
-		} else if (datos == "admin") {
-			window.location.href = "../admin/index.html";
-		} else {
+		// trato error de validación.
+		//lo que hago es buscar lo que he mandado por php. En este caso lo estoy mandando como un json
+		// y tengo que buscar en el json el tipo de usuario. En este json el tipo aparece como
+		// usuario_tipo. El json seria algo como { "usuario_tipo": "alumno", "usuario_id": "5" }
+		
+		if(datos.usuario_tipo){
+			window.location.href = "../"+datos.usuario_tipo+"/index.html?id="+ datos.usuario_id;
+		}else {
 			document.getElementById('info').innerHTML = "<font color='red'>Login incorrecto</font>";
 		}
 	}
