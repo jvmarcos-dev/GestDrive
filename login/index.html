@@ -81,13 +81,14 @@
 		document.getElementById('boton1').disabled = false;
 
 		// trato error de validación
-		if (datos != 0) {
-			//bien
-			document.getElementById('info').innerHTML = "<font face='Calibri' color='green' size='4'>Login CORRECTO</font>";
-			document.getElementById('dni').select();
-		}
-		else {
-			document.getElementById('info').innerHTML = "<font face='Calibri' color='red' size='4'>Login INCORRECTO</font>";
+		if (datos == "alumno") {
+			window.location.href = "../alumno/index.html";
+		} else if (datos == "profesor") {
+			window.location.href = "../profesor/index.html";
+		} else if (datos == "admin") {
+			window.location.href = "../admin/index.html";
+		} else {
+			document.getElementById('info').innerHTML = "<font color='red'>Login incorrecto</font>";
 		}
 	}
 </script>
