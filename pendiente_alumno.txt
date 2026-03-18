@@ -3,7 +3,7 @@
 
 [x] Identificación de Rol: Verificar que el usuario que intenta entrar es tipo 'alumno'.
 
-[ ] Carga de Perfil: Obtener los datos básicos (DNI, nombre, apellidos) del usuario logueado.
+[X] Carga de Perfil: Obtener los datos básicos (DNI, nombre, apellidos) del usuario logueado.
 
 [ ] Cambio de Contraseña: Script para actualizar el campo password.
 
