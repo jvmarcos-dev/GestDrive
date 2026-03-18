@@ -3,11 +3,15 @@
 
 [x] Identificación de Rol: Verificar que el usuario que intenta entrar es tipo 'alumno'.
 
-[ ] Carga de Perfil: Obtener los datos básicos (DNI, nombre, apellidos) del usuario logueado.
-
-[ ] Cambio de Contraseña: Script para actualizar el campo password.
+[X] Carga de Perfil: Obtener los datos básicos (DNI, nombre, apellidos) del usuario logueado.
 
 📊 Módulo 2: Dashboard (Resumen)
+
+Una consulta al entrar que traiga nombre, apellidos, saldo y estado de la teórica. Son datos simples de una sola fila.
+Una consulta para la próxima práctica que busque la reserva activa más próxima con su fecha, hora y profesor.
+Una consulta para clases disponibles que traiga los huecos libres con fecha, hora y profesor.
+Una consulta para el historial que traiga las reservas realizadas con fecha, hora y profesor.
+
 [ ] Consulta de Saldo: Obtener el saldo_clases actual desde la tabla alumnos.
 
 [ ] Estado del Carnet: Consultar si el estado_teorica es 'pendiente' o 'apto'.
@@ -39,6 +43,9 @@
 [ ] Cancelación a Tiempo: Cambiar estado de reserva a 'cancelada_tiempo', liberar la clase y devolver 1 al saldo.
 
 [ ] Cancelación Tarde: Cambiar estado de reserva a 'cancelada_tarde' y liberar la clase (sin devolver saldo).
+
+📋 Módulo 4: Configuración de la cuenta
+[ ] Cambio de Contraseña: Script para actualizar el campo password.
 
 📋 Módulo 5: Lógica de la "Web Única" (JavaScript)
 [ ] Cargador de Vistas: Función JS/jQuery que limpie el contenedor principal y cargue el fragmento PHP correspondiente.

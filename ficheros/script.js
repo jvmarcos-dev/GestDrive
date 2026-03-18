@@ -69,11 +69,12 @@ function llegadaDatos1(datos) {
 
 function inicio_alumno() {
     //borro contenido de las label por si hubiera algo
-    document.getElementById('dni_alumno').innerHTML = "";
     document.getElementById('nombre_alumno').innerHTML = "";
     document.getElementById('apellidos_alumno').innerHTML = "";
+    document.getElementById('saldo_alumno').innerHTML = "";
+    document.getElementById('teorica_alumno').innerHTML = "";
 
-    let url = "php/dashboard_alumno.php";
+    let url = "php/datos_alumno.php";
 
     $.post(url, {
         elid: idUsuario
@@ -81,11 +82,12 @@ function inicio_alumno() {
 }
 
 function datosAlumno(datos) {
-    if (datos.dni) {
-    document.getElementById('dni_alumno').innerHTML = datos.dni;
+    if (datos.nombre) {
     document.getElementById('nombre_alumno').innerHTML = datos.nombre;
     document.getElementById('apellidos_alumno').innerHTML = datos.apellidos;
+    document.getElementById('saldo_alumno').innerHTML = datos.saldo;
+    document.getElementById('teorica_alumno').innerHTML = datos.teorico;
     }else{
-        document.getElementById('info').innerHTML = "<font color='red'>Se ha producido un ERROR</font>";
+        document.getElementById('info_alumno').innerHTML = "<font color='red'>Se ha producido un ERROR</font>";
     }
 }
