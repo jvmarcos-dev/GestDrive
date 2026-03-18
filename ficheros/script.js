@@ -83,11 +83,45 @@ function inicio_alumno() {
 
 function datosAlumno(datos) {
     if (datos.nombre) {
-    document.getElementById('nombre_alumno').innerHTML = datos.nombre;
-    document.getElementById('apellidos_alumno').innerHTML = datos.apellidos;
-    document.getElementById('saldo_alumno').innerHTML = datos.saldo;
-    document.getElementById('teorica_alumno').innerHTML = datos.teorico;
-    }else{
+        document.getElementById('nombre_alumno').innerHTML = datos.nombre;
+        document.getElementById('apellidos_alumno').innerHTML = datos.apellidos;
+        document.getElementById('saldo_alumno').innerHTML = datos.saldo;
+        document.getElementById('teorica_alumno').innerHTML = datos.teorico;
+    } else {
         document.getElementById('info_alumno').innerHTML = "<font color='red'>Se ha producido un ERROR</font>";
+    }
+}
+
+function reservaActiva() {
+    document.getElementById('fecha').innerHTML = "";
+    document.getElementById('profesor').innerHTML = "";
+
+    let url = "php/reserva_activa.php";
+
+    $.post(url, {
+        elid: idUsuario
+    }, datosReserva);
+}
+
+function datosReserva(datos) {
+    if (datos.proxima_clase) {
+
+        //Le doy formato a la fecha y la hora
+        let fecha = new Date(datos.fecha_hora);
+
+        let diaSemana = fecha.toLocaleDateString('es-ES', {
+            weekday: 'long'
+        });
+        let dia = fecha.getDate();
+        let hora = fecha.toLocaleTimeString('es-ES', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia + ' a las ' + hora + 'h';
+        document.getElementById('fecha').innerHTML = fechaFormateada;
+        document.getElementById('profesor').innerHTML = datos.profesor;
+    } else {
+        document.getElementById('info_alumno').innerHTML = "<font color='red'>No hay clases proximas</font>";
     }
 }

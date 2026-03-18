@@ -12,9 +12,9 @@ Una consulta para la próxima práctica que busque la reserva activa más próxi
 Una consulta para clases disponibles que traiga los huecos libres con fecha, hora y profesor.
 Una consulta para el historial que traiga las reservas realizadas con fecha, hora y profesor.
 
-[ ] Consulta de Saldo: Obtener el saldo_clases actual desde la tabla alumnos.
+[X] Consulta de Saldo: Obtener el saldo_clases actual desde la tabla alumnos.
 
-[ ] Estado del Carnet: Consultar si el estado_teorica es 'pendiente' o 'apto'.
+[X] Estado del Carnet: Consultar si el estado_teorica es 'pendiente' o 'apto'.
 
 [ ] Contador de Próximas Citas: Contar cuántas reservas activas tiene el alumno pendientes de realizar.
 
