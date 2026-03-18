@@ -57,8 +57,35 @@ function llegadaDatos1(datos) {
     if (datos.usuario_tipo) {
         idUsuario = datos.usuario_id;
         tipoUsuario = datos.usuario_tipo;
-        $("#lacaja").load("vistas/" + datos.usuario_tipo + "/dashboard.html");
+
+        //cargo la vista correspondiente con su onload correspondiente.
+        $("#lacaja").load("vistas/" + datos.usuario_tipo + "/dashboard.html", function () {
+            window["inicio_" + datos.usuario_tipo]();
+        });
     } else {
         document.getElementById('info').innerHTML = "<font color='red'>Login incorrecto</font>";
+    }
+}
+
+function inicio_alumno() {
+    //borro contenido de las label por si hubiera algo
+    document.getElementById('dni_alumno').innerHTML = "";
+    document.getElementById('nombre_alumno').innerHTML = "";
+    document.getElementById('apellidos_alumno').innerHTML = "";
+
+    let url = "php/dashboard_alumno.php";
+
+    $.post(url, {
+        elid: idUsuario
+    }, datosAlumno);
+}
+
+function datosAlumno(datos) {
+    if (datos.dni) {
+    document.getElementById('dni_alumno').innerHTML = datos.dni;
+    document.getElementById('nombre_alumno').innerHTML = datos.nombre;
+    document.getElementById('apellidos_alumno').innerHTML = datos.apellidos;
+    }else{
+        document.getElementById('info').innerHTML = "<font color='red'>Se ha producido un ERROR</font>";
     }
 }
