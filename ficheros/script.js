@@ -85,8 +85,8 @@ function datosAlumno(datos) {
     if (datos.nombre) {
         document.getElementById('nombre_alumno').innerHTML = datos.nombre;
         document.getElementById('apellidos_alumno').innerHTML = datos.apellidos;
-        document.getElementById('saldo_alumno').innerHTML = datos.saldo;
-        document.getElementById('teorica_alumno').innerHTML = datos.teorico;
+        document.getElementById('saldo_alumno').innerHTML = datos.saldo + " clases restantes";
+        document.getElementById('teorica_alumno').innerHTML = datos.teorico.toUpperCase();
     } else {
         document.getElementById('info_alumno').innerHTML = "<font color='red'>Se ha producido un ERROR</font>";
     }

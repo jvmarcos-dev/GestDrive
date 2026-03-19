@@ -7,8 +7,8 @@
 
 📊 Módulo 2: Dashboard (Resumen)
 
-Una consulta al entrar que traiga nombre, apellidos, saldo y estado de la teórica. Son datos simples de una sola fila.
-Una consulta para la próxima práctica que busque la reserva activa más próxima con su fecha, hora y profesor.
+[X] Una consulta al entrar que traiga nombre, apellidos, saldo y estado de la teórica. Son datos simples de una sola fila.
+[X] Una consulta para la próxima práctica que busque la reserva activa más próxima con su fecha, hora y profesor.
 Una consulta para clases disponibles que traiga los huecos libres con fecha, hora y profesor.
 Una consulta para el historial que traiga las reservas realizadas con fecha, hora y profesor.
 
