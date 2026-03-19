@@ -110,7 +110,6 @@ function datosAlumno(datos) {
     }
 }
 
-// callback próxima reserva activa
 function reservaActiva() {
     document.getElementById('fecha').innerHTML = "";
     document.getElementById('profesor').innerHTML = "";
@@ -150,11 +149,7 @@ function datosReserva(datos) {
 // PANEL ALUMNO - CLASES DISPONIBLES
 // ============================================================
 function clasesDisponibles() {
-    document.getElementById('fecha').innerHTML = "";
-    document.getElementById('profesor').innerHTML = "";
-
     let url = "php/clases_disponibles.php";
-
     $.get(url, datosClases);
 }
 
@@ -180,14 +175,16 @@ function datosClases(datos) {
         fila.appendChild(th);
 
         var th = document.createElement('th');
-        th.innerHTML = "<b>Reservar</b>";
+        th.innerHTML = "<b>Acción</b>";
         fila.appendChild(th);
 
         // cuerpo
         var body = table.createTBody();
         for (var i = 0; i < datos.length; i++) {
+            //Con esto parseo la fecha y hora para que salgan en un buen formato
             let fecha = new Date(datos[i].fecha_hora);
 
+            //Aqui tomo el nombre del dia de la semana correspondiente
             let diaSemana = fecha.toLocaleDateString('es-ES', {
                 weekday: 'long'
             });
@@ -197,6 +194,7 @@ function datosClases(datos) {
                 minute: '2-digit'
             });
 
+            //Este es el resultado de la conversión
             let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia;
             let horaFormateada = hora + 'h';
             var fila = body.insertRow(i);
@@ -213,7 +211,73 @@ function datosClases(datos) {
 // ============================================================
 // PANEL ALUMNO - HISTORIAL
 // ============================================================
+function historialClases() {
+    let url = "php/historial_reservas.php";
 
+    $.post(url, {
+        elid: idUsuario
+    }, datosHistorial);
+}
+
+function datosHistorial(datos) {
+    var table = document.getElementById("tabla_historial");
+    table.innerHTML = "";
+
+    if (datos != 0) {
+        // cabecera
+        var header = table.createTHead();
+        var fila = header.insertRow(0);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Fecha</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Hora</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Profesor</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Estado</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Acción</b>";
+        fila.appendChild(th);
+
+        // cuerpo
+        var body = table.createTBody();
+        for (var i = 0; i < datos.length; i++) {
+            //Con esto parseo la fecha y hora para que salgan en un buen formato
+            let fecha = new Date(datos[i].fecha_hora);
+
+            //Aqui tomo el nombre del dia de la semana correspondiente
+            let diaSemana = fecha.toLocaleDateString('es-ES', {
+                weekday: 'long'
+            });
+            let dia = fecha.getDate();
+            let hora = fecha.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            //Este es el resultado de la conversión
+            let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia;
+            let horaFormateada = hora + 'h';
+            var fila = body.insertRow(i);
+            fila.insertCell(0).innerHTML = fechaFormateada;
+            fila.insertCell(1).innerHTML = horaFormateada;
+            fila.insertCell(2).innerHTML = datos[i].nombre_profesor + ' ' + datos[i].apellidos_profesor;
+            fila.insertCell(3).innerHTML = datos[i].estado;
+            fila.insertCell(4).innerHTML = "<button onclick='cancelar(" + datos[i].id_clase + ")'>Cancelar</button>";
+        }
+    } else {
+        document.getElementById('info_alumno').innerHTML = "No hay clases realizadas";
+    }
+}
 
 // ============================================================
 // PANEL PROFESOR
