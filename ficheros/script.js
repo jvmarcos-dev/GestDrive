@@ -1,10 +1,22 @@
-//variables globales
+// ============================================================
+// VARIABLES GLOBALES
+// ============================================================
 let idUsuario;
 let tipoUsuario;
+
+
+// ============================================================
+// INICIO Y NAVEGACIÓN
+// ============================================================
 
 function inicio() {
     $("#lacaja").load("vistas/login.html");
 }
+
+
+// ============================================================
+// LOGIN
+// ============================================================
 
 function envio_datos() {
     //VALIDACION
@@ -67,6 +79,11 @@ function llegadaDatos1(datos) {
     }
 }
 
+
+// ============================================================
+// PANEL ALUMNO - DASHBOARD
+// ============================================================
+
 function inicio_alumno() {
     //borro contenido de las label por si hubiera algo
     document.getElementById('nombre_alumno').innerHTML = "";
@@ -81,6 +98,7 @@ function inicio_alumno() {
     }, datosAlumno);
 }
 
+// callback datos del alumno
 function datosAlumno(datos) {
     if (datos.nombre) {
         document.getElementById('nombre_alumno').innerHTML = datos.nombre;
@@ -92,6 +110,7 @@ function datosAlumno(datos) {
     }
 }
 
+// callback próxima reserva activa
 function reservaActiva() {
     document.getElementById('fecha').innerHTML = "";
     document.getElementById('profesor').innerHTML = "";
@@ -125,3 +144,18 @@ function datosReserva(datos) {
         document.getElementById('info_alumno').innerHTML = "<font color='red'>No hay clases proximas</font>";
     }
 }
+
+
+// ============================================================
+// PANEL ALUMNO - CLASES DISPONIBLES
+// ============================================================
+
+
+// ============================================================
+// PANEL ALUMNO - HISTORIAL
+// ============================================================
+
+
+// ============================================================
+// PANEL PROFESOR
+// ============================================================
