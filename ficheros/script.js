@@ -314,6 +314,11 @@ function reservarClase(datos) {
         document.getElementById('info_alumno').innerHTML = "No tienes saldo suficiente";
     } else if (datos == -2) {
         document.getElementById('info_alumno').innerHTML = "No puedes tener más de 2 clases reservadas simultáneamente.";
+    } else if (datos == -3){
+        document.getElementById('info_alumno').innerHTML = "No puedes reservas 2 clases con una diferencia <45 minutos.";
+    } else if (datos == -4){
+        document.getElementById('info_alumno').innerHTML = "Esta clase ya no está disponible.";
+        clasesDisponibles();
     }
 }
 
