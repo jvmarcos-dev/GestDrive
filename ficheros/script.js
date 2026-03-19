@@ -101,8 +101,8 @@ function inicio_alumno() {
 // callback datos del alumno
 function datosAlumno(datos) {
     if (datos.nombre) {
-        document.getElementById('nombre_alumno').innerHTML = datos.nombre;
-        document.getElementById('apellidos_alumno').innerHTML = datos.apellidos;
+        document.getElementById('nombre_alumno').innerHTML = datos.nombre.charAt(0).toUpperCase() + datos.nombre.slice(1);
+        document.getElementById('apellidos_alumno').innerHTML = datos.apellidos.charAt(0).toUpperCase() + datos.apellidos.slice(1);
         document.getElementById('saldo_alumno').innerHTML = datos.saldo + " clases restantes";
         document.getElementById('teorica_alumno').innerHTML = datos.teorico.toUpperCase();
     } else {
@@ -138,7 +138,7 @@ function datosReserva(datos) {
 
         let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia + ' a las ' + hora + 'h';
         document.getElementById('fecha').innerHTML = fechaFormateada;
-        document.getElementById('profesor').innerHTML = datos.profesor;
+        document.getElementById('profesor').innerHTML = datos.profesor.charAt(0).toUpperCase() + datos.profesor.slice(1);
     } else {
         document.getElementById('info_alumno').innerHTML = "<font color='red'>No hay clases proximas</font>";
     }
@@ -197,10 +197,12 @@ function datosClases(datos) {
             //Este es el resultado de la conversión
             let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia;
             let horaFormateada = hora + 'h';
+            let nombreProfesor = datos[i].nombre_profesor.charAt(0).toUpperCase() + datos[i].nombre_profesor.slice(1);
+            let apellidosProfesor = datos[i].apellidos_profesor.charAt(0).toUpperCase() + datos[i].apellidos_profesor.slice(1);
             var fila = body.insertRow(i);
             fila.insertCell(0).innerHTML = fechaFormateada;
             fila.insertCell(1).innerHTML = horaFormateada;
-            fila.insertCell(2).innerHTML = datos[i].nombre_profesor + ' ' + datos[i].apellidos_profesor;
+            fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
             fila.insertCell(3).innerHTML = "<button onclick='reservar(" + datos[i].id_clase + ")'>Reservar</button>";
         }
     } else {
@@ -267,15 +269,43 @@ function datosHistorial(datos) {
             //Este es el resultado de la conversión
             let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia;
             let horaFormateada = hora + 'h';
+            let nombreProfesor = datos[i].nombre_profesor.charAt(0).toUpperCase() + datos[i].nombre_profesor.slice(1);
+            let apellidosProfesor = datos[i].apellidos_profesor.charAt(0).toUpperCase() + datos[i].apellidos_profesor.slice(1);
+            let estadoFormateado = datos[i].estado.charAt(0).toUpperCase() + datos[i].estado.slice(1);
             var fila = body.insertRow(i);
             fila.insertCell(0).innerHTML = fechaFormateada;
             fila.insertCell(1).innerHTML = horaFormateada;
-            fila.insertCell(2).innerHTML = datos[i].nombre_profesor + ' ' + datos[i].apellidos_profesor;
-            fila.insertCell(3).innerHTML = datos[i].estado;
+            fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
+            fila.insertCell(3).innerHTML = estadoFormateado;
             fila.insertCell(4).innerHTML = "<button onclick='cancelar(" + datos[i].id_clase + ")'>Cancelar</button>";
         }
     } else {
         document.getElementById('info_alumno').innerHTML = "No hay clases realizadas";
+    }
+}
+
+// ============================================================
+// PANEL ALUMNO - BOTON RESERVAR
+// ============================================================
+
+function reservar(idClase) {
+    let url = "php/reservar_clase.php";
+
+    $.post(url, {
+        elid: idUsuario,
+        laclase:idClase
+    }, reservarClase);
+}
+
+function reservarClase(datos) {
+    if(datos==1){
+        //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
+        document.getElementById('info_alumno').innerHTML = "Reserva realizada correctamente";
+        clasesDisponibles();
+    }else if (datos==-1){
+        document.getElementById('info_alumno').innerHTML = "No tienes saldo suficiente";
+    }else if (datos==-2){
+        document.getElementById('info_alumno').innerHTML = "No puedes tener más de 2 clases reservadas simultáneamente.";
     }
 }
 
