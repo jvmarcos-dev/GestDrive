@@ -101,6 +101,13 @@ function inicio_alumno() {
 // callback datos del alumno
 function datosAlumno(datos) {
     if (datos.nombre) {
+        if (datos.foto != '') {
+            //muestro la imagen del alumno
+            document.getElementById('foto_alumno').src = "imagenes/usuarios/" + datos.foto;
+        } else {
+            //muestro imagen predeterminada
+            document.getElementById('foto_alumno').src = 'imagenes/usuarios/default.png'
+        }
         document.getElementById('nombre_alumno').innerHTML = datos.nombre.charAt(0).toUpperCase() + datos.nombre.slice(1);
         document.getElementById('apellidos_alumno').innerHTML = datos.apellidos.charAt(0).toUpperCase() + datos.apellidos.slice(1);
         document.getElementById('saldo_alumno').innerHTML = datos.saldo + " clases restantes";
@@ -293,18 +300,19 @@ function reservar(idClase) {
 
     $.post(url, {
         elid: idUsuario,
-        laclase:idClase
+        laclase: idClase
     }, reservarClase);
 }
 
 function reservarClase(datos) {
-    if(datos==1){
+    if (datos == 1) {
         //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
         document.getElementById('info_alumno').innerHTML = "Reserva realizada correctamente";
         clasesDisponibles();
-    }else if (datos==-1){
+        historialClases();
+    } else if (datos == -1) {
         document.getElementById('info_alumno').innerHTML = "No tienes saldo suficiente";
-    }else if (datos==-2){
+    } else if (datos == -2) {
         document.getElementById('info_alumno').innerHTML = "No puedes tener más de 2 clases reservadas simultáneamente.";
     }
 }
