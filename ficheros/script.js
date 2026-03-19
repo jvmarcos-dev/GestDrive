@@ -149,7 +149,66 @@ function datosReserva(datos) {
 // ============================================================
 // PANEL ALUMNO - CLASES DISPONIBLES
 // ============================================================
+function clasesDisponibles() {
+    document.getElementById('fecha').innerHTML = "";
+    document.getElementById('profesor').innerHTML = "";
 
+    let url = "php/clases_disponibles.php";
+
+    $.get(url, datosClases);
+}
+
+function datosClases(datos) {
+    var table = document.getElementById("tabla_clases");
+    table.innerHTML = "";
+
+    if (datos != 0) {
+        // cabecera
+        var header = table.createTHead();
+        var fila = header.insertRow(0);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Fecha</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Hora</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Profesor</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Reservar</b>";
+        fila.appendChild(th);
+
+        // cuerpo
+        var body = table.createTBody();
+        for (var i = 0; i < datos.length; i++) {
+            let fecha = new Date(datos[i].fecha_hora);
+
+            let diaSemana = fecha.toLocaleDateString('es-ES', {
+                weekday: 'long'
+            });
+            let dia = fecha.getDate();
+            let hora = fecha.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia;
+            let horaFormateada = hora + 'h';
+            var fila = body.insertRow(i);
+            fila.insertCell(0).innerHTML = fechaFormateada;
+            fila.insertCell(1).innerHTML = horaFormateada;
+            fila.insertCell(2).innerHTML = datos[i].nombre_profesor + ' ' + datos[i].apellidos_profesor;
+            fila.insertCell(3).innerHTML = "<button onclick='reservar(" + datos[i].id_clase + ")'>Reservar</button>";
+        }
+    } else {
+        document.getElementById('info_alumno').innerHTML = "No hay clases disponibles";
+    }
+}
 
 // ============================================================
 // PANEL ALUMNO - HISTORIAL

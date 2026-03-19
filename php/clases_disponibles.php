@@ -10,7 +10,9 @@ require('../ficheros/conexion.php');
 $consulta = "SELECT CLASES_PRACTICAS.ID AS id_clase, FECHA_HORA, NOMBRE, APELLIDOS
 FROM CLASES_PRACTICAS INNER JOIN USUARIOS
 ON CLASES_PRACTICAS.ID_PROFESOR=USUARIOS.ID
-WHERE ESTADO='LIBRE'";
+WHERE ESTADO='LIBRE'
+AND CLASES_PRACTICAS.FECHA_HORA > NOW()
+AND CLASES_PRACTICAS.FECHA_HORA < DATE_ADD(NOW(), INTERVAL 1 WEEK)";
 $resultado = mysqli_query($conexion, $consulta);
 
 $nregistros = mysqli_num_rows($resultado);
