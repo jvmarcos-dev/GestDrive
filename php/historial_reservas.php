@@ -8,7 +8,7 @@ require('../ficheros/conexion.php');
 // aquí habría que poner los filtros de seguridad
 $id = $_POST['elid'];
 
-$consulta = "SELECT FECHA_HORA, NOMBRE, APELLIDOS, RESERVAS.ESTADO AS ESTADO
+$consulta = "SELECT FECHA_HORA, NOMBRE, APELLIDOS, RESERVAS.ID AS RESERVA, RESERVAS.ESTADO AS ESTADO
 FROM RESERVAS INNER JOIN CLASES_PRACTICAS 
 ON RESERVAS.ID_CLASE = CLASES_PRACTICAS.ID
 INNER JOIN USUARIOS 
@@ -20,16 +20,14 @@ $resultado = mysqli_query($conexion, $consulta);
 
 $nregistros = mysqli_num_rows($resultado);
 
-if ($nregistros == 0) {
-    // el usuario se ha logueado MAL
-    echo 0;
-} else {
+if ($nregistros > 0) {
     while ($fila = mysqli_fetch_assoc($resultado)) {
         $clase = array();
-        $clase['fecha_hora']         = $fila['FECHA_HORA'];
-        $clase['nombre_profesor']    = $fila['NOMBRE'];
+        $clase['fecha_hora'] = $fila['FECHA_HORA'];
+        $clase['nombre_profesor'] = $fila['NOMBRE'];
         $clase['apellidos_profesor'] = $fila['APELLIDOS'];
-        $clase['estado']             = $fila['ESTADO'];
+        $clase['estado'] = $fila['ESTADO'];
+        $clase['id_reserva'] = $fila['RESERVA'];
         $respuesta[] = $clase;
     }
 

@@ -284,7 +284,7 @@ function datosHistorial(datos) {
             fila.insertCell(1).innerHTML = horaFormateada;
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
             fila.insertCell(3).innerHTML = estadoFormateado;
-            fila.insertCell(4).innerHTML = "<button onclick='cancelar(" + datos[i].id_clase + ")'>Cancelar</button>";
+            fila.insertCell(4).innerHTML = "<button id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
         }
     } else {
         document.getElementById('info_alumno').innerHTML = "No hay clases realizadas";
@@ -314,12 +314,56 @@ function reservarClase(datos) {
         document.getElementById('info_alumno').innerHTML = "No tienes saldo suficiente";
     } else if (datos == -2) {
         document.getElementById('info_alumno').innerHTML = "No puedes tener más de 2 clases reservadas simultáneamente.";
-    } else if (datos == -3){
+    } else if (datos == -3) {
         document.getElementById('info_alumno').innerHTML = "No puedes reservas 2 clases con una diferencia <45 minutos.";
-    } else if (datos == -4){
+    } else if (datos == -4) {
         document.getElementById('info_alumno').innerHTML = "Esta clase ya no está disponible.";
         clasesDisponibles();
     }
+}
+
+// ============================================================
+// PANEL ALUMNO - BOTON CANCELAR
+// ============================================================
+
+function cancelar(idReserva, idBoton) {
+    //Al llamar a esta funcion antes tendré que hacer un botón de confirmar y ya al confirmar entonces se cancele.
+    //En este botón tendré que mirar si ha cancelado a tiempo o tarde para variar el texto.
+    let url = "php/cancelar_clase.php";
+
+    $.post(url, {
+        lareserva: idReserva
+    }, function (datos) {
+        // Llamamos manualmente a la función pasando ambos parámetros
+        cancelarClase(datos, idBoton);
+    });
+}
+
+function cancelarClase(datos, idBoton) {
+    let boton = document.getElementById(idBoton);
+    if (datos == 1 || datos == 2) {
+        if (datos == 1) {
+            //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
+            document.getElementById('info_alumno').innerHTML = "Clase cancelada correctamente";
+        } else if (datos == 2) {
+            document.getElementById('info_alumno').innerHTML = "Has cancelado la clase tarde. Tu saldo no será devuelto";
+        }
+        if (boton) {
+            // El botón está en una celda (td). El padre del botón es el td.
+            let celdaBoton = boton.parentElement;
+            // El hermano anterior de esa celda es la celda de "Estado"
+            let celdaEstado = celdaBoton.previousElementSibling;
+            celdaEstado.innerHTML = (datos == 1) ? "Cancelada" : "Cancelada Tarde";
+            boton.disabled = true;
+        }
+        clasesDisponibles();
+        inicio_alumno();
+        reservaActiva();
+    }else{
+        document.getElementById('info_alumno').innerHTML = "Error al procesar la cancelación";
+    }
+
+
 }
 
 // ============================================================
