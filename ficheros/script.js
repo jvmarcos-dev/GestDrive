@@ -310,6 +310,7 @@ function reservarClase(datos) {
         document.getElementById('info_alumno').innerHTML = "Reserva realizada correctamente";
         clasesDisponibles();
         historialClases();
+        inicio_alumno();
     } else if (datos == -1) {
         document.getElementById('info_alumno').innerHTML = "No tienes saldo suficiente";
     } else if (datos == -2) {
