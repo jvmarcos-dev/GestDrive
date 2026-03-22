@@ -21,6 +21,7 @@ $resultado = mysqli_query($conexion, $consulta);
 $nregistros = mysqli_num_rows($resultado);
 
 if ($nregistros > 0) {
+    $respuesta = array();
     while ($fila = mysqli_fetch_assoc($resultado)) {
         $clase = array();
         $clase['fecha_hora'] = $fila['FECHA_HORA'];
