@@ -1,7 +1,7 @@
 <?php
 
 usleep(600000);
-require('../ficheros/conexion.php');
+require('../../ficheros/conexion.php');
 
 // prueba directa
 //$dni="00000000A";

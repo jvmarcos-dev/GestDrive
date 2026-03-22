@@ -1,10 +1,11 @@
 <?php
-require('../ficheros/conexion.php');
+require('../../ficheros/conexion.php');
 
-$reserva = $_POST['lareserva'];
+$id = $_POST['elid'];
+$clase = $_POST['laclase'];
 
 // Llamamos al procedimiento con una variable de sesión MySQL para la salida
-mysqli_query($conexion, "CALL CANCELAR($reserva, @salida)");
+mysqli_query($conexion, "CALL RESERVAR($id, $clase, @salida)");
 
 // Leemos el valor de salida
 $resultado = mysqli_query($conexion, "SELECT @salida AS salida");

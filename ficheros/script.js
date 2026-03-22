@@ -39,7 +39,7 @@ function envio_datos() {
         var elusuario = document.getElementById('dni').value;
         var lacontasenia = document.getElementById('password').value;
 
-        var url = "php/verificacion.php";
+        var url = "php/login/verificacion.php";
         // hago la llamada AJAX
         // utilizamos método "$.post" de jQuery
 
@@ -91,7 +91,7 @@ function inicio_alumno() {
     document.getElementById('saldo_alumno').innerHTML = "";
     document.getElementById('teorica_alumno').innerHTML = "";
 
-    let url = "php/datos_alumno.php";
+    let url = "php/alumno/datos_alumno.php";
 
     $.post(url, {
         elid: idUsuario
@@ -121,7 +121,7 @@ function reservaActiva() {
     document.getElementById('fecha').innerHTML = "";
     document.getElementById('profesor').innerHTML = "";
 
-    let url = "php/reserva_activa.php";
+    let url = "php/alumno/reserva_activa.php";
 
     $.post(url, {
         elid: idUsuario
@@ -156,7 +156,7 @@ function datosReserva(datos) {
 // PANEL ALUMNO - CLASES DISPONIBLES
 // ============================================================
 function clasesDisponibles() {
-    let url = "php/clases_disponibles.php";
+    let url = "php/alumno/clases_disponibles.php";
     $.get(url, datosClases);
 }
 
@@ -221,7 +221,7 @@ function datosClases(datos) {
 // PANEL ALUMNO - HISTORIAL
 // ============================================================
 function historialClases() {
-    let url = "php/historial_reservas.php";
+    let url = "php/alumno/historial_reservas.php";
 
     $.post(url, {
         elid: idUsuario
@@ -296,7 +296,7 @@ function datosHistorial(datos) {
 // ============================================================
 
 function reservar(idClase) {
-    let url = "php/reservar_clase.php";
+    let url = "php/alumno/reservar_clase.php";
 
     $.post(url, {
         elid: idUsuario,
@@ -330,7 +330,7 @@ function reservarClase(datos) {
 function cancelar(idReserva, idBoton) {
     //Al llamar a esta funcion antes tendré que hacer un botón de confirmar y ya al confirmar entonces se cancele.
     //En este botón tendré que mirar si ha cancelado a tiempo o tarde para variar el texto.
-    let url = "php/cancelar_clase.php";
+    let url = "php/alumno/cancelar_clase.php";
 
     $.post(url, {
         lareserva: idReserva
