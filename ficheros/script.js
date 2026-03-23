@@ -374,6 +374,7 @@ function cancelarClase(datos, idBoton) {
 function inicio_admin(){
     //Aqui voy a llamar todas a todas las funciones que aparecen en el dashboard
     alumnosTotales();
+    clasesHoy();
 }
 
 function alumnosTotales() {
@@ -383,4 +384,13 @@ function alumnosTotales() {
 
 function cantidadAlumnos(datos) {
     document.getElementById('total_alumnos').innerHTML=datos.cant_alumnos;
+}
+
+function clasesHoy() {
+    let url = "php/admin/clases_hoy.php";
+    $.get(url, cantidadClases);
+}
+
+function cantidadClases(datos) {
+    document.getElementById('total_clasesHoy').innerHTML=datos.clases_hoy;
 }
