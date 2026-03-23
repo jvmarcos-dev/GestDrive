@@ -375,6 +375,7 @@ function inicio_admin(){
     //Aqui voy a llamar todas a todas las funciones que aparecen en el dashboard
     alumnosTotales();
     clasesHoy();
+    teoricoApto();
 }
 
 function alumnosTotales() {
@@ -393,4 +394,13 @@ function clasesHoy() {
 
 function cantidadClases(datos) {
     document.getElementById('total_clasesHoy').innerHTML=datos.clases_hoy;
+}
+
+function teoricoApto() {
+    let url = "php/admin/alumnos_teorico_apto.php";
+    $.get(url, cantidadTeorico);
+}
+
+function cantidadTeorico(datos) {
+    document.getElementById('total_teorico').innerHTML=datos.cant_teorico;
 }
