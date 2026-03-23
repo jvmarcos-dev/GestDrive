@@ -368,5 +368,19 @@ function cancelarClase(datos, idBoton) {
 }
 
 // ============================================================
-// PANEL PROFESOR
+// PANEL ADMINISTRADOR
 // ============================================================
+
+function inicio_admin(){
+    //Aqui voy a llamar todas a todas las funciones que aparecen en el dashboard
+    alumnosTotales();
+}
+
+function alumnosTotales() {
+    let url = "php/admin/alumnos_activos.php";
+    $.get(url, cantidadAlumnos);
+}
+
+function cantidadAlumnos(datos) {
+    document.getElementById('total_alumnos').innerHTML=datos.cant_alumnos;
+}
