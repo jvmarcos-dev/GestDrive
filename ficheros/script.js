@@ -363,12 +363,10 @@ function cancelarClase(datos, idBoton) {
     }else{
         document.getElementById('info_alumno').innerHTML = "Error al procesar la cancelación";
     }
-
-
 }
 
 // ============================================================
-// PANEL ADMINISTRADOR
+// PANEL ADMINISTRADOR - DASHBOARD
 // ============================================================
 
 function inicio_admin(){
@@ -376,7 +374,9 @@ function inicio_admin(){
     alumnosTotales();
     clasesHoy();
     teoricoApto();
+    listaClasesHoy();
 }
+
 
 function alumnosTotales() {
     let url = "php/admin/alumnos_activos.php";
@@ -387,6 +387,7 @@ function cantidadAlumnos(datos) {
     document.getElementById('total_alumnos').innerHTML=datos.cant_alumnos;
 }
 
+
 function clasesHoy() {
     let url = "php/admin/clases_hoy.php";
     $.get(url, cantidadClases);
@@ -396,6 +397,7 @@ function cantidadClases(datos) {
     document.getElementById('total_clasesHoy').innerHTML=datos.clases_hoy;
 }
 
+
 function teoricoApto() {
     let url = "php/admin/alumnos_teorico_apto.php";
     $.get(url, cantidadTeorico);
@@ -403,4 +405,62 @@ function teoricoApto() {
 
 function cantidadTeorico(datos) {
     document.getElementById('total_teorico').innerHTML=datos.cant_teorico;
+}
+
+function listaClasesHoy() {
+    let url = "php/admin/lista_clases_hoy.php";
+
+    $.get(url, datosListaClases);
+}
+
+function datosListaClases(datos) {
+    var table = document.getElementById("latabla_clases_hoy");
+    table.innerHTML = "";
+
+    if (datos != 0) {
+        // cabecera
+        var header = table.createTHead();
+        var fila = header.insertRow(0);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Hora</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Alumno</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Profesor</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Acción</b>";
+        fila.appendChild(th);
+
+        // cuerpo
+        var body = table.createTBody();
+        for (var i = 0; i < datos.length; i++) {
+            //Con esto parseo la fecha y hora para que salgan en un buen formato
+            let fecha = new Date(datos[i].fecha_hora);
+            let hora = fecha.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            //Este es el resultado de la conversión
+            let horaFormateada = hora + 'h';
+            let nombreAlumno = datos[i].nombre_alumno.charAt(0).toUpperCase() + datos[i].nombre_alumno.slice(1);
+            let apellidosAlumno = datos[i].apellidos_alumno.charAt(0).toUpperCase() + datos[i].apellidos_alumno.slice(1);
+            let nombreProfesor = datos[i].nombre_profesor.charAt(0).toUpperCase() + datos[i].nombre_profesor.slice(1);
+            let apellidosProfesor = datos[i].apellidos_profesor.charAt(0).toUpperCase() + datos[i].apellidos_profesor.slice(1);
+            var fila = body.insertRow(i);
+            fila.insertCell(0).innerHTML = horaFormateada;
+            fila.insertCell(1).innerHTML = nombreAlumno + ' ' + apellidosAlumno;
+            fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
+            fila.insertCell(3).innerHTML = "<button id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
+        }
+    } else {
+        document.getElementById('info_alumno').innerHTML = "No hay clases hoy";
+    }
 }
