@@ -5,6 +5,7 @@ require('../../ficheros/conexion.php');
 // en la misma tabla y solo dependen del tipo. Por ello, tengo que relacionar dos veces la consulta con la tabla usuarios, primero
 // para recuperar los del alumno y después para recuperar los del profesor
 $consulta = "SELECT 
+RESERVAS.ID AS ID_RESERVA,
 CLASES_PRACTICAS.FECHA_HORA AS FECHA_HORA,
 USUARIOS_ALUMNO.NOMBRE AS NOMBRE_ALUMNO,
 USUARIOS_ALUMNO.APELLIDOS AS APELLIDOS_ALUMNO,
@@ -26,6 +27,7 @@ if ($nregistros > 0) {
     $respuesta = array();
     while ($fila = mysqli_fetch_assoc($resultado)) {
         $clase = array();
+        $clase['id_reserva'] = $fila['ID_RESERVA'];
         $clase['fecha_hora'] = $fila['FECHA_HORA'];
         $clase['nombre_alumno'] = $fila['NOMBRE_ALUMNO'];
         $clase['apellidos_alumno'] = $fila['APELLIDOS_ALUMNO'];

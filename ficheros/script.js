@@ -458,9 +458,48 @@ function datosListaClases(datos) {
             fila.insertCell(0).innerHTML = horaFormateada;
             fila.insertCell(1).innerHTML = nombreAlumno + ' ' + apellidosAlumno;
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
-            fila.insertCell(3).innerHTML = "<button id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
+            fila.insertCell(3).innerHTML = "<button onclick='cancelarAdmin(" + datos[i].id_reserva + ", this)'>Cancelar</button>";
         }
     } else {
-        document.getElementById('info_alumno').innerHTML = "No hay clases hoy";
+        document.getElementById('texto_notificacion').innerHTML = "No hay clases hoy";
+    }
+}
+
+function cancelarAdmin(idReserva, boton) {
+    //Al llamar a esta funcion antes tendré que hacer un botón de confirmar y ya al confirmar entonces se cancele.
+    //En este botón tendré que mirar si ha cancelado a tiempo o tarde para variar el texto.
+    let url = "php/alumno/cancelar_clase.php";
+
+    $.post(url, {
+        lareserva: idReserva
+    }, function (datos) {
+        // Llamamos manualmente a la función pasando ambos parámetros
+        cancelarClaseAdmin(datos, boton);
+    });
+}
+
+function cancelarClaseAdmin(datos, boton) {
+    if (datos == 1 || datos == 2) {
+        if (datos == 1) {
+            //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
+            document.getElementById('texto_notificacion').innerHTML = "Clase cancelada correctamente";
+        } else if (datos == 2) {
+            document.getElementById('texto_notificacion').innerHTML = "Al alumno le quedaban -48 horas, su saldo no será devuelto";
+        }
+        if (boton) {
+            // El botón está en una celda (td). El padre del botón es el td.
+            let celda = boton.parentElement;
+            let fila = celda.parentElement;
+            fila.remove();
+
+            //obtengo el total de clases que es un numero metido en html como texto, por tanto lo transformo a numero para poder operar con el
+            let valor=parseInt(document.getElementById('total_clasesHoy').innerHTML);
+            //le resto una clase al total
+            valor--;
+            //Pongo el nuevo total como valor
+            document.getElementById('total_clasesHoy').innerHTML=valor;
+        }
+    }else{
+        document.getElementById('texto_notificacion').innerHTML = "Error al procesar la cancelación";
     }
 }
