@@ -360,7 +360,7 @@ function cancelarClase(datos, idBoton) {
         clasesDisponibles();
         inicio_alumno();
         reservaActiva();
-    }else{
+    } else {
         document.getElementById('info_alumno').innerHTML = "Error al procesar la cancelación";
     }
 }
@@ -369,7 +369,7 @@ function cancelarClase(datos, idBoton) {
 // PANEL ADMINISTRADOR - DASHBOARD
 // ============================================================
 
-function inicio_admin(){
+function inicio_admin() {
     //Aqui voy a llamar todas a todas las funciones que aparecen en el dashboard
     alumnosTotales();
     clasesHoy();
@@ -384,7 +384,7 @@ function alumnosTotales() {
 }
 
 function cantidadAlumnos(datos) {
-    document.getElementById('total_alumnos').innerHTML=datos.cant_alumnos;
+    document.getElementById('total_alumnos').innerHTML = datos.cant_alumnos;
 }
 
 
@@ -394,7 +394,7 @@ function clasesHoy() {
 }
 
 function cantidadClases(datos) {
-    document.getElementById('total_clasesHoy').innerHTML=datos.clases_hoy;
+    document.getElementById('total_clasesHoy').innerHTML = datos.clases_hoy;
 }
 
 
@@ -404,7 +404,7 @@ function teoricoApto() {
 }
 
 function cantidadTeorico(datos) {
-    document.getElementById('total_teorico').innerHTML=datos.cant_teorico;
+    document.getElementById('total_teorico').innerHTML = datos.cant_teorico;
 }
 
 function listaClasesHoy() {
@@ -493,13 +493,32 @@ function cancelarClaseAdmin(datos, boton) {
             fila.remove();
 
             //obtengo el total de clases que es un numero metido en html como texto, por tanto lo transformo a numero para poder operar con el
-            let valor=parseInt(document.getElementById('total_clasesHoy').innerHTML);
+            let valor = parseInt(document.getElementById('total_clasesHoy').innerHTML);
             //le resto una clase al total
             valor--;
             //Pongo el nuevo total como valor
-            document.getElementById('total_clasesHoy').innerHTML=valor;
+            document.getElementById('total_clasesHoy').innerHTML = valor;
         }
-    }else{
+    } else {
         document.getElementById('texto_notificacion').innerHTML = "Error al procesar la cancelación";
     }
+}
+
+function listado_alumnos_admin() {
+
+    let labusqueda = document.getElementById('buscar_alumno').value;
+    if (labusqueda.length == 0) {
+        document.getElementById('resultados_busqueda').innerHTML = "";
+        return;
+    }
+
+    let url = "php/admin/buscar_alumno.php";
+
+    $.post(url, {
+        busqueda: labusqueda
+    }, busquedaAlumnos);
+}
+
+function busquedaAlumnos() {
+    
 }
