@@ -8,20 +8,29 @@ require('../../ficheros/conexion.php');
 // aquí habría que poner los filtros de seguridad
 $busqueda = $_POST['labusqueda'];
 
-$consulta = "SELECT id, dni, nombre, apellidos, foto
+//si la busqueda esta vacia, muestro los 20 ultimos alumnos matriculados en una lista
+if (empty($_POST['labusqueda'])) {
+    $consulta = "SELECT id, dni, nombre, apellidos, foto 
+    FROM usuarios 
+    WHERE tipo = 'alumno' 
+    ORDER BY id DESC 
+    LIMIT 20";
+} else {
+    $consulta = "SELECT id, dni, nombre, apellidos, foto
 FROM usuarios 
 WHERE tipo = 'alumno'
-AND (nombre LIKE '$busqueda%' OR apellidos LIKE '$busqueda%' OR dni LIKE '$busqueda%')";
+AND (nombre LIKE '$busqueda%' OR apellidos LIKE '%$busqueda%' OR dni LIKE '$busqueda%')";
+}
 
 $resultado = mysqli_query($conexion, $consulta);
 
 $nregistros = mysqli_num_rows($resultado);
 
 if ($nregistros == 0) {
-	// el usuario se ha logueado MAL
-	echo 0;
+    // el usuario se ha logueado MAL
+    echo 0;
 } else {
-	$respuesta = array();
+    $respuesta = array();
     while ($fila = mysqli_fetch_assoc($resultado)) {
         $alumnos = array();
         $alumnos['id'] = $fila['id'];
@@ -32,9 +41,9 @@ if ($nregistros == 0) {
         $respuesta[] = $alumnos;
     }
 
-	//Esto codifica en json la tabla.
-	header("Content-type:application/json; charset=utf-8");
-	echo json_encode($respuesta);
+    //Esto codifica en json la tabla.
+    header("Content-type:application/json; charset=utf-8");
+    echo json_encode($respuesta);
 }
 
 // cerramos la conexión 
