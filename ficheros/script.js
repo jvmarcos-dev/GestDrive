@@ -545,3 +545,38 @@ function busquedaAlumnos(datos) {
         contenedor.innerHTML = "<div style='padding:5px;'>No se han encontrado alumnos.</div>";
     }
 }
+
+function seleccionarAlumno(idAlumno) {
+    $("#lacaja").load("vistas/admin/datosAlumno.html", function () {
+        mostrarDatosAlumno(idAlumno);
+    });
+}
+
+function mostrarDatosAlumno(idAlumno) {
+    let url = "php/alumno/datos_alumno.php";
+
+    //primera llamada, en este caso muestro los datos que van en las label
+    $.post(url, {
+        elid: idAlumno
+    }, datosAlumnoAdmin);
+
+    //segunda llamada, aqui muestro la tabla con el historial completo
+    $.post("php/alumno/historial_reservas.php", {
+        elid: idAlumno
+    }, historialAlumnoAdmin);
+}
+
+function datosAlumnoAdmin(datos) {
+    //div datos_alumno_admin
+    document.getElementById('foto_alumno_admin').src = datos.foto;
+    document.getElementById('nombre_alumno_admin').innerText = datos.nombre + " " + datos.apellidos;
+    document.getElementById('dni_alumno_admin').innerText = datos.dni;
+    document.getElementById('email_alumno_admin').innerText = datos.email;
+    document.getElementById('telefono_alumno_admin').innerText = datos.telefono;
+
+    //div estado_academico
+    document.getElementById('saldo_alumno_admin').innerText = datos.saldo;
+
+    //div estado_teorico_admin
+    document.getElementById('teoria_admin').innerText = datos.teorico;
+}

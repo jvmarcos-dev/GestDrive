@@ -8,7 +8,7 @@ require('../../ficheros/conexion.php');
 // aquí habría que poner los filtros de seguridad
 $id = $_POST['elid'];
 
-$consulta = "SELECT nombre, apellidos, saldo_clases, estado_teorica, foto
+$consulta = "SELECT nombre, apellidos, saldo_clases, estado_teorica, foto, dni, email, telefono
 FROM usuarios INNER JOIN alumnos
 ON usuarios.id=alumnos.id_usuario
 WHERE usuarios.id='$id'";
@@ -27,6 +27,9 @@ if ($nregistros == 0) {
 	$respuesta['saldo'] = $fila['saldo_clases'];
 	$respuesta['teorico'] = $fila['estado_teorica'];
 	$respuesta['foto'] = $fila['foto'];
+	$respuesta['dni'] = $fila['dni'];
+	$respuesta['email'] = $fila['email'];
+	$respuesta['telefono'] = $fila['telefono'];
 
 	//Esto codifica en json la tabla.
 	header("Content-type:application/json; charset=utf-8");
