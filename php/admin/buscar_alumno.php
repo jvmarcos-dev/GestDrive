@@ -8,10 +8,10 @@ require('../../ficheros/conexion.php');
 // aquí habría que poner los filtros de seguridad
 $busqueda = $_POST['labusqueda'];
 
-$consulta = "SELECT id, nombre, apellidos, foto
+$consulta = "SELECT id, dni, nombre, apellidos, foto
 FROM usuarios 
 WHERE tipo = 'alumno'
-AND (nombre LIKE '$busqueda%' OR apellidos LIKE '$busqueda%')";
+AND (nombre LIKE '$busqueda%' OR apellidos LIKE '$busqueda%' OR dni LIKE '$busqueda%')";
 
 $resultado = mysqli_query($conexion, $consulta);
 
@@ -24,6 +24,8 @@ if ($nregistros == 0) {
 	$respuesta = array();
     while ($fila = mysqli_fetch_assoc($resultado)) {
         $alumnos = array();
+        $alumnos['id'] = $fila['id'];
+        $alumnos['dni'] = $fila['dni'];
         $alumnos['nombre'] = $fila['nombre'];
         $alumnos['apellidos'] = $fila['apellidos'];
         $alumnos['foto'] = $fila['foto'];

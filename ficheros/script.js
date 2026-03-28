@@ -4,7 +4,7 @@
 let idUsuario;
 let tipoUsuario;
 
-
+let timeoutBusqueda;
 // ============================================================
 // INICIO Y NAVEGACIÓN
 // ============================================================
@@ -504,21 +504,48 @@ function cancelarClaseAdmin(datos, boton) {
     }
 }
 
-function listado_alumnos_admin() {
+function cargarAlumno(){
+    $("#lacaja").load("vistas/admin/alumno.html");
+}
 
-    let labusqueda = document.getElementById('buscar_alumno').value;
-    if (labusqueda.length == 0) {
+function listado_alumnos_admin() {
+    let busqueda = document.getElementById('buscar_alumno').value;
+
+    if (busqueda.length == 0) {
         document.getElementById('resultados_busqueda').innerHTML = "";
         return;
     }
 
-    let url = "php/admin/buscar_alumno.php";
+    clearTimeout(timeoutBusqueda);
 
-    $.post(url, {
-        busqueda: labusqueda
-    }, busquedaAlumnos);
+    //hago un timeout ya que estoy usando un evento oninput. Esto significa que cada vez que introduzco
+    //un caracter en la barra de busqueda, va a llamar a esta funcion, y por tanto, si el usuario que teclea
+    //escribe rapido la busqueda, estaria haciendo una llamada por cada caracter, cosa que si hay miles de resultados
+    //seria muy lento. De esta forma solo aparecerán los resultados cuando pare un momento, tiempo casi imperteptible
+    timeoutBusqueda = setTimeout(function() {
+        let url = "php/admin/buscar_alumno.php";
+        $.post(url, {
+            labusqueda: busqueda
+        }, busquedaAlumnos);
+    }, 400);
 }
 
-function busquedaAlumnos() {
+function busquedaAlumnos(datos) {
+    let contenedor = document.getElementById('resultados_busqueda');
+    contenedor.innerHTML = "";
     
+    if (datos != 0) {
+        for(let i=0; i<datos.length;i++){
+            let nombre = datos[i].nombre.charAt(0).toUpperCase() + datos[i].nombre.slice(1);
+            let apellidos = datos[i].apellidos.charAt(0).toUpperCase() + datos[i].apellidos.slice(1);
+            let imagen=datos[i].foto;
+            // con esto cada alumno que aparezca en la lista será un div nuevo
+            // al hacer click en el, iremos a la funcion seleccionarAlumno de este alumno que estamos llamando
+            // y obtendremos todos sus datos en una nueva pantalla.
+            contenedor.innerHTML += "<div onclick='seleccionarAlumno(" + datos[i].id + ")'>" 
+                + imagen + nombre + " " + apellidos + "</div>";
+        }
+    }else{
+        contenedor.innerHTML="sin resultados"
+    }
 }
