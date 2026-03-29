@@ -3,6 +3,7 @@
 // ============================================================
 let idUsuario;
 let tipoUsuario;
+let idAlumnoSeleccionadoAdmin;
 
 let timeoutBusqueda;
 // ============================================================
@@ -547,6 +548,7 @@ function busquedaAlumnos(datos) {
 }
 
 function seleccionarAlumno(idAlumno) {
+    idAlumnoSeleccionadoAdmin = idAlumno;
     $("#lacaja").load("vistas/admin/datosAlumno.html", function () {
         mostrarDatosAlumno(idAlumno);
     });
@@ -669,11 +671,11 @@ function cancelarClaseAdminCallback(datos, boton) {
         if (boton) {
             let celdaBoton = boton.parentElement;
             let fila = celdaBoton.parentElement;
-            
+
             // Cambiamos el texto de la celda de Estado a "Cancelada"
-            if(datos.trim()==1){
+            if (datos.trim() == 1) {
                 fila.cells[3].innerHTML = "Cancelada";
-            }else{
+            } else {
                 fila.cells[3].innerHTML = "Cancelada Tarde";
             }
             boton.disabled = true;
@@ -683,8 +685,24 @@ function cancelarClaseAdminCallback(datos, boton) {
     }
 }
 
-function volverAdmin(){
-     $("#lacaja").load("vistas/admin/dashboard.html", function () {
-            inicio_admin();
-        });
+function volverAdmin() {
+    $("#lacaja").load("vistas/admin/dashboard.html", function () {
+        inicio_admin();
+    });
+}
+
+function aprobarTeorico() {
+    let url = "php/admin/aprobar_teorico.php";
+    $.post(url, {
+        elid: idAlumnoSeleccionadoAdmin
+    }, datosTeorico);
+}
+
+function datosTeorico(datos) {
+    //aqui luego haré un boton de confirmar cambios que saldrá antes de esto.
+    if (datos == 1) {
+        document.getElementById('teoria_admin').innerText = "apto";
+    } else {
+        document.getElementById('texto_notificacion').innerText = "Se ha producido un error.";
+    }
 }
