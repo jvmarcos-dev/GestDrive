@@ -577,7 +577,7 @@ function datosAlumnoAdmin(datos) {
     document.getElementById('telefono_alumno_admin').innerText = datos.telefono;
 
     //div estado_academico
-    document.getElementById('saldo_alumno_admin').innerText = datos.saldo + " clase(s)";
+    document.getElementById('saldo_alumno_admin').innerText = "Saldo: " + datos.saldo;
 
     //div estado_teorico_admin
     document.getElementById('teoria_admin').innerText = datos.teorico;
@@ -705,4 +705,28 @@ function datosTeorico(datos) {
     } else {
         document.getElementById('texto_notificacion').innerText = "Se ha producido un error.";
     }
+}
+
+function actualizarSaldo(operacion) {
+    let sumaSaldo = document.getElementById('recargar_saldo').value;
+    let url = "php/admin/modificar_saldo.php";
+    $.post(url, {
+        elid: idAlumnoSeleccionadoAdmin,
+        saldo_nuevo: sumaSaldo,
+        laoperacion: operacion
+    }, datosSaldo);
+}
+
+function datosSaldo(datos) {
+    //aqui luego haré un boton de confirmar cambios que saldrá antes de esto.
+    if (datos == 0) {
+        document.getElementById('texto_notificacion').innerText = "Se ha producido un error.";
+    } else if (datos == -1) {
+        document.getElementById('texto_notificacion').innerText = "No puedes restar esa cantidad de saldo.";
+    } else {
+        document.getElementById('saldo_alumno_admin').innerText = "Saldo: " + datos.elsaldo;
+    }
+
+    document.getElementById('recargar_saldo').value="";
+    document.getElementById('recargar_saldo').focus;
 }
