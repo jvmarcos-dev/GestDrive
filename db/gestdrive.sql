@@ -87,24 +87,7 @@ CREATE TABLE historico_alumnos (
     email            VARCHAR(100) NOT NULL,
     telefono         VARCHAR(15)  NOT NULL DEFAULT '',
     fecha_nacimiento DATE         NOT NULL,
-    fecha_archivo    TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    observaciones    VARCHAR(500) NOT NULL DEFAULT ''
-);
-
--- ============================================================
---  TABLA 7: historico_usuarios
---  Usuarios que ya no están activos en el sistema.
--- ============================================================
-CREATE TABLE historico_usuarios (
-    id              INT          AUTO_INCREMENT PRIMARY KEY,
-    id_usuario_orig INT          NOT NULL,
-    dni             VARCHAR(9)   NOT NULL,
-    nombre          VARCHAR(60)  NOT NULL,
-    apellidos       VARCHAR(100) NOT NULL,
-    email           VARCHAR(100) NOT NULL,
-    telefono        VARCHAR(15)  NOT NULL DEFAULT '',
-    tipo            ENUM('alumno','profesor','admin') NOT NULL,
-    fecha_archivo   TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
+    fecha_archivo    TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
 );
 
 -- ============================================================
