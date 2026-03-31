@@ -730,3 +730,29 @@ function datosSaldo(datos) {
     document.getElementById('recargar_saldo').value="";
     document.getElementById('recargar_saldo').focus;
 }
+
+function archivarAlumno() {
+    let url = "php/admin/archivar_alumno.php";
+
+    $.post(url, {
+        elid: idAlumnoSeleccionadoAdmin,
+    }, datosArchivo);
+}
+
+function datosArchivo(datos) {
+    // limpiamos la respuesta de posibles espacios en blanco
+    let respuesta = datos.trim();
+    if (respuesta == -1) {
+        document.getElementById('texto_notificacion').innerText="El alumno seleccionado ya ha sido archivado o no existe"
+        volverAdmin();
+    } else if (respuesta == -2) {
+        document.getElementById('texto_notificacion').innerHTML = "El alumno debe tener el teorico apto";
+    } else if (respuesta == -3) {
+        document.getElementById('texto_notificacion').innerHTML = "El alumno debe tener 18 años o más.";
+    } else if (respuesta == 1) {
+        document.getElementById('texto_notificacion').innerHTML = "El alumno ha sido archivado.";
+        volverAdmin();
+    }else{
+        document.getElementById('texto_notificacion').innerHTML = "Se ha producido un error.";
+    }
+}
