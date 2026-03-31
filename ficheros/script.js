@@ -549,31 +549,33 @@ function busquedaAlumnos(datos) {
 
 function seleccionarAlumno(idAlumno) {
     idAlumnoSeleccionadoAdmin = idAlumno;
-    $("#lacaja").load("vistas/admin/datosAlumno.html", function () {
-        mostrarDatosAlumno(idAlumno);
+    let url = "php/alumno/datos_alumno.php";
+
+    $.post(url, {
+        elid: idAlumno
+    }, function (datos) {
+        //comprobamos si el alumno existe
+        if (!datos.nombre) {
+            document.getElementById('texto_notificacion').innerText = "Este alumno ya no existe en el sistema.";
+
+            //recargamos la busqueda para que el alumno deje de aparecer
+            listado_alumnos_admin();
+            return;
+        }
+
+        //si existe, cargamos la vista del alumno
+        $("#lacaja").load("vistas/admin/datosAlumno.html", function () {
+            datosAlumnoAdmin(datos);
+
+            //cargamos el historial
+            $.post("php/alumno/historial_reservas.php", {
+                elid: idAlumno
+            }, historialAlumnoAdmin);
+        });
     });
 }
 
-function mostrarDatosAlumno(idAlumno) {
-    let url = "php/alumno/datos_alumno.php";
-
-    //primera llamada, en este caso muestro los datos que van en las label
-    $.post(url, {
-        elid: idAlumno
-    }, datosAlumnoAdmin);
-
-    //segunda llamada, aqui muestro la tabla con el historial completo
-    $.post("php/alumno/historial_reservas.php", {
-        elid: idAlumno
-    }, historialAlumnoAdmin);
-}
-
 function datosAlumnoAdmin(datos) {
-    if (!datos.nombre) {
-        document.getElementById('texto_notificacion').innerText = "Este alumno ya no existe en el sistema.";
-        volverAdmin();
-        return;
-    }
     //div datos_alumno_admin
     document.getElementById('foto_alumno_admin').src = datos.foto;
     document.getElementById('nombre_alumno_admin').innerText = datos.nombre + " " + datos.apellidos;
@@ -732,7 +734,7 @@ function datosSaldo(datos) {
         document.getElementById('saldo_alumno_admin').innerText = "Saldo: " + datos.elsaldo;
     }
 
-    document.getElementById('recargar_saldo').value="";
+    document.getElementById('recargar_saldo').value = "";
     document.getElementById('recargar_saldo').focus;
 }
 
@@ -747,7 +749,7 @@ function archivarAlumno() {
 function datosArchivo(datos) {
     let respuesta = datos.trim();
     if (respuesta == -1) {
-        document.getElementById('texto_notificacion').innerText="El alumno seleccionado ya ha sido archivado o no existe"
+        document.getElementById('texto_notificacion').innerText = "El alumno seleccionado ya ha sido archivado o no existe"
         volverAdmin();
     } else if (respuesta == -2) {
         document.getElementById('texto_notificacion').innerHTML = "El alumno debe tener el teorico apto";
@@ -756,7 +758,7 @@ function datosArchivo(datos) {
     } else if (respuesta == 1) {
         document.getElementById('texto_notificacion').innerHTML = "El alumno ha sido archivado.";
         volverAdmin();
-    }else{
+    } else {
         document.getElementById('texto_notificacion').innerHTML = "Se ha producido un error.";
     }
 }
