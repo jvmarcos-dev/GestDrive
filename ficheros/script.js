@@ -114,7 +114,7 @@ function datosAlumno(datos) {
         document.getElementById('saldo_alumno').innerHTML = datos.saldo + " clases restantes";
         document.getElementById('teorica_alumno').innerHTML = datos.teorico.toUpperCase();
     } else {
-        document.getElementById('info_alumno').innerHTML = "<font color='red'>Se ha producido un ERROR</font>";
+        document.getElementById('notificacion_global').innerHTML = "<font color='red'>Se ha producido un ERROR</font>";
     }
 }
 
@@ -308,18 +308,18 @@ function reservar(idClase) {
 function reservarClase(datos) {
     if (datos == 1) {
         //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
-        document.getElementById('info_alumno').innerHTML = "Reserva realizada correctamente";
+        document.getElementById('notificacion_global').innerHTML = "Reserva realizada correctamente";
         clasesDisponibles();
         historialClases();
         inicio_alumno();
     } else if (datos == -1) {
-        document.getElementById('info_alumno').innerHTML = "No tienes saldo suficiente";
+        document.getElementById('notificacion_global').innerHTML = "No tienes saldo suficiente";
     } else if (datos == -2) {
-        document.getElementById('info_alumno').innerHTML = "No puedes tener más de 2 clases reservadas simultáneamente.";
+        document.getElementById('notificacion_global').innerHTML = "No puedes tener más de 2 clases reservadas simultáneamente.";
     } else if (datos == -3) {
-        document.getElementById('info_alumno').innerHTML = "No puedes reservas 2 clases con una diferencia <45 minutos.";
+        document.getElementById('notificacion_global').innerHTML = "No puedes reservas 2 clases con una diferencia <45 minutos.";
     } else if (datos == -4) {
-        document.getElementById('info_alumno').innerHTML = "Esta clase ya no está disponible.";
+        document.getElementById('notificacion_global').innerHTML = "Esta clase ya no está disponible.";
         clasesDisponibles();
     }
 }
@@ -346,9 +346,9 @@ function cancelarClase(datos, idBoton) {
     if (datos == 1 || datos == 2) {
         if (datos == 1) {
             //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
-            document.getElementById('info_alumno').innerHTML = "Clase cancelada correctamente";
+            document.getElementById('notificacion_global').innerHTML = "Clase cancelada correctamente";
         } else if (datos == 2) {
-            document.getElementById('info_alumno').innerHTML = "Has cancelado la clase tarde. Tu saldo no será devuelto";
+            document.getElementById('notificacion_global').innerHTML = "Has cancelado la clase tarde. Tu saldo no será devuelto";
         }
         if (boton) {
             // El botón está en una celda (td). El padre del botón es el td.
@@ -362,7 +362,7 @@ function cancelarClase(datos, idBoton) {
         inicio_alumno();
         reservaActiva();
     } else {
-        document.getElementById('info_alumno').innerHTML = "Error al procesar la cancelación";
+        document.getElementById('notificacion_global').innerHTML = "Error al procesar la cancelación";
     }
 }
 
@@ -462,7 +462,7 @@ function datosListaClases(datos) {
             fila.insertCell(3).innerHTML = "<button onclick='cancelarAdmin(" + datos[i].id_reserva + ", this)'>Cancelar</button>";
         }
     } else {
-        document.getElementById('texto_notificacion').innerHTML = "No hay clases hoy";
+        document.getElementById('notificacion_global').innerHTML = "No hay clases hoy";
     }
 }
 
@@ -483,9 +483,9 @@ function cancelarClaseAdmin(datos, boton) {
     if (datos == 1 || datos == 2) {
         if (datos == 1) {
             //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
-            document.getElementById('texto_notificacion').innerHTML = "Clase cancelada correctamente";
+            document.getElementById('notificacion_global').innerHTML = "Clase cancelada correctamente";
         } else if (datos == 2) {
-            document.getElementById('texto_notificacion').innerHTML = "Al alumno le quedaban -48 horas, su saldo no será devuelto";
+            document.getElementById('notificacion_global').innerHTML = "Al alumno le quedaban -48 horas, su saldo no será devuelto";
         }
         if (boton) {
             // El botón está en una celda (td). El padre del botón es el td.
@@ -501,7 +501,7 @@ function cancelarClaseAdmin(datos, boton) {
             document.getElementById('total_clasesHoy').innerHTML = valor;
         }
     } else {
-        document.getElementById('texto_notificacion').innerHTML = "Error al procesar la cancelación";
+        document.getElementById('notificacion_global').innerHTML = "Error al procesar la cancelación";
     }
 }
 
@@ -556,7 +556,7 @@ function seleccionarAlumno(idAlumno) {
     }, function (datos) {
         //comprobamos si el alumno existe
         if (!datos.nombre) {
-            document.getElementById('texto_notificacion').innerText = "Este alumno ya no existe en el sistema.";
+            document.getElementById('notificacion_global').innerText = "Este alumno ya no existe en el sistema.";
 
             //recargamos la busqueda para que el alumno deje de aparecer
             listado_alumnos_admin();
@@ -670,9 +670,9 @@ function cancelarClaseAdminCallback(datos, boton) {
     if (datos.trim() == 1 || datos.trim() == 2) {
         if (datos.trim() == 1) {
             //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
-            document.getElementById('texto_notificacion').innerHTML = "Clase cancelada correctamente";
+            document.getElementById('notificacion_global').innerHTML = "Clase cancelada correctamente";
         } else if (datos.trim() == 2) {
-            document.getElementById('texto_notificacion').innerHTML = "Al alumno le quedaban -48 horas, su saldo no será devuelto";
+            document.getElementById('notificacion_global').innerHTML = "Al alumno le quedaban -48 horas, su saldo no será devuelto";
         }
 
         if (boton) {
@@ -688,7 +688,7 @@ function cancelarClaseAdminCallback(datos, boton) {
             boton.disabled = true;
         }
     } else {
-        document.getElementById('texto_notificacion').innerHTML = "Error al procesar la cancelación";
+        document.getElementById('notificacion_global').innerHTML = "Error al procesar la cancelación";
     }
 }
 
@@ -710,7 +710,7 @@ function datosTeorico(datos) {
     if (datos == 1) {
         document.getElementById('teoria_admin').innerText = "apto";
     } else {
-        document.getElementById('texto_notificacion').innerText = "Se ha producido un error.";
+        document.getElementById('notificacion_global').innerText = "Se ha producido un error.";
     }
 }
 
@@ -727,9 +727,9 @@ function actualizarSaldo(operacion) {
 function datosSaldo(datos) {
     //aqui luego haré un boton de confirmar cambios que saldrá antes de esto.
     if (datos == 0) {
-        document.getElementById('texto_notificacion').innerText = "Se ha producido un error.";
+        document.getElementById('notificacion_global').innerText = "Se ha producido un error.";
     } else if (datos == -1) {
-        document.getElementById('texto_notificacion').innerText = "No puedes restar esa cantidad de saldo.";
+        document.getElementById('notificacion_global').innerText = "No puedes restar esa cantidad de saldo.";
     } else {
         document.getElementById('saldo_alumno_admin').innerText = "Saldo: " + datos.elsaldo;
     }
@@ -749,16 +749,16 @@ function archivarAlumno() {
 function datosArchivo(datos) {
     let respuesta = datos.trim();
     if (respuesta == -1) {
-        document.getElementById('texto_notificacion').innerText = "El alumno seleccionado ya ha sido archivado o no existe"
+        document.getElementById('notificacion_global').innerText = "El alumno seleccionado ya ha sido archivado o no existe"
         volverAdmin();
     } else if (respuesta == -2) {
-        document.getElementById('texto_notificacion').innerHTML = "El alumno debe tener el teorico apto";
+        document.getElementById('notificacion_global').innerHTML = "El alumno debe tener el teorico apto";
     } else if (respuesta == -3) {
-        document.getElementById('texto_notificacion').innerHTML = "El alumno debe tener 18 años o más.";
+        document.getElementById('notificacion_global').innerHTML = "El alumno debe tener 18 años o más.";
     } else if (respuesta == 1) {
-        document.getElementById('texto_notificacion').innerHTML = "El alumno ha sido archivado.";
+        document.getElementById('notificacion_global').innerHTML = "El alumno ha sido archivado.";
         volverAdmin();
     } else {
-        document.getElementById('texto_notificacion').innerHTML = "Se ha producido un error.";
+        document.getElementById('notificacion_global').innerHTML = "Se ha producido un error.";
     }
 }
