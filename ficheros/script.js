@@ -569,6 +569,11 @@ function mostrarDatosAlumno(idAlumno) {
 }
 
 function datosAlumnoAdmin(datos) {
+    if (!datos.nombre) {
+        document.getElementById('texto_notificacion').innerText = "Este alumno ya no existe en el sistema.";
+        volverAdmin();
+        return;
+    }
     //div datos_alumno_admin
     document.getElementById('foto_alumno_admin').src = datos.foto;
     document.getElementById('nombre_alumno_admin').innerText = datos.nombre + " " + datos.apellidos;
@@ -740,7 +745,6 @@ function archivarAlumno() {
 }
 
 function datosArchivo(datos) {
-    // limpiamos la respuesta de posibles espacios en blanco
     let respuesta = datos.trim();
     if (respuesta == -1) {
         document.getElementById('texto_notificacion').innerText="El alumno seleccionado ya ha sido archivado o no existe"
