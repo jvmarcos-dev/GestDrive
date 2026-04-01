@@ -478,7 +478,7 @@ function datosListaClases(datos) {
             fila.insertCell(0).innerHTML = horaFormateada;
             fila.insertCell(1).innerHTML = nombreAlumno + ' ' + apellidosAlumno;
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
-            fila.insertCell(3).innerHTML = "<button onclick='cancelarClaseAdmin(" + datos[i].id_reserva + ", this)'>Cancelar</button>";
+            fila.insertCell(3).innerHTML = "<button onclick='seleccionarAlumno(" + datos[i].id_alumno + ")'>Ver Ficha</button>";
         }
     } else {
         document.getElementById('noclases').innerText = "No hay clases hoy";
