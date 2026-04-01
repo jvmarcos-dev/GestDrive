@@ -158,11 +158,15 @@ function datosReserva(datos) {
 // ============================================================
 function clasesDisponibles() {
     let url = "php/alumno/clases_disponibles.php";
-    $.get(url, datosClases);
+    $.post(url, datosClases);
 }
 
 function datosClases(datos) {
-    var table = document.getElementById("tabla_clases");
+    if (tipoUsuario == "alumno") {
+        var table = document.getElementById("tabla_clases");
+    } else {
+        var table = document.getElementById("proximas_clases_alumno");
+    }
     table.innerHTML = "";
 
     if (datos != 0) {
@@ -214,7 +218,11 @@ function datosClases(datos) {
             fila.insertCell(3).innerHTML = "<button onclick='reservar(" + datos[i].id_clase + ")'>Reservar</button>";
         }
     } else {
-        document.getElementById('info_alumno').innerHTML = "No hay clases disponibles";
+        if (tipoUsuario == "alumno") {
+            document.getElementById('info_alumno').innerHTML = "No hay clases disponibles";
+        } else {
+            document.getElementById('no_clases_proximas').innerHTML = "No hay clases disponibles";
+        }
     }
 }
 
@@ -293,33 +301,44 @@ function datosHistorial(datos) {
 }
 
 // ============================================================
-// PANEL ALUMNO - BOTON RESERVAR
+// PANEL ALUMNO/ADMIN - BOTON RESERVAR
 // ============================================================
 
 function reservar(idClase) {
     let url = "php/alumno/reservar_clase.php";
 
-    $.post(url, {
-        elid: idUsuario,
-        laclase: idClase
-    }, reservarClase);
+    if (tipoUsuario == "alumno") {
+        $.post(url, {
+            elid: idUsuario,
+            laclase: idClase
+        }, reservarClase);
+    } else {
+        $.post(url, {
+            elid: idAlumnoSeleccionadoAdmin,
+            laclase: idClase
+        }, reservarClase);
+    }
 }
 
 function reservarClase(datos) {
     if (datos == 1) {
         //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
-        document.getElementById('notificacion_global').innerHTML = "Reserva realizada correctamente";
-        clasesDisponibles();
-        historialClases();
-        inicio_alumno();
+        document.getElementById('notificacion_global').innerHTML = "Reserva registrada correctamente";
+        if (tipoUsuario == "alumno") {
+            clasesDisponibles();
+            historialClases();
+            inicio_alumno();
+        }else{
+            seleccionarAlumno(idAlumnoSeleccionadoAdmin);
+        }
     } else if (datos == -1) {
-        document.getElementById('notificacion_global').innerHTML = "No tienes saldo suficiente";
+        document.getElementById('notificacion_global').innerHTML = "Saldo de clases insuficiente";
     } else if (datos == -2) {
-        document.getElementById('notificacion_global').innerHTML = "No puedes tener más de 2 clases reservadas simultáneamente.";
+        document.getElementById('notificacion_global').innerHTML = "Límite máximo de 2 reservas simultáneas alcanzado.";
     } else if (datos == -3) {
-        document.getElementById('notificacion_global').innerHTML = "No puedes reservas 2 clases con una diferencia <45 minutos.";
+        document.getElementById('notificacion_global').innerHTML = "Debe existir un margen mínimo de 45 minutos entre reservas.";
     } else if (datos == -4) {
-        document.getElementById('notificacion_global').innerHTML = "Esta clase ya no está disponible.";
+        document.getElementById('notificacion_global').innerHTML = "La clase seleccionada ya no se encuentra disponible.";
         clasesDisponibles();
     }
 }
@@ -459,49 +478,10 @@ function datosListaClases(datos) {
             fila.insertCell(0).innerHTML = horaFormateada;
             fila.insertCell(1).innerHTML = nombreAlumno + ' ' + apellidosAlumno;
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
-            fila.insertCell(3).innerHTML = "<button onclick='cancelarAdmin(" + datos[i].id_reserva + ", this)'>Cancelar</button>";
+            fila.insertCell(3).innerHTML = "<button onclick='cancelarClaseAdmin(" + datos[i].id_reserva + ", this)'>Cancelar</button>";
         }
     } else {
-        document.getElementById('notificacion_global').innerHTML = "No hay clases hoy";
-    }
-}
-
-function cancelarAdmin(idReserva, boton) {
-    //Al llamar a esta funcion antes tendré que hacer un botón de confirmar y ya al confirmar entonces se cancele.
-    //En este botón tendré que mirar si ha cancelado a tiempo o tarde para variar el texto.
-    let url = "php/alumno/cancelar_clase.php";
-
-    $.post(url, {
-        lareserva: idReserva
-    }, function (datos) {
-        // Llamamos manualmente a la función pasando ambos parámetros
-        cancelarClaseAdmin(datos, boton);
-    });
-}
-
-function cancelarClaseAdmin(datos, boton) {
-    if (datos == 1 || datos == 2) {
-        if (datos == 1) {
-            //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
-            document.getElementById('notificacion_global').innerHTML = "Clase cancelada correctamente";
-        } else if (datos == 2) {
-            document.getElementById('notificacion_global').innerHTML = "Al alumno le quedaban -48 horas, su saldo no será devuelto";
-        }
-        if (boton) {
-            // El botón está en una celda (td). El padre del botón es el td.
-            let celda = boton.parentElement;
-            let fila = celda.parentElement;
-            fila.remove();
-
-            //obtengo el total de clases que es un numero metido en html como texto, por tanto lo transformo a numero para poder operar con el
-            let valor = parseInt(document.getElementById('total_clasesHoy').innerHTML);
-            //le resto una clase al total
-            valor--;
-            //Pongo el nuevo total como valor
-            document.getElementById('total_clasesHoy').innerHTML = valor;
-        }
-    } else {
-        document.getElementById('notificacion_global').innerHTML = "Error al procesar la cancelación";
+        document.getElementById('noclases').innerText = "No hay clases hoy";
     }
 }
 
@@ -571,7 +551,11 @@ function seleccionarAlumno(idAlumno) {
             $.post("php/alumno/historial_reservas.php", {
                 elid: idAlumno
             }, historialAlumnoAdmin);
+            
+            //cargamos las clases disponibles
+            clasesDisponibles();
         });
+
     });
 }
 
@@ -671,6 +655,17 @@ function cancelarClaseAdminCallback(datos, boton) {
         if (datos.trim() == 1) {
             //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
             document.getElementById('notificacion_global').innerHTML = "Clase cancelada correctamente";
+            let labelSaldo = document.getElementById('saldo_alumno_admin');
+            if (labelSaldo) {
+                
+                //ahora mismo está como un texto completo y necesito extraer cual es el numero del saldo. Por ejemplo Saldo: 5
+                //para ello separo el texto con el espacio que hay de por medio, así esto devuelve un array. [Saldo:, 5]
+                let textoSeparado = labelSaldo.innerText.split(" ");
+                //cogemos la posición 1 del array (el número) y lo pasamos a entero
+                let saldoActual = parseInt(textoSeparado[1]);
+                //sumamos 1 y reescribimos
+                labelSaldo.innerText = "Saldo: " + (saldoActual + 1);
+            }
         } else if (datos.trim() == 2) {
             document.getElementById('notificacion_global').innerHTML = "Al alumno le quedaban -48 horas, su saldo no será devuelto";
         }
@@ -687,6 +682,7 @@ function cancelarClaseAdminCallback(datos, boton) {
             }
             boton.disabled = true;
         }
+        clasesDisponibles();
     } else {
         document.getElementById('notificacion_global').innerHTML = "Error al procesar la cancelación";
     }
