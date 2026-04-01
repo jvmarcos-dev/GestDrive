@@ -328,7 +328,7 @@ function reservarClase(datos) {
             clasesDisponibles();
             historialClases();
             inicio_alumno();
-        }else{
+        } else {
             seleccionarAlumno(idAlumnoSeleccionadoAdmin);
         }
     } else if (datos == -1) {
@@ -551,7 +551,7 @@ function seleccionarAlumno(idAlumno) {
             $.post("php/alumno/historial_reservas.php", {
                 elid: idAlumno
             }, historialAlumnoAdmin);
-            
+
             //cargamos las clases disponibles
             clasesDisponibles();
         });
@@ -638,12 +638,18 @@ function historialAlumnoAdmin(datos) {
 }
 
 function cancelarClaseAdmin(idReserva, boton) {
-    //Al llamar a esta funcion antes tendré que hacer un botón de confirmar y ya al confirmar entonces se cancele.
-    //En este botón tendré que mirar si ha cancelado a tiempo o tarde para variar el texto.
-    let url = "php/alumno/cancelar_clase.php";
+    //Luego en vez de este confirm lo que haré es un menú que aparezca encima de la pantalla
+    //Y puedas pulsar uno de los dos botones y en funcion de cual pulses se haga una cosa u otra
+    let decision = confirm("¿Quieres devolver el saldo de esta clase al alumno?\n\n- Si.\n- No.");
+
+    //convertimos el true/false en 1/0 para enviarlo a PHP
+    let valorDevolver = decision ? 1 : 0;
+
+    let url = "php/admin/cancelar_clase_admin.php";
 
     $.post(url, {
-        lareserva: idReserva
+        lareserva: idReserva,
+        devolver_saldo: valorDevolver
     }, function (datos) {
         // Llamamos manualmente a la función pasando ambos parámetros
         cancelarClaseAdminCallback(datos, boton);
@@ -657,7 +663,7 @@ function cancelarClaseAdminCallback(datos, boton) {
             document.getElementById('notificacion_global').innerHTML = "Clase cancelada correctamente";
             let labelSaldo = document.getElementById('saldo_alumno_admin');
             if (labelSaldo) {
-                
+
                 //ahora mismo está como un texto completo y necesito extraer cual es el numero del saldo. Por ejemplo Saldo: 5
                 //para ello separo el texto con el espacio que hay de por medio, así esto devuelve un array. [Saldo:, 5]
                 let textoSeparado = labelSaldo.innerText.split(" ");
