@@ -834,3 +834,23 @@ function listadoProfesoresCallback(datos) {
         document.getElementById('no_profesores').innerText = "No hay profesores registrados.";
     }
 }
+
+function cargarCalendario(){
+    $("#lacaja").load("vistas/admin/generar_calendario.html");
+}
+
+function generoClases() {
+    let url = "php/admin/generar_clases.php";
+
+    $.post(url, {
+    }, generoClasesCallback);
+}
+
+function generoClasesCallback(datos) {
+    let respuesta = datos.trim();
+    if (respuesta == 1) {
+        document.getElementById('notificacion_global').innerText = "Las clases han sido creadas correctamente"
+    } else {
+        document.getElementById('notificacion_global').innerText = "Las clases ya estaban generadas"
+    }
+}
