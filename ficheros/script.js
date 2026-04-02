@@ -764,3 +764,73 @@ function datosArchivo(datos) {
         document.getElementById('notificacion_global').innerHTML = "Se ha producido un error.";
     }
 }
+
+function cargarProfesores(){
+    $("#lacaja").load("vistas/admin/profesor.html", function () {
+        listadoProfesores();
+    });
+}
+
+function listadoProfesores() {
+    let url = "php/admin/lista_profesores.php";
+
+    $.get(url, listadoProfesoresCallback);
+}
+
+function listadoProfesoresCallback(datos) {
+    var table = document.getElementById("datos_profesores");
+    table.innerHTML = "";
+
+    if (datos != 0) {
+        // cabecera
+        var header = table.createTHead();
+        var fila = header.insertRow(0);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Foto</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>DNI</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Nombre</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Apellidos</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Email</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Telefono</b>";
+        fila.appendChild(th);
+
+        var th = document.createElement('th');
+        th.innerHTML = "<b>Num licencia</b>";
+        fila.appendChild(th);
+
+        // cuerpo
+        var body = table.createTBody();
+        for (var i = 0; i < datos.length; i++) {
+            //con esto convierto la primera letra en mayuscula y dejo todo lo demas igual 
+            // (slice coge desde el caracter 1 hasta el final para concatenar sin repetir la primera letra)
+            let nombreProfesor = datos[i].nombre.charAt(0).toUpperCase() + datos[i].nombre.slice(1);
+            let apellidosProfesor = datos[i].apellidos.charAt(0).toUpperCase() + datos[i].apellidos.slice(1);
+            var fila = body.insertRow(i);
+            fila.insertCell(0).innerHTML = datos[i].foto;
+            fila.insertCell(1).innerHTML = datos[i].dni;
+            fila.insertCell(2).innerHTML = nombreProfesor;
+            fila.insertCell(3).innerHTML = apellidosProfesor;
+            fila.insertCell(4).innerHTML = datos[i].email;
+            fila.insertCell(5).innerHTML = datos[i].telefono;
+            fila.insertCell(6).innerHTML = datos[i].licencia;
+        }
+    } else {
+        document.getElementById('no_profesores').innerText = "No hay profesores registrados.";
+    }
+}
