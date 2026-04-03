@@ -717,7 +717,16 @@ function datosTeorico(datos) {
 }
 
 function actualizarSaldo(operacion) {
-    let sumaSaldo = document.getElementById('recargar_saldo').value;
+    let inputSaldo = document.getElementById('recargar_saldo');
+    let sumaSaldo = inputSaldo.value;
+
+    //compruebo que introduce un numero al pulsar un boton y en caso de introducirlo que no sea negativo
+    if (sumaSaldo == "" || sumaSaldo <= 0) {
+        document.getElementById('notificacion_global').innerText = "Introduce una cantidad válida.";
+        inputSaldo.focus();
+        return;
+    }
+
     let url = "php/admin/modificar_saldo.php";
     $.post(url, {
         elid: idAlumnoSeleccionadoAdmin,
@@ -737,7 +746,7 @@ function datosSaldo(datos) {
     }
 
     document.getElementById('recargar_saldo').value = "";
-    document.getElementById('recargar_saldo').focus;
+    document.getElementById('recargar_saldo').focus();
 }
 
 function archivarAlumno() {
