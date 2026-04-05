@@ -916,7 +916,7 @@ function limpio_pantalla(estado) {
 		// oculto estrella
 		document.getElementById('estrella').style.visibility = 'hidden';
 		// habilito botones
-		document.getElementById('boton1').disabled = false;
+		document.getElementById('elboton').disabled = false;
 
 		// no hay error
 		// dejo todo en situación inicial
@@ -931,3 +931,17 @@ function limpio_pantalla(estado) {
 			document.formulario1.dni.select();
 		}
 	}
+
+function visualizo(id_input, id_imagen) {
+    let input = document.getElementById(id_input);
+    let imagen_preview = document.getElementById(id_imagen);
+
+    // compruebo si hay un archivo seleccionado. Esto lo hago con la primera condicion del if que devolverá true.
+    // la segunda condicion es porque html trata el tipo file como un array, ya que existe la posibilidad de añadir muchas imagenes.
+    // por tanto tengo que comprobar que en la primera posicion (y en este caso unica) hay algo.
+
+    if (input.files && input.files[0]) {
+        //creo una url temporal que muestro en el formulario con la imagen nueva, es decir, muestro la imagen nueva.
+        imagen_preview.src = URL.createObjectURL(input.files[0]);
+    }
+}

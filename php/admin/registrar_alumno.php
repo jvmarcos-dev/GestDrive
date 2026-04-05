@@ -1,6 +1,8 @@
 <?php
 require('../../ficheros/conexion.php');
 
+mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_OFF);
+
 $dni=strtoupper($_POST['dni']);
 $nombre=ucwords(strtolower($_POST['nombre']));
 $apellidos=ucwords(strtolower($_POST['apellidos']));
@@ -10,9 +12,32 @@ $nacimiento=$_POST['fecha_nac'];
 $saldo=$_POST['saldo_inicial'];
 $teorico=strtolower($_POST['estado_teorico']);
 
-$consulta_usuario="INSERT INTO usuarios (dni, nombre, apellidos, email, password, telefono, tipo)
-VALUES ('$dni','$nombre','$apellidos','$email','$dni','$telefono','alumno')";
-$resultado_usuario = mysqli_query($conexion, $consulta_usuario);
+//imagen predeterminada
+$foto = 'imagenes/usuarios/default.png';
+//esta variable la utilizaré para comprobar si se ha asignado una foto a guardar.
+//de esta forma en caso de que se produzca un error, la imagen no se guardará en la carpeta correspondiente sin guardarse en la bbdd y así evito
+//que se utilice espacio de forma innecesaria y una incosistencia de datos, ya que tendría una imagen con ese mismo nombre ya guardada.
+$hay_foto=false;
+
+//compruebo que existe la imagen. Con $_FILES['imagen']['error'] == 0 lo que hago es ver si se produce algun error:
+//0 significa que no ha habido ningun error. Es importante ponerlo porque la imagen no es obligatoria y se podría mantener la predeterminada
+//en caso de mantener esta, daría un error de tipo 4 (no se cumple la condicion y por tanto no entra en el if) el cual significa que no se ha seleccionado archivo
+
+if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
+    //extraemos la extension de la imagen
+    $extension = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
+    //renombramos la imagen nueva
+    $nombre_archivo = $dni . '.' . $extension;
+    //asignamos la ruta en la que se guardará la imagen
+    $ruta_destino = '../../imagenes/usuarios/' . $nombre_archivo;
+    //si no se da ningun fallo, cambiamos la imagen por defecto a la real
+    $foto = 'imagenes/usuarios/'.$nombre_archivo;
+    $hay_foto=true;
+}
+
+$consulta_usuario="INSERT INTO usuarios (dni, nombre, apellidos, email, password, telefono, tipo, foto)
+VALUES ('$dni','$nombre','$apellidos','$email','$dni','$telefono','alumno', '$foto')";
+$resultado_usuario = @mysqli_query($conexion, $consulta_usuario);
 
 //si en la primera consulta no hubo ningun error
 if($resultado_usuario){
@@ -21,16 +46,25 @@ if($resultado_usuario){
 
     $consulta_alumno="INSERT INTO alumnos (id_usuario, fecha_nacimiento, saldo_clases, estado_teorica)
     VALUES ($id_recien_creado, '$nacimiento', $saldo, '$teorico')";
-    $resultado_alumno = mysqli_query($conexion, $consulta_alumno);
+    $resultado_alumno = @mysqli_query($conexion, $consulta_alumno);
 }
 
-if ($resultado_alumno) {
+if (mysqli_errno($conexion)==0) {
+    if ($hay_foto) {
+        //muevo la imagen a la carpeta correspondiente solo en caso de no producirse ningun error
+        //php por defecto antes de guardar el archivo, lo ha movido a una carpeta temporal.
+        //por tanto, con tmp_name recuperamos donde está guardado el archivo en esa carpeta temporal
+        //y lo movemos a la carpeta correspondiente.
+        //de esta forma esta linea se podria traducir como mover el archivo 'imagen' desde 'la carpeta temporal (tmp_name)
+        //hacia la ruta de destino.
+        move_uploaded_file($_FILES['imagen']['tmp_name'], $ruta_destino);
+    }
     echo 1;
 } else {
     // se ha producido un error
     $numerror=mysqli_errno($conexion); 
-	//$descrerror=mysqli_error($conexion); 
-	echo $numerror;
+    //$descrerror=mysqli_error($conexion); 
+    echo $numerror;
 }
 
 // cerramos la conexión 

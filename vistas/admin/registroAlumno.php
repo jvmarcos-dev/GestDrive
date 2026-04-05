@@ -48,6 +48,16 @@
 						<input class="elinput" id="fecha_nac" name="fecha_nac" type="date" max="<?php echo $fecha_maxima; ?>" required>
 					</div>
 
+					<div style="text-align: center; margin-bottom: 15px;">
+						<img id="img1" src="imagenes/usuarios/default.png">
+					</div>
+
+					<div class="form-group">
+						<label class="titulo" for="imagen">Imagen:</label>
+						<input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png, image/jpg" 
+						onchange="visualizo('imagen', 'img1')">
+					</div>
+
 					<div class="form-group">
 						<label class="titulo" for="saldo_inicial">Saldo de clases inicial:</label>
 						<input class="elinput" id="saldo_inicial" name="saldo_inicial" type="number" value="0" min="0" required>
