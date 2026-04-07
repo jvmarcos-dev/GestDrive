@@ -520,7 +520,7 @@ function busquedaAlumnos(datos) {
             // al hacer click en el, iremos a la funcion seleccionarAlumno de este alumno que estamos llamando
             // y obtendremos todos sus datos en una nueva pantalla.
             contenedor.innerHTML += "<div style='cursor:pointer; padding:5px; border-bottom:1px solid #ccc;' onclick='seleccionarAlumno(" + datos[i].id + ")'>" +
-                imagen + " " + nombre + " " + apellidos + "</div>";
+                "<img src='"+imagen + "'>" + " " + nombre + " " + apellidos + "</div>";
         }
     } else {
         contenedor.innerHTML = "<div style='padding:5px;'>No se han encontrado alumnos.</div>";
