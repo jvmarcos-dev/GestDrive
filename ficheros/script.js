@@ -831,7 +831,7 @@ function listadoProfesoresCallback(datos) {
             let nombreProfesor = datos[i].nombre.charAt(0).toUpperCase() + datos[i].nombre.slice(1);
             let apellidosProfesor = datos[i].apellidos.charAt(0).toUpperCase() + datos[i].apellidos.slice(1);
             var fila = body.insertRow(i);
-            fila.insertCell(0).innerHTML = datos[i].foto;
+            fila.insertCell(0).innerHTML = "<img src=" + datos[i].foto + ">";
             fila.insertCell(1).innerHTML = datos[i].dni;
             fila.insertCell(2).innerHTML = nombreProfesor;
             fila.insertCell(3).innerHTML = apellidosProfesor;
