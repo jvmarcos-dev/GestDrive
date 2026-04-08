@@ -901,34 +901,36 @@ function registroAlumno(){
 					document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='green' size='4'>EXITO!! en el ALTA</font></b>";
 					// limpio cajas formulario
 					document.formulario1.reset();
-					limpio_pantalla(0);
+					limpio_pantalla(0, 'formulario1');
 				} else {
 					//aqui podemos tratar todos los tipos de error que se produzcan
 					document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='red' size='4'>ERROR ALTA usuario ("+datos+")</font></b>";
-					limpio_pantalla(1);
+					limpio_pantalla(1, 'formulario1');
 				}
 				// Habilito botón de realizar alta
 				document.getElementById('elboton').disabled = false;
 			});
 	}
 
-function limpio_pantalla(estado) {
+function limpio_pantalla(estado, id_formulario) {
 		// oculto estrella
 		document.getElementById('estrella').style.visibility = 'hidden';
 		// habilito botones
 		document.getElementById('elboton').disabled = false;
 
+        let form=document.getElementById(id_formulario);
+
 		// no hay error
 		// dejo todo en situación inicial
 		if (estado == 0) {
 			// limpio cajas
-			document.formulario1.reset();
-			document.formulario1.dni.select();
+			form.reset();
+			form.dni.select();
 		}
 		// hay error	
 		else {
 			// selecciono el contenido de la caja de texto codc
-			document.formulario1.dni.select();
+			form.dni.select();
 		}
 	}
 
@@ -945,3 +947,51 @@ function visualizo(id_input, id_imagen) {
         imagen_preview.src = URL.createObjectURL(input.files[0]);
     }
 }
+
+function nuevoProfesor(){
+    $("#lacaja").load("vistas/admin/registroProfesor.html");
+}
+
+function registroProfesor(){
+		// borro div mensaje
+		document.getElementById('notificacion_global').innerHTML = ""
+		// visualizo la estrellita
+		document.getElementById('estrella').style.visibility = 'visible';
+		// inhabilito botón de realizar alta
+		document.getElementById('elboton').disabled = true;
+
+		//RECUPERO -> los datos del formulario
+		let los_datos_f = new FormData(document.getElementById("formulario2"));
+
+		//llamada AJAX
+		$.ajax({
+			url: "php/admin/registrar_profesor.php", //script php que quiero ejecutar
+			type: "POST", //forma en la que voy a pasar la información al formulario -> Metodo de envio de informacion, en este caso es POST
+			dataType: "HTML", //el formato de los datos que envía el servidor (siempre JSON, esta es una excepcion)
+			data: los_datos_f, //Datos que le paso al script
+			cache: false,
+			contentType: false,
+			processData: false
+		}).done(function(datos)
+			// esta función es el callback()
+			// y en el parámetro "datos" tendré toda la información que me devuelva el script php (si devolviese ALGO...)
+			// es obligatorio definir un callback en una funcion asincrona utilizando ajax
+			{
+				$("#estrella").css("visibility", "hidden");
+				// // document.getElementById('estrella').style.visibility='hidden';
+				// trato mensaje devuelto por el servidor
+                let respuesta = datos.trim();
+				if (respuesta == 1) {
+					document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='green' size='4'>EXITO!! en el ALTA</font></b>";
+					// limpio cajas formulario
+					document.formulario2.reset();
+					limpio_pantalla(0, 'formulario2');
+				} else {
+					//aqui podemos tratar todos los tipos de error que se produzcan
+					document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='red' size='4'>ERROR ALTA usuario ("+datos+")</font></b>";
+					limpio_pantalla(1, 'formulario2');
+				}
+				// Habilito botón de realizar alta
+				document.getElementById('elboton').disabled = false;
+			});
+	}

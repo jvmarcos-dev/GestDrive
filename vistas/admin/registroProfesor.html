@@ -1,0 +1,64 @@
+<form id="formulario2" name="formulario2" ENCTYPE="multipart/form-data"
+					ACTION="PHP_Alta_Usuario.php" METHOD="POST" TARGET="mensaje" autocomplete="off"
+					onsubmit="registroProfesor(event); return false;">
+					<p class="leyenda">REGISTRAR PROFESOR</p><br>
+					<div class="form-group">
+						<label class="titulo" for="dni">DNI / NIE:</label>
+						<input class="elinput" id="dni" name="dni" type="text" pattern="([0-9]{8}[A-Za-z])|([XYZxyz][0-9]{7}[A-Za-z])"
+                            title="Introduce 8 números y 1 letra (DNI) o Letra X,Y,Z, 7 números y 1 letra (NIE)"
+							minlength="9" maxlength="9"
+							style="text-transform: uppercase;" required autofocus
+							placeholder="Ej: 11267905K">
+					</div>
+
+					<div class="form-group">
+						<label class="titulo" for="nombre">Nombre:</label>
+						<input class="elinput" id="nombre" name="nombre" type="text" minlength="1" maxlength="60"
+						style="text-transform: capitalize;" required
+						placeholder="Ej: Juan Valentín">
+					</div>
+
+                    <div class="form-group">
+						<label class="titulo" for="apellidos">Apellidos:</label>
+						<input class="elinput" id="apellidos" name="apellidos" type="text" minlength="1" maxlength="100"
+						style="text-transform: capitalize;" required
+						placeholder="Ej: Marcos Argandoña">
+					</div>
+
+                    <div class="form-group">
+						<label class="titulo" for="email">Email:</label>
+						<input class="elinput" id="email" name="email" type="email" minlength="1" maxlength="100" required
+							placeholder="Ej: jm7023333@gmail.com">
+					</div>
+
+                    <div class="form-group">
+						<label class="titulo" for="telefono">Telefono:</label>
+						<input class="elinput" id="telefono" name="telefono" type="tel" minlength="1" maxlength="15" pattern="[0-9]{9,15}"
+                        title="Introduce entre 9 y 15 números" required
+						placeholder="Ej: 691087441">
+					</div>
+
+					<div style="text-align: center; margin-bottom: 15px;">
+						<img id="img2" src="imagenes/usuarios/default.png">
+					</div>
+
+					<div class="form-group">
+						<label class="titulo" for="imagen2">Imagen:</label>
+						<input type="file" id="imagen2" name="imagen2" accept="image/jpeg, image/png, image/jpg" 
+						onchange="visualizo('imagen2', 'img2')">
+					</div>
+
+					<!--Para la licencia he usado un formato inventado el cual debe ser LIC-AÑO-CODIGO-->
+					<div class="form-group">
+						<label class="titulo" for="licencia">Número de licencia:</label>
+						<input class="elinput" id="licencia" name="licencia" type="text" pattern="LIC-\d{4}-[A-Z0-9]{3}"
+                            title="El formato debe tener exactamente 12 caracteres: LIC-AÑO-CÓDIGO"
+							minlength="12" maxlength="12"
+							style="text-transform: uppercase;" required
+							placeholder="Ej: LIC-2025-H11">
+					</div>
+
+					<div id="boton_confirmar">
+						<button id="elboton" form="formulario2" type="submit">Realizar Alta</button>
+					</div>
+</form>
