@@ -11,13 +11,27 @@ let timeoutBusqueda;
 // ============================================================
 
 function inicio() {
-    $("#lacaja").load("vistas/login.html");
+    $("#lacaja").load("vistas/general.html");
 }
 
 
 // ============================================================
 // LOGIN
 // ============================================================
+
+function cargarPanel() {
+    $.post("php/login/comprobar_sesion.php", function (datos) {
+        if (datos == 0) {
+            //si no hay sesión, cargamos la vista del formulario de login
+            $("#lacaja").load("vistas/login.html");
+        } else {
+            //si hay sesión, redirigimos a la vista correspondiente. Datos siempre tiene el tipo de usuario por lo que no hay que especificar
+            $("#lacaja").load("vistas/" + datos + "/dashboard.php", function () {
+            window["inicio_" + datos]();
+        });
+        }
+    });
+}
 
 function envio_datos() {
     //VALIDACION
@@ -37,20 +51,23 @@ function envio_datos() {
         document.getElementById('info').innerHTML = "";
 
         // estos 2 valores habría que pasarlos por un filtro de seguridad.
-        var elusuario = document.getElementById('dni').value;
-        var lacontasenia = document.getElementById('password').value;
+        let elusuario = document.getElementById('dni').value;
+        let lacontasenia = document.getElementById('password').value;
+
+        // tenemos que comprobar si el check está marcado
+        let elcheck = 0;
+        if (document.getElementById('recordar').checked) {
+            elcheck = 1;
+        }
 
         var url = "php/login/verificacion.php";
         // hago la llamada AJAX
         // utilizamos método "$.post" de jQuery
 
-        // aL ENVIAR DATOS TIENES QUE PASAR 3 COSAS -> LA url A LA QUE QUIERES PASARLO, LOS PARÁMETROS QUE QUIERES PASAR Y POR ULTIMO EL CALLBACK
-        //Un callback es una funcion que atiende la finalización de un script en la función
-        //Se devuelve cuando termina de ejecutarse el script
-        // solo se puede poner el nombre de la funcion del callback, no los parametros de entrada
         $.post(url, {
             eldni: elusuario.trim(),
-            tcontrasenia: lacontasenia.trim()
+            tcontrasenia: lacontasenia.trim(),
+            marcado:elcheck
         }, llegadaDatos1);
     }
 }
@@ -72,12 +89,21 @@ function llegadaDatos1(datos) {
         tipoUsuario = datos.usuario_tipo;
 
         //cargo la vista correspondiente con su onload correspondiente.
-        $("#lacaja").load("vistas/" + datos.usuario_tipo + "/dashboard.html", function () {
+        $("#lacaja").load("vistas/" + datos.usuario_tipo + "/dashboard.php", function () {
             window["inicio_" + datos.usuario_tipo]();
         });
     } else {
         document.getElementById('info').innerHTML = "<font color='red'>Login incorrecto</font>";
     }
+}
+
+function cerrarSesion() {
+    $.post("php/login/logout.php", function() {
+        idUsuario = null;
+        tipoUsuario = null;
+        $("#lacaja").load("vistas/general.html");
+        document.getElementById('notificacion_global').innerHTML = "Has cerrado sesión correctamente.";
+    });
 }
 
 
@@ -520,7 +546,7 @@ function busquedaAlumnos(datos) {
             // al hacer click en el, iremos a la funcion seleccionarAlumno de este alumno que estamos llamando
             // y obtendremos todos sus datos en una nueva pantalla.
             contenedor.innerHTML += "<div style='cursor:pointer; padding:5px; border-bottom:1px solid #ccc;' onclick='seleccionarAlumno(" + datos[i].id + ")'>" +
-                "<img src='"+imagen + "'>" + " " + nombre + " " + apellidos + "</div>";
+                "<img src='" + imagen + "'>" + " " + nombre + " " + apellidos + "</div>";
         }
     } else {
         contenedor.innerHTML = "<div style='padding:5px;'>No se han encontrado alumnos.</div>";
@@ -774,7 +800,7 @@ function datosArchivo(datos) {
     }
 }
 
-function cargarProfesores(){
+function cargarProfesores() {
     $("#lacaja").load("vistas/admin/profesor.html", function () {
         listadoProfesores();
     });
@@ -844,15 +870,14 @@ function listadoProfesoresCallback(datos) {
     }
 }
 
-function cargarCalendario(){
+function cargarCalendario() {
     $("#lacaja").load("vistas/admin/generar_calendario.html");
 }
 
 function generoClases() {
     let url = "php/admin/generar_clases.php";
 
-    $.post(url, {
-    }, generoClasesCallback);
+    $.post(url, {}, generoClasesCallback);
 }
 
 function generoClasesCallback(datos) {
@@ -864,75 +889,75 @@ function generoClasesCallback(datos) {
     }
 }
 
-function nuevoAlumno(){
+function nuevoAlumno() {
     $("#lacaja").load("vistas/admin/registroAlumno.php");
 }
 
-function registroAlumno(){
-		// borro div mensaje
-		document.getElementById('notificacion_global').innerHTML = ""
-		// visualizo la estrellita
-		document.getElementById('estrella').style.visibility = 'visible';
-		// inhabilito botón de realizar alta
-		document.getElementById('elboton').disabled = true;
+function registroAlumno() {
+    // borro div mensaje
+    document.getElementById('notificacion_global').innerHTML = ""
+    // visualizo la estrellita
+    document.getElementById('estrella').style.visibility = 'visible';
+    // inhabilito botón de realizar alta
+    document.getElementById('elboton').disabled = true;
 
-		//RECUPERO -> los datos del formulario
-		let los_datos_f = new FormData(document.getElementById("formulario1"));
+    //RECUPERO -> los datos del formulario
+    let los_datos_f = new FormData(document.getElementById("formulario1"));
 
-		//llamada AJAX
-		$.ajax({
-			url: "php/admin/registrar_alumno.php", //script php que quiero ejecutar
-			type: "POST", //forma en la que voy a pasar la información al formulario -> Metodo de envio de informacion, en este caso es POST
-			dataType: "HTML", //el formato de los datos que envía el servidor (siempre JSON, esta es una excepcion)
-			data: los_datos_f, //Datos que le paso al script
-			cache: false,
-			contentType: false,
-			processData: false
-		}).done(function(datos)
-			// esta función es el callback()
-			// y en el parámetro "datos" tendré toda la información que me devuelva el script php (si devolviese ALGO...)
-			// es obligatorio definir un callback en una funcion asincrona utilizando ajax
-			{
-				$("#estrella").css("visibility", "hidden");
-				// // document.getElementById('estrella').style.visibility='hidden';
-				// trato mensaje devuelto por el servidor
-                let respuesta = datos.trim();
-				if (respuesta == 1) {
-					document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='green' size='4'>EXITO!! en el ALTA</font></b>";
-					// limpio cajas formulario
-					document.formulario1.reset();
-					limpio_pantalla(0, 'formulario1');
-				} else {
-					//aqui podemos tratar todos los tipos de error que se produzcan
-					document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='red' size='4'>ERROR ALTA usuario ("+datos+")</font></b>";
-					limpio_pantalla(1, 'formulario1');
-				}
-				// Habilito botón de realizar alta
-				document.getElementById('elboton').disabled = false;
-			});
-	}
+    //llamada AJAX
+    $.ajax({
+        url: "php/admin/registrar_alumno.php", //script php que quiero ejecutar
+        type: "POST", //forma en la que voy a pasar la información al formulario -> Metodo de envio de informacion, en este caso es POST
+        dataType: "HTML", //el formato de los datos que envía el servidor (siempre JSON, esta es una excepcion)
+        data: los_datos_f, //Datos que le paso al script
+        cache: false,
+        contentType: false,
+        processData: false
+    }).done(function (datos)
+        // esta función es el callback()
+        // y en el parámetro "datos" tendré toda la información que me devuelva el script php (si devolviese ALGO...)
+        // es obligatorio definir un callback en una funcion asincrona utilizando ajax
+        {
+            $("#estrella").css("visibility", "hidden");
+            // // document.getElementById('estrella').style.visibility='hidden';
+            // trato mensaje devuelto por el servidor
+            let respuesta = datos.trim();
+            if (respuesta == 1) {
+                document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='green' size='4'>EXITO!! en el ALTA</font></b>";
+                // limpio cajas formulario
+                document.formulario1.reset();
+                limpio_pantalla(0, 'formulario1');
+            } else {
+                //aqui podemos tratar todos los tipos de error que se produzcan
+                document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='red' size='4'>ERROR ALTA usuario (" + datos + ")</font></b>";
+                limpio_pantalla(1, 'formulario1');
+            }
+            // Habilito botón de realizar alta
+            document.getElementById('elboton').disabled = false;
+        });
+}
 
 function limpio_pantalla(estado, id_formulario) {
-		// oculto estrella
-		document.getElementById('estrella').style.visibility = 'hidden';
-		// habilito botones
-		document.getElementById('elboton').disabled = false;
+    // oculto estrella
+    document.getElementById('estrella').style.visibility = 'hidden';
+    // habilito botones
+    document.getElementById('elboton').disabled = false;
 
-        let form=document.getElementById(id_formulario);
+    let form = document.getElementById(id_formulario);
 
-		// no hay error
-		// dejo todo en situación inicial
-		if (estado == 0) {
-			// limpio cajas
-			form.reset();
-			form.dni.select();
-		}
-		// hay error	
-		else {
-			// selecciono el contenido de la caja de texto codc
-			form.dni.select();
-		}
-	}
+    // no hay error
+    // dejo todo en situación inicial
+    if (estado == 0) {
+        // limpio cajas
+        form.reset();
+        form.dni.select();
+    }
+    // hay error	
+    else {
+        // selecciono el contenido de la caja de texto codc
+        form.dni.select();
+    }
+}
 
 function visualizo(id_input, id_imagen) {
     let input = document.getElementById(id_input);
@@ -948,50 +973,50 @@ function visualizo(id_input, id_imagen) {
     }
 }
 
-function nuevoProfesor(){
+function nuevoProfesor() {
     $("#lacaja").load("vistas/admin/registroProfesor.html");
 }
 
-function registroProfesor(){
-		// borro div mensaje
-		document.getElementById('notificacion_global').innerHTML = ""
-		// visualizo la estrellita
-		document.getElementById('estrella').style.visibility = 'visible';
-		// inhabilito botón de realizar alta
-		document.getElementById('elboton').disabled = true;
+function registroProfesor() {
+    // borro div mensaje
+    document.getElementById('notificacion_global').innerHTML = ""
+    // visualizo la estrellita
+    document.getElementById('estrella').style.visibility = 'visible';
+    // inhabilito botón de realizar alta
+    document.getElementById('elboton').disabled = true;
 
-		//RECUPERO -> los datos del formulario
-		let los_datos_f = new FormData(document.getElementById("formulario2"));
+    //RECUPERO -> los datos del formulario
+    let los_datos_f = new FormData(document.getElementById("formulario2"));
 
-		//llamada AJAX
-		$.ajax({
-			url: "php/admin/registrar_profesor.php", //script php que quiero ejecutar
-			type: "POST", //forma en la que voy a pasar la información al formulario -> Metodo de envio de informacion, en este caso es POST
-			dataType: "HTML", //el formato de los datos que envía el servidor (siempre JSON, esta es una excepcion)
-			data: los_datos_f, //Datos que le paso al script
-			cache: false,
-			contentType: false,
-			processData: false
-		}).done(function(datos)
-			// esta función es el callback()
-			// y en el parámetro "datos" tendré toda la información que me devuelva el script php (si devolviese ALGO...)
-			// es obligatorio definir un callback en una funcion asincrona utilizando ajax
-			{
-				$("#estrella").css("visibility", "hidden");
-				// // document.getElementById('estrella').style.visibility='hidden';
-				// trato mensaje devuelto por el servidor
-                let respuesta = datos.trim();
-				if (respuesta == 1) {
-					document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='green' size='4'>EXITO!! en el ALTA</font></b>";
-					// limpio cajas formulario
-					document.formulario2.reset();
-					limpio_pantalla(0, 'formulario2');
-				} else {
-					//aqui podemos tratar todos los tipos de error que se produzcan
-					document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='red' size='4'>ERROR ALTA usuario ("+datos+")</font></b>";
-					limpio_pantalla(1, 'formulario2');
-				}
-				// Habilito botón de realizar alta
-				document.getElementById('elboton').disabled = false;
-			});
-	}
+    //llamada AJAX
+    $.ajax({
+        url: "php/admin/registrar_profesor.php", //script php que quiero ejecutar
+        type: "POST", //forma en la que voy a pasar la información al formulario -> Metodo de envio de informacion, en este caso es POST
+        dataType: "HTML", //el formato de los datos que envía el servidor (siempre JSON, esta es una excepcion)
+        data: los_datos_f, //Datos que le paso al script
+        cache: false,
+        contentType: false,
+        processData: false
+    }).done(function (datos)
+        // esta función es el callback()
+        // y en el parámetro "datos" tendré toda la información que me devuelva el script php (si devolviese ALGO...)
+        // es obligatorio definir un callback en una funcion asincrona utilizando ajax
+        {
+            $("#estrella").css("visibility", "hidden");
+            // // document.getElementById('estrella').style.visibility='hidden';
+            // trato mensaje devuelto por el servidor
+            let respuesta = datos.trim();
+            if (respuesta == 1) {
+                document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='green' size='4'>EXITO!! en el ALTA</font></b>";
+                // limpio cajas formulario
+                document.formulario2.reset();
+                limpio_pantalla(0, 'formulario2');
+            } else {
+                //aqui podemos tratar todos los tipos de error que se produzcan
+                document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='red' size='4'>ERROR ALTA usuario (" + datos + ")</font></b>";
+                limpio_pantalla(1, 'formulario2');
+            }
+            // Habilito botón de realizar alta
+            document.getElementById('elboton').disabled = false;
+        });
+}
