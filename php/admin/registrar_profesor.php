@@ -17,6 +17,9 @@ $email=strtolower($_POST['email']);
 $telefono=$_POST['telefono'];
 $licencia=strtoupper($_POST['licencia']);
 
+//A modo de contraseña inicial usaré el DNI.
+$contrasenia_segura=password_hash($dni, PASSWORD_BCRYPT);
+
 //imagen predeterminada
 $foto = 'imagenes/usuarios/default.png';
 //esta variable la utilizaré para comprobar si se ha asignado una foto a guardar.
@@ -41,7 +44,7 @@ if (isset($_FILES['imagen2']) && $_FILES['imagen2']['error'] == 0) {
 }
 
 $consulta_usuario="INSERT INTO usuarios (dni, nombre, apellidos, email, password, telefono, tipo, foto)
-VALUES ('$dni','$nombre','$apellidos','$email','$dni','$telefono','profesor', '$foto')";
+VALUES ('$dni','$nombre','$apellidos','$email','$contrasenia_segura','$telefono','profesor', '$foto')";
 $resultado_usuario = @mysqli_query($conexion, $consulta_usuario);
 
 //si en la primera consulta no hubo ningun error

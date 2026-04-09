@@ -19,6 +19,9 @@ $nacimiento=$_POST['fecha_nac'];
 $saldo=$_POST['saldo_inicial'];
 $teorico=strtolower($_POST['estado_teorico']);
 
+//A modo de contraseña inicial usaré el DNI que luego el alumno podrá cambiarlo desde el panel de alumno.
+$contrasenia_segura=password_hash($dni, PASSWORD_BCRYPT);
+
 //imagen predeterminada
 $foto = 'imagenes/usuarios/default.png';
 //esta variable la utilizaré para comprobar si se ha asignado una foto a guardar.
@@ -43,7 +46,7 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
 }
 
 $consulta_usuario="INSERT INTO usuarios (dni, nombre, apellidos, email, password, telefono, tipo, foto)
-VALUES ('$dni','$nombre','$apellidos','$email','$dni','$telefono','alumno', '$foto')";
+VALUES ('$dni','$nombre','$apellidos','$email','$contrasenia_segura','$telefono','alumno', '$foto')";
 $resultado_usuario = @mysqli_query($conexion, $consulta_usuario);
 
 //si en la primera consulta no hubo ningun error
