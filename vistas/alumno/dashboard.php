@@ -6,7 +6,6 @@
         ?>
         <button onclick="cerrarSesion()">Logout</button>
     </div>
-    <img id='correo' src="imagenes/imagencorreo.jpg">
 </div>
 
 <div class="contenedor_alumno">

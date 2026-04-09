@@ -1,6 +1,8 @@
 <?php
 require('../../ficheros/conexion.php');
 
+session_start();
+
 $reserva = $_POST['lareserva'];
 
 mysqli_query($conexion, "CALL CANCELAR($reserva, @salida)");

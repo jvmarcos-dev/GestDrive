@@ -1,12 +1,25 @@
 <?php
 require('../../ficheros/conexion.php');
 
+session_start();
+
 // prueba directa
 //$dni="00000000A";
 //$lacontrasenia="1234";
 
 // aquí habría que poner los filtros de seguridad
-$id = $_POST['elid'];
+
+//Como este archivo luego lo utiliza el administrador para entrar en la ficha del alumno, tengo que hacer este if
+$tipo = $_SESSION['usuario_tipo'];
+
+
+if ($tipo == 'admin') {
+    //si es admin, cogemos el ID por POST
+    $id = $_POST['elid'];
+} else {
+    //si es alumno, usamos el id de session
+    $id = $_SESSION['idusuario'];
+}
 
 $consulta = "SELECT nombre, apellidos, saldo_clases, estado_teorica, foto, dni, email, telefono
 FROM usuarios INNER JOIN alumnos

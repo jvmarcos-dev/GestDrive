@@ -7,6 +7,8 @@ require('../../ficheros/conexion.php');
 
 // aquí habría que poner los filtros de seguridad
 
+session_start();
+
 $consulta = "SELECT CLASES_PRACTICAS.ID AS id_clase, FECHA_HORA, NOMBRE, APELLIDOS
 FROM CLASES_PRACTICAS INNER JOIN USUARIOS
 ON CLASES_PRACTICAS.ID_PROFESOR=USUARIOS.ID

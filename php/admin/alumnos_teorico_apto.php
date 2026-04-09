@@ -1,6 +1,8 @@
 <?php
 require('../../ficheros/conexion.php');
 
+session_start();
+
 $consulta = "SELECT COUNT(*) AS total
 FROM ALUMNOS
 WHERE ESTADO_TEORICA='apto'";

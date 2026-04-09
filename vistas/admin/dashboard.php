@@ -1,3 +1,13 @@
+<div class="contenedor3">
+    <div id="logout">
+        <?php
+        session_start(); //
+        echo "(" . $_SESSION['idusuario'] . ") ";
+        ?>
+        <button onclick="cerrarSesion()">Logout</button>
+    </div>
+</div>
+
 <div class="contenedor_alumno">
     <div id="cantidad_alumnos">
         <label id="texto_alumnosActivos">Alumnos Activos</label>

@@ -1,7 +1,9 @@
 <?php
 require('../../ficheros/conexion.php');
 
-$id = $_POST['elid'];
+session_start();
+
+$id = $_SESSION['idusuario'];
 $clase = $_POST['laclase'];
 
 // Llamamos al procedimiento con una variable de sesión MySQL para la salida

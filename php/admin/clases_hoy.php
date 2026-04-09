@@ -1,6 +1,14 @@
 <?php
 require('../../ficheros/conexion.php');
 
+session_start();
+
+//esto es una comprobacion de seguridad para saber que quien ejecuta esto es un administrador real.
+//si no, se podria desde la propia consola ejecutar la funcion js que llama a este script php pasando cualquier id como parametro
+if (!isset($_SESSION['usuario_tipo']) || $_SESSION['usuario_tipo'] != 'admin') {
+    die();
+}
+
 // Date transforma la fecha y hora que están en una unica columna por solo la fecha
 // Curdate() devuelve la fecha actual del sistema en que se ejecuta la base de datos. Por tanto, estoy solicitando
 // que la clase ocurra hoy

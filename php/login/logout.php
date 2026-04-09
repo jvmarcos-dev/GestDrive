@@ -3,11 +3,18 @@
 	
 	// esto no hace falta
 	// recordar como se borran variables de sesión -> sin cerrar la sesión
-	unset($_SESSION['idusuario']);
-	unset($_SESSION['usuario_tipo']);
+
+	//al hacerlo asi la cookie por algun motivo no se borraba si en alguna de las pruebas habia marcado el recordar aunque haya hecho logout mas tarde
+	// unset($_SESSION['idusuario']);
+	// unset($_SESSION['usuario_tipo']);
 	
-	session_destroy();
+	// session_destroy();
+
+	$_SESSION = array(); 
+    if (isset($_COOKIE[session_name()])) {
+        setcookie(session_name(), '', time() - 3600, '/');
+    }
+    session_destroy();
+
 	
-	// esto no hace falta -> por qué? -> porque la cookie se borrará sola cuando se cierre el navegador
-	//setcookie('PHPSESSID', $_COOKIE['PHPSESSID'], time()-10);
 ?>

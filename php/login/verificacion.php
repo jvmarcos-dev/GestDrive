@@ -23,7 +23,7 @@ if ($nregistros == 0) {
 } else {
 	$fila = mysqli_fetch_assoc($resultado);
 	//creo las variables de sesion
-	$_SESSION['idusuario'] = $fila['dni'];
+	$_SESSION['idusuario'] = $fila['id'];
 	$_SESSION['usuario_tipo'] = $fila['tipo'];
 
 	if ($lacaja) {

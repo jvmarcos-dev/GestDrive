@@ -1,12 +1,14 @@
 <?php
 require('../../ficheros/conexion.php');
 
+session_start();
+
 // prueba directa
 //$dni="00000000A";
 //$lacontrasenia="1234";
 
 // aquí habría que poner los filtros de seguridad
-$id = $_POST['elid'];
+$id = $_SESSION['idusuario'];
 
 $consulta = "SELECT CLASES_PRACTICAS.ID AS id_clase, FECHA_HORA, NOMBRE, APELLIDOS
 FROM RESERVAS 

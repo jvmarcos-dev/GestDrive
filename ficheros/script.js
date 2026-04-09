@@ -1,7 +1,6 @@
 // ============================================================
 // VARIABLES GLOBALES
 // ============================================================
-let idUsuario;
 let tipoUsuario;
 let idAlumnoSeleccionadoAdmin;
 
@@ -25,6 +24,7 @@ function cargarPanel() {
             //si no hay sesión, cargamos la vista del formulario de login
             $("#lacaja").load("vistas/login.html");
         } else {
+            tipoUsuario = datos.trim();
             //si hay sesión, redirigimos a la vista correspondiente. Datos siempre tiene el tipo de usuario por lo que no hay que especificar
             $("#lacaja").load("vistas/" + datos + "/dashboard.php", function () {
             window["inicio_" + datos]();
@@ -85,9 +85,8 @@ function llegadaDatos1(datos) {
     // usuario_tipo. El json seria algo como { "usuario_tipo": "alumno", "usuario_id": "5" }
 
     if (datos.usuario_tipo) {
-        idUsuario = datos.usuario_id;
-        tipoUsuario = datos.usuario_tipo;
 
+        tipoUsuario = datos.usuario_tipo.trim();
         //cargo la vista correspondiente con su onload correspondiente.
         $("#lacaja").load("vistas/" + datos.usuario_tipo + "/dashboard.php", function () {
             window["inicio_" + datos.usuario_tipo]();
@@ -99,8 +98,7 @@ function llegadaDatos1(datos) {
 
 function cerrarSesion() {
     $.post("php/login/logout.php", function() {
-        idUsuario = null;
-        tipoUsuario = null;
+        //redirigo a la vista general
         $("#lacaja").load("vistas/general.html");
         document.getElementById('notificacion_global').innerHTML = "Has cerrado sesión correctamente.";
     });
@@ -121,7 +119,6 @@ function inicio_alumno() {
     let url = "php/alumno/datos_alumno.php";
 
     $.post(url, {
-        elid: idUsuario
     }, datosAlumno);
 }
 
@@ -151,7 +148,6 @@ function reservaActiva() {
     let url = "php/alumno/reserva_activa.php";
 
     $.post(url, {
-        elid: idUsuario
     }, datosReserva);
 }
 
@@ -259,7 +255,6 @@ function historialClases() {
     let url = "php/alumno/historial_reservas.php";
 
     $.post(url, {
-        elid: idUsuario
     }, datosHistorial);
 }
 
@@ -335,7 +330,6 @@ function reservar(idClase) {
 
     if (tipoUsuario == "alumno") {
         $.post(url, {
-            elid: idUsuario,
             laclase: idClase
         }, reservarClase);
     } else {
@@ -721,7 +715,7 @@ function cancelarClaseAdminCallback(datos, boton) {
 }
 
 function volverAdmin() {
-    $("#lacaja").load("vistas/admin/dashboard.html", function () {
+    $("#lacaja").load("vistas/admin/dashboard.php", function () {
         inicio_admin();
     });
 }
