@@ -27,8 +27,8 @@ function cargarPanel() {
             tipoUsuario = datos.trim();
             //si hay sesión, redirigimos a la vista correspondiente. Datos siempre tiene el tipo de usuario por lo que no hay que especificar
             $("#lacaja").load("vistas/" + datos + "/dashboard.php", function () {
-            window["inicio_" + datos]();
-        });
+                window["inicio_" + datos]();
+            });
         }
     });
 }
@@ -67,7 +67,7 @@ function envio_datos() {
         $.post(url, {
             eldni: elusuario.trim(),
             tcontrasenia: lacontasenia.trim(),
-            marcado:elcheck
+            marcado: elcheck
         }, llegadaDatos1);
     }
 }
@@ -97,7 +97,7 @@ function llegadaDatos1(datos) {
 }
 
 function cerrarSesion() {
-    $.post("php/login/logout.php", function() {
+    $.post("php/login/logout.php", function () {
         //redirigo a la vista general
         $("#lacaja").load("vistas/general.html");
         document.getElementById('notificacion_global').innerHTML = "Has cerrado sesión correctamente.";
@@ -118,8 +118,7 @@ function inicio_alumno() {
 
     let url = "php/alumno/datos_alumno.php";
 
-    $.post(url, {
-    }, datosAlumno);
+    $.post(url, {}, datosAlumno);
 }
 
 // callback datos del alumno
@@ -147,8 +146,7 @@ function reservaActiva() {
 
     let url = "php/alumno/reserva_activa.php";
 
-    $.post(url, {
-    }, datosReserva);
+    $.post(url, {}, datosReserva);
 }
 
 function datosReserva(datos) {
@@ -254,8 +252,7 @@ function datosClases(datos) {
 function historialClases() {
     let url = "php/alumno/historial_reservas.php";
 
-    $.post(url, {
-    }, datosHistorial);
+    $.post(url, {}, datosHistorial);
 }
 
 function datosHistorial(datos) {
@@ -319,6 +316,56 @@ function datosHistorial(datos) {
     } else {
         document.getElementById('info_alumno').innerHTML = "No hay clases realizadas";
     }
+}
+
+// ============================================================
+// PANEL ALUMNO - CAMBIAR CONTRASEÑA
+// ============================================================
+function cambiarPassword() {
+    let actual = document.getElementById('contra_actual').value;
+    let nueva = document.getElementById('contra_nueva').value;
+    let confirmar = document.getElementById('contra_confirmar').value;
+
+    //compruebo si algun capo esta vacio
+    if (actual == "") {
+        document.getElementById('notificacion_global').innerHTML = "Debes rellenar todos los campos.";
+        document.getElementById('contra_actual').focus();
+        return;
+    } else if (nueva == "") {
+        document.getElementById('notificacion_global').innerHTML = "Debes rellenar todos los campos.";
+        document.getElementById('contra_nueva').focus();
+        return;
+    } else if (confirmar == "") {
+        document.getElementById('notificacion_global').innerHTML = "Debes rellenar todos los campos.";
+        document.getElementById('contra_confirmar').focus();
+        return;
+    }
+
+    if (nueva != confirmar) {
+        document.getElementById('notificacion_global').innerHTML = "Las contraseñas no coinciden.";
+        return;
+    }
+
+    let url = "php/alumno/cambiar_password.php";
+
+    $.post(url, {
+        pass_actual: actual,
+        pass_nueva: nueva
+    }, function (datos) {
+        let respuesta = datos.trim();
+
+        if (respuesta == 1) {
+            document.getElementById('notificacion_global').innerHTML = "Contraseña actualizada correctamente.";
+            //limpiao las cajas
+            document.getElementById('pass_actual').value = "";
+            document.getElementById('pass_nueva').value = "";
+            document.getElementById('pass_confirmar').value = "";
+        } else if (respuesta == 2) {
+            document.getElementById('notificacion_global').innerHTML = "La contraseña actual es incorrecta.";
+        } else {
+            document.getElementById('notificacion_global').innerHTML = "Error al actualizar la contraseña.";
+        }
+    });
 }
 
 // ============================================================

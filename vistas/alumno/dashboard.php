@@ -32,4 +32,12 @@
         <button onclick="historialClases()">HISTORIAL CLASES</button>
         <table id="tabla_historial"></table>
     </div>
+
+    <div id="caja_cambio_password">
+    <label>Cambiar Contraseña</label>
+    <input type="password" id="contra_actual" placeholder="Contraseña actual"><br><br>
+    <input type="password" id="contra_nueva" placeholder="Nueva contraseña"><br><br>
+    <input type="password" id="contra_confirmar" placeholder="Repite la nueva"><br><br>
+    <button onclick="cambiarPassword()">Actualizar Contraseña</button>
+    </div>
 </div>
