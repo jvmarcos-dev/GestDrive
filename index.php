@@ -6,7 +6,6 @@
     <title>GestDrive - Dev</title>
     <!-- Archivos css -->
     <link href="ficheros/login.css" rel="stylesheet">
-    <link href="ficheros/barra_menu.css" rel="stylesheet">
     <link href="ficheros/all.css" rel="stylesheet">
     <!-- librería jQuery -->
     <script type="text/javascript" src="ficheros/jquery.js"></script>
@@ -18,8 +17,6 @@
     <!-- **************************** CUERPO ************************************************ -->
     <!-- **************************** CUERPO ************************************************ -->
     <!-- **************************** CUERPO ************************************************ -->
-
-    <div class="contenedor1">
         <div id="lacaja" class="contenedor2">
 
             <!-- contenedor donde se cargan las vistas -->
@@ -27,7 +24,6 @@
             <!-- contenedor donde se cargan las vistas -->
 
         </div>
-    </div>
 
     <!-- **************************** FOOTER ************************************************ -->
     <!-- **************************** FOOTER ************************************************ -->
