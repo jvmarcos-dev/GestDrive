@@ -38,17 +38,20 @@ function envio_datos() {
     // compruebo que las cajas de texto no estén vacías	
     if ((document.getElementById('dni').value == "")) {
         document.getElementById('dni').focus();
-        document.getElementById('info').innerHTML = "introduce usuario!";
+        document.getElementById('info').style.visibility = 'visible';
+        document.getElementById('info').innerHTML = "Debes introducir el usuario";
     } else if ((document.getElementById('password').value == "")) {
         document.getElementById('password').focus();
-        document.getElementById('info').innerHTML = "introduce contraseña!";
+        document.getElementById('info').style.visibility = 'visible';
+        document.getElementById('info').innerHTML = "Debes introducir la contraseña";
     } else {
         // visualizo estrella
-        document.getElementById('estrella').style.visibility = 'visible';
+        document.getElementById('boton1').innerHTML = '<img id="estrella" src="imagenes/estrella.gif" height="40" width="40" style="display:block; margin: 0 auto;" />';
         // deshabilito botón
         document.getElementById('boton1').disabled = true;
         // borro mensaje etiqueta
         document.getElementById('info').innerHTML = "";
+        document.getElementById('info').style.visibility = 'hidden';
 
         // estos 2 valores habría que pasarlos por un filtro de seguridad.
         let elusuario = document.getElementById('dni').value;
@@ -75,7 +78,7 @@ function envio_datos() {
 // callback llamada
 function llegadaDatos1(datos) {
     // oculto estrella
-    document.getElementById('estrella').style.visibility = 'hidden';
+    document.getElementById('boton1').innerHTML = "Iniciar Sesión";
     // habilito botón
     document.getElementById('boton1').disabled = false;
 
@@ -92,7 +95,8 @@ function llegadaDatos1(datos) {
             window["inicio_" + datos.usuario_tipo]();
         });
     } else {
-        document.getElementById('info').innerHTML = "<font color='red'>Login incorrecto</font>";
+        document.getElementById('info').style.visibility = 'visible';
+        document.getElementById('info').innerHTML = "Login incorrecto";
     }
 }
 
