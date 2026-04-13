@@ -7,7 +7,6 @@
     <!-- Archivos css -->
     <link href="ficheros/login.css" rel="stylesheet">
     <link href="ficheros/barra_menu.css" rel="stylesheet">
-    <link href="ficheros/formularios_login.css" rel="stylesheet">
     <link href="ficheros/all.css" rel="stylesheet">
     <!-- librería jQuery -->
     <script type="text/javascript" src="ficheros/jquery.js"></script>
@@ -16,19 +15,6 @@
 </head>
 
 <body onload="inicio();">
-    <!-- **************************** CABECERA ************************************************ -->
-    <!-- **************************** CABECERA ************************************************ -->
-    <!-- **************************** CABECERA ************************************************ -->
-
-    <header>
-        <div class="BarraNavegar">
-            <i class="fas fa-tv fa-2x"></i>
-            <label class="L1">Proyecto 1º DAW</label>
-            <label class="L2"><b>Login</b></label>
-            <label class="L3">de MENTIRA</label>
-        </div>
-    </header>
-
     <!-- **************************** CUERPO ************************************************ -->
     <!-- **************************** CUERPO ************************************************ -->
     <!-- **************************** CUERPO ************************************************ -->
@@ -47,14 +33,8 @@
     <!-- **************************** FOOTER ************************************************ -->
     <!-- **************************** FOOTER ************************************************ -->
 
-    <footer class="footer">
-        <img id="estrella" src="imagenes/estrella.gif" height="40" width="40" style="visibility:hidden;" />
-        <i class="fas fa-building fa-2x"></i>
-        <label>© 2026 IES Amparo Sanz</label>
-    </footer>
-
     <!-- Ejemplo de notificacion con la que trabajar generado por IA. Luego la modificare para hacer yo una-->
-    <div id="notificacion_global" style="
+    <!-- <div id="notificacion_global" style="
         position: fixed; 
         top: 80px; 
         right: 20px; 
@@ -65,7 +45,7 @@
         display: block; 
         border-radius: 5px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-    </div>
+    </div> -->
 </body>
 
 </html>
