@@ -12,7 +12,7 @@ body
 }
 
 .contenedor-principal-login{
-	border: 5px solid red;
+	border: 0px solid red;
 	background-image: url("../imagenes/fondo_login.png");
     background-size: cover;
     background-position: center;
@@ -22,6 +22,16 @@ body
 	flex: 1;
     justify-content: center;
     align-items: center;
+	padding: 20px;
+}
+
+#info{
+	border: 1px solid red;
+	margin-top: 10px;
+	background-color: rgba(236, 169, 169, 0.308);
+	color: brown;
+	width: 60%;
+	text-align: center;
 }
 
 #logo-login{
@@ -37,7 +47,7 @@ body
 	display: flex;
 	flex-direction: row;
 	flex: 1;	
-	border: solid 1px blue;
+	border: solid 0px blue;
 	border-radius:8px;
 }
 
@@ -55,6 +65,15 @@ body
 	padding: 40px;
 }
 
+#credenciales
+{
+	display: flex;
+	margin-top: 10px;
+	flex-direction: column;
+	gap: 10px;
+	width: 60%;
+}
+
 #contenedor-recordar{
 	border: 0px solid red;
 }
@@ -67,16 +86,60 @@ body
 	margin-top: 20px;
 }
 
+.form-group-login{
+	display: flex;
+    align-items: center;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 10px 15px;
+    transition: all 0.3s;
+}
+
+/*Cuando el input tiene el foco*/
+.form-group-login:focus-within {
+    border-color: #1a56b6;
+    box-shadow: 0 0 0 3px rgba(26, 86, 182, 0.1);
+}
+
+/*Cambio del icono cuando se hace focus en el input*/
+.form-group-login:focus-within i {
+    color: #1a56b6;
+}
+
+.input-control{
+	border: none;
+	width: 100%;
+    padding-left: 10px
+}
+
+.input-control:focus
+{
+	outline: none;
+	border: none;
+}
+
 #boton1
 {
-	font-family: calibri;
-	font-size: 18px;
-	color: white;
-	padding: 10px 0px;
-	border: 0px solid black;
-	background-color: green;
-	border-radius: 8px;
+	font-size: 1.1rem; 
+    font-weight: bold;
+    color: white;
+    padding: 12px 0;
+    background-color: #1a56b6; 
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-	cursor: pointer;
-	width: 30%;
+#boton1:hover {
+    background-color: #13428c;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#boton1:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
