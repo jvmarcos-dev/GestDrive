@@ -3,8 +3,7 @@
         <img id="logo-header" src="imagenes/logo.png">
     </div>
 
-    <div class="separador"></div> <div id="contenedor-texto-header">
-    </div>
+    <div class="separador"></div>
 
     <div id="contenedor-texto-header">
         <label id="texto-header-alumno">Panel de Control del Alumno</label>
@@ -12,15 +11,21 @@
 
     <div id="datos-alumno-header">
         <img id="foto_alumno" src="">
-        <label id="nombre_alumno"></label>
-    </div>
+        <label onclick="cargarDesplegableAlumno()" id="nombre_alumno"></label>
 
-    <div id="logout">
-        <?php
-        session_start(); //
-        ?>
-        <button onclick="cerrarSesion()">Logout</button>
-    </div>
+
+        <div class="desplegable-header-alumno">
+            <div class="item-desplegable">
+                <i class="fas fa-cog"></i>
+                <button class="limpiar-boton">Cambiar contraseña</button>
+            </div>
+            <!-- Este hr es un separador horizontal-->
+            <hr>
+            <div id="logout" class="item-desplegable">
+                <i class="fas fa-sign-out-alt"></i>
+                <button class="limpiar-boton" onclick="cerrarSesion()">Logout</button>
+            </div>
+        </div>
 </header>
 
 <div class="contenedor_alumno">

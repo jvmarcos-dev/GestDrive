@@ -1064,3 +1064,12 @@ function registroProfesor() {
             document.getElementById('elboton').disabled = false;
         });
 }
+
+// ============================================================
+// ESTILOS - PANEL ALUMNO
+// ============================================================
+
+//Mostrar menu del header al pulsar sobre el nombre
+function cargarDesplegableAlumno() {
+    document.querySelector(".desplegable-header-alumno").classList.toggle("mostrar-desplegable");
+}
