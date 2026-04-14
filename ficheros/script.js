@@ -116,7 +116,6 @@ function cerrarSesion() {
 function inicio_alumno() {
     //borro contenido de las label por si hubiera algo
     document.getElementById('nombre_alumno').innerHTML = "";
-    document.getElementById('apellidos_alumno').innerHTML = "";
     document.getElementById('saldo_alumno').innerHTML = "";
     document.getElementById('teorica_alumno').innerHTML = "";
 
@@ -135,8 +134,8 @@ function datosAlumno(datos) {
             //muestro imagen predeterminada
             document.getElementById('foto_alumno').src = 'imagenes/usuarios/default.png'
         }
-        document.getElementById('nombre_alumno').innerHTML = datos.nombre.charAt(0).toUpperCase() + datos.nombre.slice(1);
-        document.getElementById('apellidos_alumno').innerHTML = datos.apellidos.charAt(0).toUpperCase() + datos.apellidos.slice(1);
+        document.getElementById('nombre_alumno').innerHTML = datos.nombre.charAt(0).toUpperCase() + datos.nombre.slice(1) + 
+        " " + datos.apellidos.charAt(0).toUpperCase() + datos.apellidos.slice(1);
         document.getElementById('saldo_alumno').innerHTML = datos.saldo + " clases restantes";
         document.getElementById('teorica_alumno').innerHTML = datos.teorico.toUpperCase();
     } else {

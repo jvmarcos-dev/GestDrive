@@ -2,10 +2,22 @@
     <div id="imagen-header">
         <img id="logo-header" src="imagenes/logo.png">
     </div>
+
+    <div class="separador"></div> <div id="contenedor-texto-header">
+    </div>
+
+    <div id="contenedor-texto-header">
+        <label id="texto-header-alumno">Panel de Control del Alumno</label>
+    </div>
+
+    <div id="datos-alumno-header">
+        <img id="foto_alumno" src="">
+        <label id="nombre_alumno"></label>
+    </div>
+
     <div id="logout">
         <?php
         session_start(); //
-        echo "(" . $_SESSION['idusuario'] . ") ";
         ?>
         <button onclick="cerrarSesion()">Logout</button>
     </div>
@@ -13,9 +25,6 @@
 
 <div class="contenedor_alumno">
     <div id="consulta_datos">
-        <img id="foto_alumno" src="">
-        <label id="nombre_alumno"></label>
-        <label id="apellidos_alumno"></label>
         <label id="saldo_alumno"></label>
         <label id="teorica_alumno"></label>
         <label id="info_alumno"></label>
@@ -37,10 +46,10 @@
     </div>
 
     <div id="caja_cambio_password">
-    <label>Cambiar Contraseña</label>
-    <input type="password" id="contra_actual" placeholder="Contraseña actual"><br><br>
-    <input type="password" id="contra_nueva" placeholder="Nueva contraseña"><br><br>
-    <input type="password" id="contra_confirmar" placeholder="Repite la nueva"><br><br>
-    <button onclick="cambiarPassword()">Actualizar Contraseña</button>
+        <label>Cambiar Contraseña</label>
+        <input type="password" id="contra_actual" placeholder="Contraseña actual"><br><br>
+        <input type="password" id="contra_nueva" placeholder="Nueva contraseña"><br><br>
+        <input type="password" id="contra_confirmar" placeholder="Repite la nueva"><br><br>
+        <button onclick="cambiarPassword()">Actualizar Contraseña</button>
     </div>
 </div>

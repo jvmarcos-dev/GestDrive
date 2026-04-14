@@ -6,6 +6,7 @@
     <title>GestDrive - Dev</title>
     <!-- Archivos css -->
     <link href="ficheros/login.css" rel="stylesheet">
+    <link href="ficheros/alumno.css" rel="stylesheet">
     <link href="ficheros/all.css" rel="stylesheet">
     <!-- librería jQuery -->
     <script type="text/javascript" src="ficheros/jquery.js"></script>

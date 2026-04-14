@@ -1,0 +1,71 @@
+header
+{
+	display:flex;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	/*flex-direction:row;*/
+	align-items:center;
+	/*padding:15px 15px 8px 15px;*/
+
+	background-color: white;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+	color: black;
+}
+
+#imagen-header
+{
+    border: 0px solid blue;
+    width: 15%;
+}
+
+#logo-header
+{
+    width: 100%;
+}
+
+.separador {
+    height: 40px;      /* Altura fija de la línea */
+    width: 1px;        /* Grosor */
+    background-color: #ddd; 
+    margin: 0 10px;    /* Espacio a los lados */
+}
+
+#contenedor-texto-header
+{
+    display: flex;
+    border: 0px solid red;
+    margin-left: 10px;
+}
+
+#texto-header-alumno{
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #1a56b6;
+}
+
+#datos-alumno-header{
+    display: flex;
+    border: 0px solid blue;
+    align-items: center;
+    margin-left: auto;
+    gap: 10px;
+}
+
+#foto_alumno{
+    width: 20%;
+    border-radius: 50px;
+    border: 1px solid black;
+}
+
+#nombre_alumno
+{
+    text-align: center;
+    cursor: pointer;
+}
+
+#logout
+{
+    margin-right: 20px;
+}
