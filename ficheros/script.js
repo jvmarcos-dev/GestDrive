@@ -46,7 +46,7 @@ function envio_datos() {
         document.getElementById('info').innerHTML = "Debes introducir la contraseña";
     } else {
         // visualizo estrella
-        document.getElementById('boton1').innerHTML = '<img id="estrella" src="imagenes/estrella.gif" height="40" width="40" style="display:block; margin: 0 auto;" />';
+        document.getElementById('boton1').innerHTML = '<img id="estrella" src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />';
         // deshabilito botón
         document.getElementById('boton1').disabled = true;
         // borro mensaje etiqueta
