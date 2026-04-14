@@ -130,7 +130,7 @@ function datosAlumno(datos) {
     if (datos.nombre) {
         if (datos.foto != '') {
             //muestro la imagen del alumno
-            document.getElementById('foto_alumno').src = "imagenes/usuarios/" + datos.foto;
+            document.getElementById('foto_alumno').src = datos.foto;
         } else {
             //muestro imagen predeterminada
             document.getElementById('foto_alumno').src = 'imagenes/usuarios/default.png'

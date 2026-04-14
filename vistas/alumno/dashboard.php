@@ -1,4 +1,7 @@
-<div class="contenedor3">
+<header>
+    <div id="imagen-header">
+        <img id="logo-header" src="imagenes/logo.png">
+    </div>
     <div id="logout">
         <?php
         session_start(); //
@@ -6,7 +9,7 @@
         ?>
         <button onclick="cerrarSesion()">Logout</button>
     </div>
-</div>
+</header>
 
 <div class="contenedor_alumno">
     <div id="consulta_datos">
