@@ -41,14 +41,14 @@ header
 
 #texto-header-alumno{
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: #1a56b6;
 }
 
 #datos-alumno-header{
     position: relative;
     display: flex;
-    border: 2px solid blue;
+    border: 0px solid blue;
     align-items: center;
     margin-left: auto;
     gap: 10px;
@@ -123,15 +123,17 @@ header
 
 .item-desplegable i {
     color: #1a56b6;
-    width: 20px;
+    width: 5%;
     text-align: center;
 }
 
-.limpiar-boton{
+.boton-desplegable{
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
+
+    margin-left: 7px;
 }
 
 /*Esto funciona como un separador horizontal*/

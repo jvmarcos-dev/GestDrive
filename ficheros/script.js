@@ -1070,6 +1070,26 @@ function registroProfesor() {
 // ============================================================
 
 //Mostrar menu del header al pulsar sobre el nombre
-function cargarDesplegableAlumno() {
+function cargarDesplegableAlumno(event) {
+    //sin esta linea, al hacer click en el propio nombre, como estoy "escuchando clicks", se cerraria el propio menu, es decir,
+    //no se llegaría a abrir
+    event.stopPropagation(); 
+    
     document.querySelector(".desplegable-header-alumno").classList.toggle("mostrar-desplegable");
 }
+
+//miro cuando ha hecho click el usuario
+document.addEventListener('click', function(event) {
+    let menu = document.querySelector(".desplegable-header-alumno");
+    
+    //en caso de que el menu esté abierto tiene asignada esta clase, por tanto en este caso:
+    if (menu.classList.contains('mostrar-desplegable')) {
+        
+        //compruebo si donde ha hecho click no es dentro del menu
+        if (!menu.contains(event.target)) {
+            
+            //si el click fue fuera se elimina la clase.
+            menu.classList.remove('mostrar-desplegable');
+        }
+    }
+});

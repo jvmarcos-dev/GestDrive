@@ -11,19 +11,19 @@
 
     <div id="datos-alumno-header">
         <img id="foto_alumno" src="">
-        <label onclick="cargarDesplegableAlumno()" id="nombre_alumno"></label>
+        <label onclick="cargarDesplegableAlumno(event)" id="nombre_alumno"></label>
 
 
         <div class="desplegable-header-alumno">
             <div class="item-desplegable">
                 <i class="fas fa-cog"></i>
-                <button class="limpiar-boton">Cambiar contraseña</button>
+                <button class="boton-desplegable">Cambiar contraseña</button>
             </div>
             <!-- Este hr es un separador horizontal-->
             <hr>
             <div id="logout" class="item-desplegable">
                 <i class="fas fa-sign-out-alt"></i>
-                <button class="limpiar-boton" onclick="cerrarSesion()">Logout</button>
+                <button class="boton-desplegable" onclick="cerrarSesion()">Logout</button>
             </div>
         </div>
 </header>
