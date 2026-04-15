@@ -29,25 +29,36 @@
     </div>
 </header>
 
+<label>Resumen</label>
+
 <div class="contenedor_alumno">
     <div id="consulta_datos">
-        <label id="saldo_alumno"></label>
-        <label id="teorica_alumno"></label>
         <label id="info_alumno"></label>
     </div>
 
+    <div id="estado-teorico">
+        <label>Teórico</label>
+        <label id="teorica_alumno"></label>
+    </div>
+
+    <div id="practicas-restantes">
+        <label>Saldo de prácticas</label>
+        <label id="saldo_alumno"></label>
+    </div>
+
+    <div id="proxima-practica">
+    </div>
+
     <div id="consulta_proxima_practica">
-        <button onclick="reservaActiva()">RESERVAS</button>
+        <label>SIguiente práctica</label>
         <label id="fecha"></label>
         <label id="profesor"></label>
     </div>
     <div id="lasclases">
-        <button onclick="clasesDisponibles()">TABLA CLASES</button>
         <table id="tabla_clases"></table>
     </div>
 
     <div id="historial_clases">
-        <button onclick="historialClases()">HISTORIAL CLASES</button>
         <table id="tabla_historial"></table>
     </div>
 

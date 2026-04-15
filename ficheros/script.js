@@ -127,6 +127,9 @@ function inicio_alumno() {
 // callback datos del alumno
 function datosAlumno(datos) {
     if (datos.nombre) {
+        reservaActiva();
+        clasesDisponibles();
+        historialClases();
         if (datos.foto != '') {
             //muestro la imagen del alumno
             document.getElementById('foto_alumno').src = datos.foto;
