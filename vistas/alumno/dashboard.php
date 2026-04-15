@@ -26,6 +26,7 @@
                 <button class="boton-desplegable" onclick="cerrarSesion()">Logout</button>
             </div>
         </div>
+    </div>
 </header>
 
 <div class="contenedor_alumno">
