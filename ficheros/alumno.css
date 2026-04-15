@@ -1,3 +1,5 @@
+/*************************** HEADER ***********************************/
+
 header
 {
 	display:flex;
@@ -9,6 +11,7 @@ header
 	background-color: white;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 	color: black;
+    margin-bottom: 20px;
 }
 
 #imagen-header
@@ -154,3 +157,71 @@ hr {
     cursor:default;
     z-index: -1; 
 }
+
+/*************************** TARJETAS DATOS ***********************************/
+.contenedor-alumno{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    border: 0px solid blue;
+}
+
+#tarjetas-datos-alumno{
+    display: flex;
+    gap: 20px;
+}
+
+.latarjeta{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    gap: 15px;
+    width: 33%;
+    background-color: white;
+}
+
+#texto-resumen{
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.titulo-tarjeta
+{
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.resultado-label{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.contenedor-icono{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.icono-tarjeta{
+    width: 20px;
+    height: 20px;
+    /*Color del svg*/
+    fill: #1a56b6;
+}
+
+.resultado-label{
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1e293b;
+}
+
+.subtitulo-label{
+    font-size: 1.2rem;
+    color: grey;
+}
+

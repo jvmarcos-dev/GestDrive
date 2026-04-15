@@ -170,7 +170,7 @@ function datosReserva(datos) {
             minute: '2-digit'
         });
 
-        let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia + ' a las ' + hora + 'h';
+        let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia + ', ' + hora + 'h';
         document.getElementById('fecha').innerHTML = fechaFormateada;
         document.getElementById('profesor').innerHTML = datos.profesor.charAt(0).toUpperCase() + datos.profesor.slice(1);
     } else {
