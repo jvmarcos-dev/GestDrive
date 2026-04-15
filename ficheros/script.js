@@ -174,7 +174,7 @@ function datosReserva(datos) {
         document.getElementById('fecha').innerHTML = fechaFormateada;
         document.getElementById('profesor').innerHTML = datos.profesor.charAt(0).toUpperCase() + datos.profesor.slice(1);
     } else {
-        document.getElementById('info_alumno').innerHTML = "<font color='red'>No hay clases proximas</font>";
+        document.getElementById('info_alumno').innerHTML = "No hay clases proximas";
     }
 }
 
@@ -245,7 +245,7 @@ function datosClases(datos) {
         }
     } else {
         if (tipoUsuario == "alumno") {
-            document.getElementById('info_alumno').innerHTML = "No hay clases disponibles";
+            document.getElementById('info-clases-alumno').innerHTML = "No hay clases disponibles";
         } else {
             document.getElementById('no_clases_proximas').innerHTML = "No hay clases disponibles";
         }
@@ -320,7 +320,7 @@ function datosHistorial(datos) {
             fila.insertCell(4).innerHTML = "<button id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
         }
     } else {
-        document.getElementById('info_alumno').innerHTML = "No hay clases realizadas";
+        document.getElementById('info-alumno-historial').innerHTML = "No hay clases realizadas";
     }
 }
 

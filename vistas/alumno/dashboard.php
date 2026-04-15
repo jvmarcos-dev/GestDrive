@@ -33,11 +33,10 @@
 
 <div class="contenedor_alumno">
     <div id="consulta_datos">
-        <label id="info_alumno"></label>
     </div>
 
     <div id="estado-teorico">
-        <i class="fas fa-book"></i>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M300-80q-58 0-99-41t-41-99v-520q0-58 41-99t99-41h500v600q-25 0-42.5 17.5T740-220q0 25 17.5 42.5T800-160v80H300Zm-60-267q14-7 29-10t31-3h20v-440h-20q-25 0-42.5 17.5T240-740v393Zm160-13h320v-440H400v440Zm-160 13v-453 453Zm60 187h373q-6-14-9.5-28.5T660-220q0-16 3-31t10-29H300q-26 0-43 17.5T240-220q0 26 17 43t43 17Z"/></svg>
         <label>Teórico</label>
         <label id="teorica_alumno"></label>
     </div>
@@ -56,13 +55,16 @@
         <label>Siguiente práctica</label>
         <label id="fecha"></label>
         <label id="profesor"></label>
+        <label id="info_alumno"></label>
     </div>
     <div id="lasclases">
         <table id="tabla_clases"></table>
+        <label id="info-clases-alumno"></label>
     </div>
 
     <div id="historial_clases">
         <table id="tabla_historial"></table>
+        <label id="info-alumno-historial"></label>
     </div>
 
     <div id="caja_cambio_password">
