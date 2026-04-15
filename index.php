@@ -13,6 +13,8 @@
     <script type="text/javascript" src="ficheros/jquery.js"></script>
     <!-- archivo script.js -->
     <script type="text/javascript" src="ficheros/script.js"></script>
+    <!-- iconos de google -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 
 <body onload="inicio();">

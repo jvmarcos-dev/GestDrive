@@ -37,11 +37,15 @@
     </div>
 
     <div id="estado-teorico">
+        <i class="fas fa-book"></i>
         <label>Teórico</label>
         <label id="teorica_alumno"></label>
     </div>
 
     <div id="practicas-restantes">
+        <span class="material-symbols-outlined">
+        search_hands_free
+        </span>
         <label>Saldo de prácticas</label>
         <label id="saldo_alumno"></label>
     </div>
@@ -50,7 +54,10 @@
     </div>
 
     <div id="consulta_proxima_practica">
-        <label>SIguiente práctica</label>
+        <span class="material-symbols-outlined">
+        calendar_today
+        </span>
+        <label>Siguiente práctica</label>
         <label id="fecha"></label>
         <label id="profesor"></label>
     </div>
