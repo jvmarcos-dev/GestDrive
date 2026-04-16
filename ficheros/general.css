@@ -1,17 +1,43 @@
-body
-{
-	  display: flex;
-	  flex-direction: column;
-	  margin: 0;
-	  min-height: 100vh;
-	  font-family: calibri;
-	  background-color: #eff4fa;
+body {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	min-height: 100vh;
+	font-family: calibri;
+	background-color: #eff4fa;
 }
 
-#lacaja{
-		  display: flex;
-	  flex-direction: column;
-	  margin: 0;
-	  min-height: 100vh;
-	  font-family: calibri;
+#lacaja {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	min-height: 100vh;
+	font-family: calibri;
+}
+
+.boton-principal {
+	display: flex;
+    background-color: #1a56b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(26, 86, 182, 0.25);
+    transition: all 0.2s ease;
+    justify-content: center;
+    align-items: center;
+}
+
+.boton-principal:hover {
+    background-color: #13428c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px -1px rgba(26, 86, 182, 0.35);
+}
+
+/*Al pulsar*/
+.boton-principal:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px -1px rgba(26, 86, 182, 0.2);
 }
