@@ -216,6 +216,13 @@ hr {
     color: grey;
 }
 
+#info_alumno {
+    font-size: 1rem;
+    color: #64748b;
+    font-style: italic;
+    margin-top: 5px;
+}
+
 /*************************** TABLA HISTORIAL ***********************************/
 
 #historial_clases {
@@ -297,4 +304,14 @@ hr {
     opacity: 0.4;
     cursor: not-allowed;
     background-color: #f1f5f9;
+}
+
+#info-alumno-historial {
+    display: block;
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 1rem;
+    color: #64748b;
+    /*cursiva*/
+    font-style: italic;
 }
