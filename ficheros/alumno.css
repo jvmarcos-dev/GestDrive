@@ -231,6 +231,14 @@ hr {
     background-color: white;
 }
 
+.estado-pendiente {
+    color: #f59e0b;
+}
+
+.estado-apto {
+    color: #10b981;;
+}
+
 #texto-resumen {
     font-weight: bold;
     font-size: 2rem;

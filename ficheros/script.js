@@ -143,7 +143,11 @@ function datosAlumno(datos) {
             " " + datos.apellidos.charAt(0).toUpperCase() + datos.apellidos.slice(1);
         document.getElementById('saldo_alumno').innerHTML = datos.saldo
         document.getElementById('resultado2').innerHTML = "clases restantes";
-        document.getElementById('teorica_alumno').innerHTML = datos.teorico.toUpperCase();
+        if(datos.teorico=="apto"){
+            document.getElementById('teorica_alumno').innerHTML = "<label class='estado-apto'>" + datos.teorico.toUpperCase() + "</label>";
+        }else{
+            document.getElementById('teorica_alumno').innerHTML = "<label class='estado-pendiente'>" + datos.teorico.toUpperCase() + "</label>";
+        }
     } else {
         document.getElementById('notificacion_global').innerHTML = "<font color='red'>Se ha producido un ERROR</font>";
     }
