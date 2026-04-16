@@ -19,7 +19,7 @@
             </div>
             <hr>
             <div id="logout" class="item-desplegable">
-                <i class="fas fa-sign-out-alt"></i>
+                <i onclick="cerrarSesion()" class="fas fa-sign-out-alt"></i>
                 <button class="boton-desplegable" onclick="cerrarSesion()">Logout</button>
             </div>
         </div>
