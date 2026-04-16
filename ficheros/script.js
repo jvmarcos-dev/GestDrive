@@ -324,7 +324,11 @@ function datosHistorial(datos) {
             } else {
                 fila.insertCell(3).innerHTML = "Cancelada";
             }
-            fila.insertCell(4).innerHTML = "<button id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
+            if(estadoFormateado == "Activa"){
+                fila.insertCell(4).innerHTML = "<button class='boton-cancelar' id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
+            }else{
+                fila.insertCell(4).innerHTML = "<button disabled class='boton-cancelar' id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
+            }
         }
     } else {
         document.getElementById('info-alumno-historial').innerHTML = "No hay clases realizadas";

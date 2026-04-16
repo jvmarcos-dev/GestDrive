@@ -228,7 +228,6 @@ hr {
     background-color: white;
     padding: 10px;
     border-radius: 12px;
-    width: 100%;
 }
 
 #texto-historial {
@@ -264,7 +263,7 @@ hr {
 }
 
 #historial_clases table tr:hover td {
-    background-color: #d4e3cc;
+    background-color: #f8fafc;
 }
 
 #historial_clases table td {
@@ -274,4 +273,28 @@ hr {
 #historial_clases table th:last-child,
 #historial_clases table td:last-child {
     text-align: center;
+}
+
+.boton-cancelar {
+    background-color: white;
+    border: 1px solid #cbd5e1;
+    color: #64748b;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/*Esto es para que solo haga el hover si no está deshabilitado. Ya que si está deshabilitado no tiene sentido*/
+.boton-cancelar:hover:not(:disabled) {
+    border-color: #ef4444;
+    color: #ef4444;
+    background-color: #fef2f2;
+}
+
+.boton-cancelar:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: #f1f5f9;
 }
