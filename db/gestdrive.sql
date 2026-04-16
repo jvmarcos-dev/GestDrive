@@ -90,12 +90,12 @@ CREATE TABLE historico_alumnos (
 -- ============================================================
 
 INSERT INTO usuarios (dni, nombre, apellidos, email, password, telefono, tipo, foto) VALUES
-('00000000A', 'Admin', 'Sistema', 'admin@gestdrive.com', '1234', '600000000', 'admin', ''),
-('11111111B', 'Carlos', 'Ruiz Soler', 'carlos@gestdrive.com', '1234', '611222333', 'profesor', ''),
-('22222222C', 'Marta', 'Gómez Rey', 'marta@gestdrive.com', '1234', '622333444', 'profesor', ''),
-('33333333D', 'Laura', 'Pérez Gil', 'laura@gmail.com', '1234', '633444555', 'alumno', ''),
-('44444444E', 'Jorge', 'Sanz León', 'jorge@gmail.com', '1234', '644555666', 'alumno', ''),
-('55555555F', 'Ana', 'López Vega', 'ana@gmail.com', '1234', '655666777', 'alumno', '');
+('00000000A', 'Admin', 'Sistema', 'admin@gestdrive.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '600000000', 'admin', ''),
+('11111111B', 'Carlos', 'Ruiz Soler', 'carlos@gestdrive.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '611222333', 'profesor', ''),
+('22222222C', 'Marta', 'Gómez Rey', 'marta@gestdrive.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '622333444', 'profesor', ''),
+('33333333D', 'Laura', 'Pérez Gil', 'laura@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '633444555', 'alumno', ''),
+('44444444E', 'Jorge', 'Sanz León', 'jorge@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '644555666', 'alumno', ''),
+('55555555F', 'Ana', 'López Vega', 'ana@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '655666777', 'alumno', '');
 
 -- ============================================================
 -- 2. PROFESORES
