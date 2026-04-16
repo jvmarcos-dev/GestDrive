@@ -23,9 +23,9 @@
                 <button class="boton-desplegable">Cambiar contraseña</button>
             </div>
             <hr>
-            <div id="logout" class="item-desplegable">
-                <i onclick="cerrarSesion()" class="fas fa-sign-out-alt"></i>
-                <button class="boton-desplegable" onclick="cerrarSesion()">Logout</button>
+            <div id="logout" class="item-desplegable" onclick="cerrarSesion()">
+                <i class="fas fa-sign-out-alt"></i>
+                <button class="boton-desplegable">Logout</button>
             </div>
         </div>
     </div>

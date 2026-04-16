@@ -150,8 +150,10 @@ header {
     padding: 12px 15px;
     gap: 12px;
     cursor: pointer;
+    border: 0px solid red;
     transition: background 0.2s;
     color: #444;
+    width: 85%;
 }
 
 .item-desplegable:hover {
