@@ -92,6 +92,17 @@ header {
     align-items: center;
     margin-left: auto;
     gap: 10px;
+    padding: 6px 16px 6px 6px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#datos-alumno-header:hover {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
 }
 
 #foto_alumno {
@@ -101,8 +112,22 @@ header {
 }
 
 #nombre_alumno {
-    text-align: center;
-    cursor: pointer;
+cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #334155;
+}
+
+.flecha-perfil {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-left: 5px;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/*Si el contenedor tiene un elemento con la clase mostrar desplegable, se rota la flecha 180 grados*/
+#datos-alumno-header:has(.mostrar-desplegable) .flecha-perfil {
+    transform: rotate(180deg);
 }
 
 #logout {

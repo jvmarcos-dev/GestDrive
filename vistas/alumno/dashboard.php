@@ -14,9 +14,10 @@
         <a class="cambiar-ventana">Reservar clases</a>
     </div>
 
-    <div id="datos-alumno-header">
+    <div id="datos-alumno-header" onclick="cargarDesplegableAlumno(event)" >
         <img id="foto_alumno" src="">
-        <label onclick="cargarDesplegableAlumno(event)" id="nombre_alumno"></label>
+        <label id="nombre_alumno"></label>
+        <i class="fas fa-chevron-down flecha-perfil"></i>
         <div class="desplegable-header-alumno">
             <div class="item-desplegable">
                 <i class="fas fa-cog"></i>
