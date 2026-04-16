@@ -315,3 +315,34 @@ hr {
     /*cursiva*/
     font-style: italic;
 }
+
+#no-clases {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.boton-reservar {
+    background-color: #1a56b6;
+    color: #ffffff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(26, 86, 182, 0.2); /* Sombra sutil azulada */
+    transition: all 0.2s ease;
+}
+
+.boton-reservar:hover {
+    background-color: #13428c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px -1px rgba(26, 86, 182, 0.3);
+}
+
+/*Cuando se pulsa*/
+.boton-reservar:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px -1px rgba(26, 86, 182, 0.2);
+}

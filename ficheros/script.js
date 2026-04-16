@@ -324,14 +324,20 @@ function datosHistorial(datos) {
             } else {
                 fila.insertCell(3).innerHTML = "Cancelada";
             }
-            if(estadoFormateado == "Activa"){
+            if (estadoFormateado == "Activa") {
                 fila.insertCell(4).innerHTML = "<button class='boton-cancelar' id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
-            }else{
+            } else {
                 fila.insertCell(4).innerHTML = "<button disabled class='boton-cancelar' id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
             }
         }
     } else {
-        document.getElementById('info-alumno-historial').innerHTML = "No hay clases realizadas";
+        document.getElementById('info-alumno-historial').innerHTML = "Aún no has realizado ninguna práctica con nosotros.";
+        document.getElementById('no-clases').innerHTML =
+            `
+        <button class="boton-reservar" onclick="cambiarVista('reservar')">
+            Reservar mi primera clase
+        </button>
+        `;
     }
 }
 
