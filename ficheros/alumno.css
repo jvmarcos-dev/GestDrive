@@ -235,6 +235,7 @@ hr {
     background-color: white;
     padding: 10px;
     border-radius: 12px;
+    height: fit-content;
 }
 
 #texto-historial {
@@ -248,9 +249,9 @@ hr {
     width: 100%;
     border: 0px solid red;
     background-color: white;
-    margin: auto;
     border-collapse: separate;
     border-spacing: 0;
+    margin: 0;
 }
 
 #historial_clases table th,

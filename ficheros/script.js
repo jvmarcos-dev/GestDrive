@@ -338,6 +338,8 @@ function datosHistorial(datos) {
             Reservar mi primera clase
         </button>
         `;
+
+        document.getElementById('info-alumno-historial').style.display= "block"
     }
 }
 
