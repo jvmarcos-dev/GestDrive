@@ -181,6 +181,7 @@ function datosReserva(datos) {
         document.getElementById('fecha').innerHTML = fechaFormateada;
         document.getElementById('profesor').innerHTML = datos.profesor.charAt(0).toUpperCase() + datos.profesor.slice(1);
     } else {
+        document.getElementById('info_alumno').style.display="block";
         document.getElementById('info_alumno').innerHTML = "No hay clases proximas";
     }
 }

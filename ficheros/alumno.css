@@ -276,11 +276,18 @@ hr {
     color: grey;
 }
 
+#fecha, 
+#profesor, 
+#info_alumno {
+    display: block;
+}
+
 #info_alumno {
     font-size: 1rem;
     color: #64748b;
     font-style: italic;
     margin-top: 5px;
+    font-weight: 500;
 }
 
 /*************************** TABLA HISTORIAL ***********************************/
