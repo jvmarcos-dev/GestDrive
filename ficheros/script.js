@@ -114,14 +114,16 @@ function cerrarSesion() {
 // ============================================================
 
 function inicio_alumno() {
-    //borro contenido de las label por si hubiera algo
-    document.getElementById('nombre_alumno').innerHTML = "";
-    document.getElementById('saldo_alumno').innerHTML = "";
-    document.getElementById('teorica_alumno').innerHTML = "";
+    $("#cargar-dashboard-alumno").load("vistas/alumno/principal.html", function () {
+        //borro contenido de las label por si hubiera algo
+        document.getElementById('nombre_alumno').innerHTML = "";
+        document.getElementById('saldo_alumno').innerHTML = "";
+        document.getElementById('teorica_alumno').innerHTML = "";
 
-    let url = "php/alumno/datos_alumno.php";
+        let url = "php/alumno/datos_alumno.php";
 
-    $.post(url, {}, datosAlumno);
+        $.post(url, {}, datosAlumno);
+    });
 }
 
 // callback datos del alumno
@@ -317,9 +319,9 @@ function datosHistorial(datos) {
             fila.insertCell(0).innerHTML = fechaFormateada;
             fila.insertCell(1).innerHTML = horaFormateada;
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
-            if(estadoFormateado=="Activa"){
+            if (estadoFormateado == "Activa") {
                 fila.insertCell(3).innerHTML = estadoFormateado;
-            }else{
+            } else {
                 fila.insertCell(3).innerHTML = "Cancelada";
             }
             fila.insertCell(4).innerHTML = "<button id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
