@@ -30,8 +30,6 @@
 
     <label id="texto-resumen">Resumen</label>
 
-    <div id="datos-arriba">
-
         <div id="tarjetas-datos-alumno">
 
             <div class="latarjeta" id="estado-teorico">
@@ -79,11 +77,10 @@
         </div>
 
         <div id="historial_clases">
+            <label id="texto-historial">Mi Historial de Prácticas</label>
             <table id="tabla_historial"></table>
             <label id="info-alumno-historial"></label>
         </div>
-
-    </div>
 
 
     <div id="lasclases">

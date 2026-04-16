@@ -1,51 +1,47 @@
 /*************************** HEADER ***********************************/
 
-header
-{
-	display:flex;
-	width: 100%;
-	/*flex-direction:row;*/
-	align-items:center;
-	/*padding:15px 15px 8px 15px;*/
+header {
+    display: flex;
+    width: 100%;
+    /*flex-direction:row;*/
+    align-items: center;
+    /*padding:15px 15px 8px 15px;*/
 
-	background-color: white;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-	color: black;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    color: black;
     margin-bottom: 20px;
 }
 
-#imagen-header
-{
+#imagen-header {
     border: 0px solid blue;
     width: 15%;
 }
 
-#logo-header
-{
+#logo-header {
     width: 100%;
 }
 
 .separador {
     height: 40px;
     width: 1px;
-    background-color: #ddd; 
+    background-color: #ddd;
     margin: 0 10px;
 }
 
-#contenedor-texto-header
-{
+#contenedor-texto-header {
     display: flex;
     border: 0px solid red;
     margin-left: 10px;
 }
 
-#texto-header-alumno{
+#texto-header-alumno {
     font-weight: bold;
     font-size: 1.5rem;
     color: #1a56b6;
 }
 
-#datos-alumno-header{
+#datos-alumno-header {
     position: relative;
     display: flex;
     border: 0px solid blue;
@@ -54,20 +50,18 @@ header
     gap: 10px;
 }
 
-#foto_alumno{
+#foto_alumno {
     width: 20%;
     border-radius: 50%;
     border: 1px solid black;
 }
 
-#nombre_alumno
-{
+#nombre_alumno {
     text-align: center;
     cursor: pointer;
 }
 
-#logout
-{
+#logout {
     margin-right: 20px;
 }
 
@@ -90,7 +84,7 @@ header
     width: 85%;
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     border: 1px solid #eee;
     z-index: 1000;
     margin-top: 10px;
@@ -126,7 +120,7 @@ header
     text-align: center;
 }
 
-.boton-desplegable{
+.boton-desplegable {
     background: none;
     border: none;
     cursor: pointer;
@@ -154,89 +148,94 @@ hr {
     border-top: 1px solid #eee;
     border-left: 1px solid #eee;
     transform: rotate(45deg);
-    cursor:default;
-    z-index: -1; 
-}
-
-/*************************** PARTE ARRIBA ***********************************/
-#datos-arriba
-{
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
+    cursor: default;
+    z-index: -1;
 }
 
 /*************************** TARJETAS ***********************************/
-.contenedor-alumno{
+.contenedor-alumno {
     display: flex;
     flex-direction: column;
     margin: 10px;
     border: 0px solid blue;
+    gap: 10px;
 }
 
-#tarjetas-datos-alumno{
+#tarjetas-datos-alumno {
     display: flex;
     gap: 20px;
-    width: 60%;
+    width: 100%;
 }
 
-.latarjeta{
+.latarjeta {
     display: flex;
     flex-direction: column;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     gap: 15px;
     flex: 1;
     background-color: white;
 }
 
-#texto-resumen{
+#texto-resumen {
     font-weight: bold;
     font-size: 2rem;
     margin-bottom: 10px;
 }
 
-.titulo-tarjeta
-{
+.titulo-tarjeta {
     font-size: 0.95rem;
     font-weight: 600;
     color: #475569;
 }
 
-.contenedor-icono{
+.contenedor-icono {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.icono-tarjeta{
+.icono-tarjeta {
     width: 20px;
     height: 20px;
     /*Color del svg*/
     fill: #1a56b6;
 }
 
-.resultado-label{
+.resultado-label {
     font-size: 1.5rem;
     font-weight: bold;
     color: #1e293b;
 }
 
-.subtitulo-label{
+.subtitulo-label {
     font-size: 0.8rem;
     color: grey;
 }
 
 /*************************** TABLA HISTORIAL ***********************************/
 
-#historial_clases{
+#historial_clases {
     display: flex;
-    border: 0px solid red;
+    flex-direction: column;
+    border: 1px solid #e2e8f0;
     max-height: 60vh;
     overflow: auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    background-color: white;
+    padding: 10px;
+    border-radius: 12px;
+    width: 100%;
+}
+
+#texto-historial {
+    font-weight: bold;
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+    margin-left: 10px;
 }
 
 #historial_clases table {
@@ -246,58 +245,33 @@ hr {
     margin: auto;
     border-collapse: separate;
     border-spacing: 0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
 }
+
 #historial_clases table th,
 #historial_clases table td {
     vertical-align: middle;
-    padding: 10px;
-    border: 1px solid grey;
     font-family: calibri;
-    font-size: 18px;
+    font-size: 1rem;
+    padding: 7px 15px;
+    white-space: nowrap;
+    text-align: left;
+    border-bottom: 1px solid #f1f5f9;
 }
+
 #historial_clases table th {
     text-align: left;
-    background-color: #414141;
-    color: white;
-    position: sticky;
-    top: -5px;
-    z-index: 10;
+    color: black;
 }
+
 #historial_clases table tr:hover td {
     background-color: #d4e3cc;
 }
+
 #historial_clases table td {
     height: 55px;
 }
-#historial_clases table th:nth-child(1),
-#historial_clases table td:nth-child(1) {
-    width: 20%;
+
+#historial_clases table th:last-child,
+#historial_clases table td:last-child {
     text-align: center;
-}
-#historial_clases table th:nth-child(2),
-#historial_clases table td:nth-child(2) {
-    width: 15%;
-}
-#historial_clases table th:nth-child(3),
-#historial_clases table td:nth-child(3) {
-    width: 35%;
-    text-align: left;
-}
-#historial_clases table th:nth-child(4),
-#historial_clases table td:nth-child(4) {
-    width: 15%;
-    text-align: center;
-}
-#historial_clases table th:nth-child(5),
-#historial_clases table td:nth-child(5) {
-    width: 15%;
-    text-align: center;
-}
-#historial_clases table tr:last-child td:first-child {
-    border-bottom-left-radius: 10px;
-}
-#historial_clases table tr:last-child td:last-child {
-    border-bottom-right-radius: 10px;
 }

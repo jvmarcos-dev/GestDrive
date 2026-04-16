@@ -317,7 +317,11 @@ function datosHistorial(datos) {
             fila.insertCell(0).innerHTML = fechaFormateada;
             fila.insertCell(1).innerHTML = horaFormateada;
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
-            fila.insertCell(3).innerHTML = estadoFormateado;
+            if(estadoFormateado=="Activa"){
+                fila.insertCell(3).innerHTML = estadoFormateado;
+            }else{
+                fila.insertCell(3).innerHTML = "Cancelada";
+            }
             fila.insertCell(4).innerHTML = "<button id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
         }
     } else {
