@@ -158,7 +158,15 @@ hr {
     z-index: -1; 
 }
 
-/*************************** TARJETAS DATOS ***********************************/
+/*************************** PARTE ARRIBA ***********************************/
+#datos-arriba
+{
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/*************************** TARJETAS ***********************************/
 .contenedor-alumno{
     display: flex;
     flex-direction: column;
@@ -169,6 +177,7 @@ hr {
 #tarjetas-datos-alumno{
     display: flex;
     gap: 20px;
+    width: 60%;
 }
 
 .latarjeta{
@@ -179,13 +188,14 @@ hr {
     padding: 20px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     gap: 15px;
-    width: 33%;
+    flex: 1;
     background-color: white;
 }
 
 #texto-resumen{
     font-weight: bold;
-    font-size: 25px;
+    font-size: 2rem;
+    margin-bottom: 10px;
 }
 
 .titulo-tarjeta
@@ -193,11 +203,6 @@ hr {
     font-size: 0.95rem;
     font-weight: 600;
     color: #475569;
-}
-
-.resultado-label{
-    font-size: 24px;
-    font-weight: bold;
 }
 
 .contenedor-icono{
@@ -215,13 +220,84 @@ hr {
 }
 
 .resultado-label{
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #1e293b;
 }
 
 .subtitulo-label{
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     color: grey;
 }
 
+/*************************** TABLA HISTORIAL ***********************************/
+
+#historial_clases{
+    display: flex;
+    border: 0px solid red;
+    max-height: 60vh;
+    overflow: auto;
+}
+
+#historial_clases table {
+    width: 100%;
+    border: 0px solid red;
+    background-color: white;
+    margin: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+#historial_clases table th,
+#historial_clases table td {
+    vertical-align: middle;
+    padding: 10px;
+    border: 1px solid grey;
+    font-family: calibri;
+    font-size: 18px;
+}
+#historial_clases table th {
+    text-align: left;
+    background-color: #414141;
+    color: white;
+    position: sticky;
+    top: -5px;
+    z-index: 10;
+}
+#historial_clases table tr:hover td {
+    background-color: #d4e3cc;
+}
+#historial_clases table td {
+    height: 55px;
+}
+#historial_clases table th:nth-child(1),
+#historial_clases table td:nth-child(1) {
+    width: 20%;
+    text-align: center;
+}
+#historial_clases table th:nth-child(2),
+#historial_clases table td:nth-child(2) {
+    width: 15%;
+}
+#historial_clases table th:nth-child(3),
+#historial_clases table td:nth-child(3) {
+    width: 35%;
+    text-align: left;
+}
+#historial_clases table th:nth-child(4),
+#historial_clases table td:nth-child(4) {
+    width: 15%;
+    text-align: center;
+}
+#historial_clases table th:nth-child(5),
+#historial_clases table td:nth-child(5) {
+    width: 15%;
+    text-align: center;
+}
+#historial_clases table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+#historial_clases table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}

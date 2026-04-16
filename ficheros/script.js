@@ -139,7 +139,8 @@ function datosAlumno(datos) {
         }
         document.getElementById('nombre_alumno').innerHTML = datos.nombre.charAt(0).toUpperCase() + datos.nombre.slice(1) +
             " " + datos.apellidos.charAt(0).toUpperCase() + datos.apellidos.slice(1);
-        document.getElementById('saldo_alumno').innerHTML = datos.saldo + " clases restantes";
+        document.getElementById('saldo_alumno').innerHTML = datos.saldo
+        document.getElementById('resultado2').innerHTML = "clases restantes";
         document.getElementById('teorica_alumno').innerHTML = datos.teorico.toUpperCase();
     } else {
         document.getElementById('notificacion_global').innerHTML = "<font color='red'>Se ha producido un ERROR</font>";
