@@ -320,9 +320,9 @@ function datosHistorial(datos) {
             fila.insertCell(1).innerHTML = horaFormateada;
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
             if (estadoFormateado == "Activa") {
-                fila.insertCell(3).innerHTML = estadoFormateado;
+                fila.insertCell(3).innerHTML = "<label class='estado-activa'>" + estadoFormateado + "</label>";
             } else {
-                fila.insertCell(3).innerHTML = "Cancelada";
+                fila.insertCell(3).innerHTML = "<label class='estado-cancelada'>Cancelada</label>";
             }
             if (estadoFormateado == "Activa") {
                 fila.insertCell(4).innerHTML = "<button class='boton-cancelar' id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
