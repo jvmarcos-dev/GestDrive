@@ -112,7 +112,7 @@ header {
 }
 
 #nombre_alumno {
-cursor: pointer;
+    cursor: pointer;
     font-size: 0.95rem;
     font-weight: 500;
     color: #334155;
@@ -222,8 +222,9 @@ hr {
     cursor: default;
     z-index: -1;
 }
+
 /*************************** GENERAL ***********************************/
-#cargar-dashboard-alumno{
+#cargar-dashboard-alumno {
     display: flex;
     flex-direction: column;
     border: solid 0px blue;
@@ -263,7 +264,8 @@ hr {
 }
 
 .estado-apto {
-    color: #10b981;;
+    color: #10b981;
+    ;
 }
 
 #texto-resumen {
@@ -303,8 +305,8 @@ hr {
     color: grey;
 }
 
-#fecha, 
-#profesor, 
+#fecha,
+#profesor,
 #info_alumno {
     display: block;
 }
@@ -427,7 +429,7 @@ hr {
     font-size: 1rem;
 }
 
-.estado-activa, 
+.estado-activa,
 .estado-cancelada,
 .estado-realizada {
     display: inline-block;
@@ -442,7 +444,7 @@ hr {
 }
 
 .estado-activa {
-    background-color: #e6f4ea; 
+    background-color: #e6f4ea;
     color: #137333;
 }
 
@@ -452,8 +454,67 @@ hr {
 }
 
 .estado-cancelada {
-    background-color: #fce8e6; 
+    background-color: #fce8e6;
     color: #c5221f;
+}
+
+/*************************** TABLA CLASES ***********************************/
+.lista-clases {
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px 25px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin: 10px;
+}
+
+.cabecera-tabla-controles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.titulo-seccion-tabla {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+}
+
+.cabecera-der {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.titulo-filtro {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #64748b;
+    margin: 0;
+}
+
+.select-profesor {
+    width: 220px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    color: #334155;
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.select-profesor:hover, 
+.select-profesor:focus {
+    background-color: white;
+    border-color: #1a56b6;
+    box-shadow: 0 0 0 3px rgba(26, 86, 182, 0.1);
 }
 
 /*************************** FOOTER ***********************************/
@@ -468,16 +529,18 @@ footer {
     justify-content: center;
     gap: 15px;
 }
+
 .enlace-footer {
     color: #94a3b8;
     cursor: pointer;
 }
+
 .enlace-footer:hover {
     color: #1a56b6;
 }
 
 @media (max-width: 850px) {
-    
+
     header {
         height: auto;
         flex-wrap: wrap;
@@ -486,10 +549,10 @@ footer {
     }
 
     #menu-central {
-         /* Desactivamos el absolute */
+        /* Desactivamos el absolute */
         position: static;
         /* Desactivamos el centrado forzado */
-        transform: none; 
+        transform: none;
         width: 100%;
         justify-content: center;
         /*Se pone como ultimo elemento para que salga en la linea de abajo*/
@@ -513,7 +576,7 @@ footer {
 
     .desplegable-header-alumno {
         position: fixed;
-        top: auto; 
+        top: auto;
         bottom: 0;
         left: 0;
         width: 100%;
@@ -521,11 +584,11 @@ footer {
         box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
         padding-top: 10px;
         padding-bottom: 25px;
-        transform: translateY(100%); 
+        transform: translateY(100%);
     }
 
     .desplegable-header-alumno.mostrar-desplegable {
-        transform: translateY(0); 
+        transform: translateY(0);
     }
 
     .desplegable-header-alumno::before {

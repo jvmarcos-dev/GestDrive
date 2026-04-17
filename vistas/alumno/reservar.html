@@ -1,10 +1,16 @@
-<div class="panel-filtros-izquierdo">
-    <label for="filtro-profesor" class="titulo-filtro">Profesor</label>
-    
-    <select id="filtro-profesor" class="select-profesor" onchange="filtrarPorProfesor()">
-        <option value="todos">Todos</option>
-        </select>
-</div>
+<div class="lista-clases">
+    <div class="cabecera-tabla-controles">
+        <div class="cabecera-izq">
+            <h3 class="titulo-seccion-tabla">Clases Disponibles</h3>
+        </div>
+
+        <div class="cabecera-der">
+            <label for="filtro-profesor" class="titulo-filtro">Profesor:</label>
+            <select id="filtro-profesor" class="select-profesor" onchange="filtrarPorProfesor()">
+                <option value="todos">Todos</option>
+            </select>
+        </div>
+    </div>
 
     <div id="lasclases">
         <table id="tabla_clases"></table>
