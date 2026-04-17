@@ -10,8 +10,8 @@
     </div>
 
     <div id="menu-central">
-        <label class="cambiar-ventana activo">Resumen</label>
-        <a class="cambiar-ventana">Reservar clases</a>
+        <label class="cambiar-ventana activo" id="header-resumen" onclick="cambiarVentana(1)">Resumen</label>
+        <a class="cambiar-ventana" id="header-reservar" onclick="cambiarVentana(2)">Reservar clases</a>
     </div>
 
     <div id="datos-alumno-header" onclick="cargarDesplegableAlumno(event)" >

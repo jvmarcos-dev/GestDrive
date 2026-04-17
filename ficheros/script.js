@@ -130,7 +130,6 @@ function inicio_alumno() {
 function datosAlumno(datos) {
     if (datos.nombre) {
         reservaActiva();
-        clasesDisponibles();
         historialClases();
         if (datos.foto != '') {
             //muestro la imagen del alumno
@@ -339,7 +338,7 @@ function datosHistorial(datos) {
         document.getElementById('info-alumno-historial').innerHTML = "Aún no has realizado ninguna práctica con nosotros.";
         document.getElementById('no-clases').innerHTML =
             `
-        <button class="boton-principal boton-reservar" onclick="cambiarVista('reservar')">
+        <button class="boton-principal boton-reservar" onclick="cambiarVentana(2)">
             Reservar mi primera clase
         </button>
         `;
@@ -422,7 +421,6 @@ function reservarClase(datos) {
         //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
         document.getElementById('notificacion_global').innerHTML = "Reserva registrada correctamente";
         if (tipoUsuario == "alumno") {
-            clasesDisponibles();
             historialClases();
             inicio_alumno();
         } else {
@@ -474,7 +472,6 @@ function cancelarClase(datos, idBoton) {
             celdaEstado.innerHTML = (datos == 1) ? "Cancelada" : "Cancelada Tarde";
             boton.disabled = true;
         }
-        clasesDisponibles();
         inicio_alumno();
         reservaActiva();
     } else {
@@ -1121,3 +1118,24 @@ document.addEventListener('click', function (event) {
         }
     }
 });
+
+// ============================================================
+// ESTILOS - HEADER ALUMNO
+// ============================================================
+
+function cambiarVentana(ventana){
+    let resumen=document.getElementById('header-resumen');
+    let reservar=document.getElementById('header-reservar');
+    if(ventana==2 && resumen.classList.contains('activo')){
+        resumen.classList.remove('activo')
+        reservar.classList.add('activo')
+        $("#cargar-dashboard-alumno").load("vistas/alumno/reservar.html", function () {
+            clasesDisponibles();
+        });
+
+    }else if(ventana==1 && reservar.classList.contains('activo')){
+        reservar.classList.remove('activo')
+        resumen.classList.add('activo')
+        inicio_alumno()
+    }
+}
