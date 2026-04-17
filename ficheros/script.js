@@ -314,6 +314,40 @@ function datosClases(datos) {
     }
 }
 
+function filtrarPorProfesor() {
+    //obtengo el id del profesor que se acaba de seleccionar
+    let select = document.getElementById("filtro-profesor");
+    let idSeleccionado = select.value;
+    
+    //busco la tabla que está activa, ya que servirá tanto para alumno como para administrador
+    let table = (tipoUsuario == "alumno") ? document.getElementById("tabla_clases") : document.getElementById("proximas_clases_alumno");
+    
+    //si la tabla no existe ya que no hay clases, salgo de la función para evitar errores
+    if (!table || table.getElementsByTagName("tbody").length === 0) return;
+
+    //obtengo todas las tr de la tabla
+    let filas = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+    
+    //recorro las tr
+    for (let i = 0; i < filas.length; i++) {
+        let fila = filas[i];
+         //se lee el ID oculto
+        let idFila = fila.getAttribute("data-profesor");
+        
+        //si el value es todos
+        if (idSeleccionado == "todos") {
+            //se muestra todo y quito cualquier display none que pudiera tener
+            fila.style.display = ""; 
+        } else if (idSeleccionado == idFila) {
+            //si el id de la fila (data-profesor) que estoy recorriendo coincide con el id del select, se muestra
+            fila.style.display = "";
+        } else {
+            //si no, se oculta
+            fila.style.display = "none";
+        }
+    }
+}
+
 // ============================================================
 // PANEL ALUMNO - HISTORIAL
 // ============================================================
