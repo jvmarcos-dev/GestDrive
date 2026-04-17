@@ -380,7 +380,9 @@ function datosHistorial(datos) {
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
             if (estadoFormateado == "Activa") {
                 fila.insertCell(3).innerHTML = "<label class='estado-activa'>" + estadoFormateado + "</label>";
-            } else {
+            } else if(estadoFormateado=="Realizada"){
+                fila.insertCell(3).innerHTML = "<label class='estado-realizada'>" + estadoFormateado + "</label>";
+            }else{
                 fila.insertCell(3).innerHTML = "<label class='estado-cancelada'>Cancelada</label>";
             }
             if (estadoFormateado == "Activa") {

@@ -428,7 +428,8 @@ hr {
 }
 
 .estado-activa, 
-.estado-cancelada {
+.estado-cancelada,
+.estado-realizada {
     display: inline-block;
     padding: 3px 0;
     width: 85px;
@@ -443,6 +444,11 @@ hr {
 .estado-activa {
     background-color: #e6f4ea; 
     color: #137333;
+}
+
+.estado-realizada {
+    background-color: #e0f2fe;
+    color: #0369a1;
 }
 
 .estado-cancelada {
