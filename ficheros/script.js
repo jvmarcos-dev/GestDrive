@@ -142,9 +142,9 @@ function datosAlumno(datos) {
             " " + datos.apellidos.charAt(0).toUpperCase() + datos.apellidos.slice(1);
         document.getElementById('saldo_alumno').innerHTML = datos.saldo
         document.getElementById('resultado2').innerHTML = "clases restantes";
-        if(datos.teorico=="apto"){
+        if (datos.teorico == "apto") {
             document.getElementById('teorica_alumno').innerHTML = "<label class='estado-apto'>" + datos.teorico.toUpperCase() + "</label>";
-        }else{
+        } else {
             document.getElementById('teorica_alumno').innerHTML = "<label class='estado-pendiente'>" + datos.teorico.toUpperCase() + "</label>";
         }
     } else {
@@ -180,7 +180,7 @@ function datosReserva(datos) {
         document.getElementById('fecha').innerHTML = fechaFormateada;
         document.getElementById('profesor').innerHTML = datos.profesor.charAt(0).toUpperCase() + datos.profesor.slice(1);
     } else {
-        document.getElementById('info_alumno').style.display="block";
+        document.getElementById('info_alumno').style.display = "block";
         document.getElementById('info_alumno').innerHTML = "No hay clases proximas";
     }
 }
@@ -195,15 +195,39 @@ function clasesDisponibles() {
 }
 
 function datosClases(datos) {
-    if (tipoUsuario == "alumno") {
-        var table = document.getElementById("tabla_clases");
-    } else {
-        var table = document.getElementById("proximas_clases_alumno");
-    }
+    let table = (tipoUsuario == "alumno") ? document.getElementById("tabla_clases") : document.getElementById("proximas_clases_alumno");
+    let selectProfesor = document.getElementById("filtro-profesor");
+
     table.innerHTML = "";
 
     if (datos != 0) {
-        // cabecera
+        if (selectProfesor) {
+            selectProfesor.innerHTML = '<option value="todos">Todos</option>';
+            //array para no repetir ids
+            let profesoresAñadidos = [];
+
+            for (let i = 0; i < datos.length; i++) {
+                let idProfesor = datos[i].id_profesor;
+                let nombreP = datos[i].nombre_profesor.charAt(0).toUpperCase() + datos[i].nombre_profesor.slice(1);
+                let apellidosP = datos[i].apellidos_profesor.charAt(0).toUpperCase() + datos[i].apellidos_profesor.slice(1);
+                let nombreCompleto = nombreP + ' ' + apellidosP;
+
+                //si el ID de este profesor aún no está en el array, se añade al select
+                if (!profesoresAñadidos.includes(idProfesor)) {
+                    //se añade al array para marcarlo como añadido
+                    profesoresAñadidos.push(idProfesor);
+
+                    //creo un elemento option de html
+                    let option = document.createElement('option');
+                    //pongo como value del option el id del profesor
+                    option.value = idProfesor;
+                    //pongo como texto que se ve el nombre completo
+                    option.textContent = nombreCompleto;
+                    //inserto este option justo debajo del ultimo creado
+                    selectProfesor.appendChild(option);
+                }
+            }
+        }
         var header = table.createTHead();
         var fila = header.insertRow(0);
 
@@ -223,13 +247,10 @@ function datosClases(datos) {
         th.innerHTML = "<b>Acción</b>";
         fila.appendChild(th);
 
-        // cuerpo
         var body = table.createTBody();
         for (var i = 0; i < datos.length; i++) {
-            //Con esto parseo la fecha y hora para que salgan en un buen formato
             let fecha = new Date(datos[i].fecha_hora);
 
-            //Aqui tomo el nombre del dia de la semana correspondiente
             let diaSemana = fecha.toLocaleDateString('es-ES', {
                 weekday: 'long'
             });
@@ -239,12 +260,43 @@ function datosClases(datos) {
                 minute: '2-digit'
             });
 
-            //Este es el resultado de la conversión
             let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia;
             let horaFormateada = hora + 'h';
             let nombreProfesor = datos[i].nombre_profesor.charAt(0).toUpperCase() + datos[i].nombre_profesor.slice(1);
             let apellidosProfesor = datos[i].apellidos_profesor.charAt(0).toUpperCase() + datos[i].apellidos_profesor.slice(1);
+
             var fila = body.insertRow(i);
+
+            //desde HTML5, se pueden crear atributos personalizados que empiecen por data-*.
+            //en este caso le he puesto data-profesor pero lo de después no importa.
+            //esto sirve para guardar dentro del tr el id del profesor sin que el usuario lo vea,
+            //asi despues para que en la tabla solo se muestren las clases de este profesor será mucho más facil
+            //porque solo tengo que buscar los que tienen en este atributo el id del profesor que he seleccionado en el select.
+
+            //POR EJEMPLO:
+
+            //sin el data-profesor, la tabla creada sería algo así:
+
+            /*<tr>
+                <td>DOMINGO 19</td>
+                <td>14:14h</td>
+                <td>Marta Gómez Rey</td>
+                <td><button>Reservar</button></td>
+            </tr> */
+
+            //ahora, al añadir este atrbuto, se vería así:
+
+            /*<tr data-profesor="3">
+                <td>DOMINGO 19</td>
+                <td>14:14h</td>
+                <td>Marta Gómez Rey</td>
+                <td><button>Reservar</button></td>
+            </tr> */
+
+            //de esta forma, luego en el select estoy guardando al seleccionar a marta el value 3
+            //y buscare los que tengan data-profesor="3" para solo mostrar estos.
+            fila.setAttribute('data-profesor', datos[i].id_profesor);
+
             fila.insertCell(0).innerHTML = fechaFormateada;
             fila.insertCell(1).innerHTML = horaFormateada;
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
@@ -256,6 +308,9 @@ function datosClases(datos) {
         } else {
             document.getElementById('no_clases_proximas').innerHTML = "No hay clases disponibles";
         }
+
+        //si no hay clases, vacio el select dejándolo solo en todos
+        if (selectProfesor) selectProfesor.innerHTML = '<option value="todos">Todos</option>';
     }
 }
 
@@ -343,7 +398,7 @@ function datosHistorial(datos) {
         </button>
         `;
 
-        document.getElementById('info-alumno-historial').style.display= "block"
+        document.getElementById('info-alumno-historial').style.display = "block"
     }
 }
 
@@ -1123,17 +1178,17 @@ document.addEventListener('click', function (event) {
 // ESTILOS - HEADER ALUMNO
 // ============================================================
 
-function cambiarVentana(ventana){
-    let resumen=document.getElementById('header-resumen');
-    let reservar=document.getElementById('header-reservar');
-    if(ventana==2 && resumen.classList.contains('activo')){
+function cambiarVentana(ventana) {
+    let resumen = document.getElementById('header-resumen');
+    let reservar = document.getElementById('header-reservar');
+    if (ventana == 2 && resumen.classList.contains('activo')) {
         resumen.classList.remove('activo')
         reservar.classList.add('activo')
         $("#cargar-dashboard-alumno").load("vistas/alumno/reservar.html", function () {
             clasesDisponibles();
         });
 
-    }else if(ventana==1 && reservar.classList.contains('activo')){
+    } else if (ventana == 1 && reservar.classList.contains('activo')) {
         reservar.classList.remove('activo')
         resumen.classList.add('activo')
         inicio_alumno()

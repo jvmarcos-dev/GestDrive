@@ -1,4 +1,13 @@
-<div id="lasclases">
-    <table id="tabla_clases"></table>
-    <label id="info-clases-alumno"></label>
+<div class="panel-filtros-izquierdo">
+    <label for="filtro-profesor" class="titulo-filtro">Profesor</label>
+    
+    <select id="filtro-profesor" class="select-profesor" onchange="filtrarPorProfesor()">
+        <option value="todos">Todos</option>
+        </select>
+</div>
+
+    <div id="lasclases">
+        <table id="tabla_clases"></table>
+        <label id="info-clases-alumno"></label>
+    </div>
 </div>

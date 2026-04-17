@@ -9,7 +9,7 @@ require('../../ficheros/conexion.php');
 
 session_start();
 
-$consulta = "SELECT CLASES_PRACTICAS.ID AS id_clase, FECHA_HORA, NOMBRE, APELLIDOS
+$consulta = "SELECT CLASES_PRACTICAS.ID AS id_clase, FECHA_HORA, NOMBRE, APELLIDOS, USUARIOS.id AS ID_PROFESOR
 FROM CLASES_PRACTICAS INNER JOIN USUARIOS
 ON CLASES_PRACTICAS.ID_PROFESOR=USUARIOS.ID
 WHERE ESTADO='libre'
@@ -30,6 +30,7 @@ if ($nregistros == 0) {
         $clase['fecha_hora'] = $fila['FECHA_HORA'];
         $clase['nombre_profesor'] = $fila['NOMBRE'];
         $clase['apellidos_profesor'] = $fila['APELLIDOS'];
+        $clase['id_profesor'] = $fila['ID_PROFESOR'];
         $respuesta[] = $clase;
     }
     header("Content-type:application/json; charset=utf-8");
