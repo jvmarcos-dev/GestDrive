@@ -517,6 +517,95 @@ hr {
     box-shadow: 0 0 0 3px rgba(26, 86, 182, 0.1);
 }
 
+#tabla_clases, #proximas_clases_alumno {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+/* --- BLOQUE DEL DÍA --- */
+.tarjeta-dia-reserva {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* --- CABECERA DEL DÍA  --- */
+.cabecera-dia {
+    background-color: #f1f5f9;
+    color: #334155;
+    font-size: 0.85rem;
+    border: 0px solid red;
+    font-weight: 700;
+    padding: 10px 15px;
+    border-bottom: 1px solid #e2e8f0;
+    letter-spacing: 0.5px;
+}
+
+/* --- CONTENEDOR DE LAS PÍLDORAS --- */
+.contenedor-pildoras {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 15px;
+}
+
+/* --- BOTÓN DE LA HORA --- */
+.pildora-hora-boton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 0px solid red;
+    justify-content: center;
+    background-color: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 10px 16px;
+    cursor: pointer;
+    min-width: 110px;
+    transition: all 0.2s ease;
+}
+
+.pildora-hora-boton:hover {
+    border-color: #1a56b6;
+    background-color: #f8fafc;
+}
+
+/* --- TEXTOS DENTRO DEL BOTÓN --- */
+.pildora-hora-texto {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 2px;
+    border: 0px solid red;
+    cursor: pointer;
+}
+
+/* --- NOMBRE PROFESOR --- */
+.pildora-accion-texto {
+    display: block;
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 500;
+    border: 0px solid red;
+    cursor: pointer;
+}
+
+/* --- MENSAJES DE VACÍO --- */
+.mensaje-vacio-filtro {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
+    font-style: italic;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    border: 1px dashed #cbd5e1;
+}
+
 /*************************** FOOTER ***********************************/
 
 footer {
