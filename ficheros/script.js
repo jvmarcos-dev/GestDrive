@@ -5,6 +5,7 @@ let tipoUsuario;
 let idAlumnoSeleccionadoAdmin;
 
 let timeoutBusqueda;
+let datosClasesGlobal = [];
 // ============================================================
 // INICIO Y NAVEGACIÓN
 // ============================================================
@@ -194,11 +195,13 @@ function clasesDisponibles() {
     $.post(url, datosClases);
 }
 
+//genero el select
 function datosClases(datos) {
-    let table = (tipoUsuario == "alumno") ? document.getElementById("tabla_clases") : document.getElementById("proximas_clases_alumno");
+    //añado las clases al array de datosClasesGlobal para así poder trabajar con ello.
+    //esto lo hago, ya que luego si el usuario cambia el valor del select, cambiaré lo que es muestra en pantalla
+    //y de esta forma ahorro pedir al servidor otra vez todos los datos
+    datosClasesGlobal = datos;
     let selectProfesor = document.getElementById("filtro-profesor");
-
-    table.innerHTML = "";
 
     if (datos != 0) {
         if (selectProfesor) {
@@ -228,80 +231,7 @@ function datosClases(datos) {
                 }
             }
         }
-        var header = table.createTHead();
-        var fila = header.insertRow(0);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Fecha</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Hora</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Profesor</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Acción</b>";
-        fila.appendChild(th);
-
-        var body = table.createTBody();
-        for (var i = 0; i < datos.length; i++) {
-            let fecha = new Date(datos[i].fecha_hora);
-
-            let diaSemana = fecha.toLocaleDateString('es-ES', {
-                weekday: 'long'
-            });
-            let dia = fecha.getDate();
-            let hora = fecha.toLocaleTimeString('es-ES', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-
-            let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia;
-            let horaFormateada = hora + 'h';
-            let nombreProfesor = datos[i].nombre_profesor.charAt(0).toUpperCase() + datos[i].nombre_profesor.slice(1);
-            let apellidosProfesor = datos[i].apellidos_profesor.charAt(0).toUpperCase() + datos[i].apellidos_profesor.slice(1);
-
-            var fila = body.insertRow(i);
-
-            //desde HTML5, se pueden crear atributos personalizados que empiecen por data-*.
-            //en este caso le he puesto data-profesor pero lo de después no importa.
-            //esto sirve para guardar dentro del tr el id del profesor sin que el usuario lo vea,
-            //asi despues para que en la tabla solo se muestren las clases de este profesor será mucho más facil
-            //porque solo tengo que buscar los que tienen en este atributo el id del profesor que he seleccionado en el select.
-
-            //POR EJEMPLO:
-
-            //sin el data-profesor, la tabla creada sería algo así:
-
-            /*<tr>
-                <td>DOMINGO 19</td>
-                <td>14:14h</td>
-                <td>Marta Gómez Rey</td>
-                <td><button>Reservar</button></td>
-            </tr> */
-
-            //ahora, al añadir este atrbuto, se vería así:
-
-            /*<tr data-profesor="3">
-                <td>DOMINGO 19</td>
-                <td>14:14h</td>
-                <td>Marta Gómez Rey</td>
-                <td><button>Reservar</button></td>
-            </tr> */
-
-            //de esta forma, luego en el select estoy guardando al seleccionar a marta el value 3
-            //y buscare los que tengan data-profesor="3" para solo mostrar estos.
-            fila.setAttribute('data-profesor', datos[i].id_profesor);
-
-            fila.insertCell(0).innerHTML = fechaFormateada;
-            fila.insertCell(1).innerHTML = horaFormateada;
-            fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
-            fila.insertCell(3).innerHTML = "<button onclick='reservar(" + datos[i].id_clase + ")'>Reservar</button>";
-        }
+        pintoClases('todos');
     } else {
         if (tipoUsuario == "alumno") {
             document.getElementById('info-clases-alumno').innerHTML = "No hay clases disponibles";
@@ -315,36 +245,115 @@ function datosClases(datos) {
 }
 
 function filtrarPorProfesor() {
-    //obtengo el id del profesor que se acaba de seleccionar
     let select = document.getElementById("filtro-profesor");
-    let idSeleccionado = select.value;
-    
-    //busco la tabla que está activa, ya que servirá tanto para alumno como para administrador
-    let table = (tipoUsuario == "alumno") ? document.getElementById("tabla_clases") : document.getElementById("proximas_clases_alumno");
-    
-    //si la tabla no existe ya que no hay clases, salgo de la función para evitar errores
-    if (!table || table.getElementsByTagName("tbody").length === 0) return;
+    pintoClases(select.value);
+}
 
-    //obtengo todas las tr de la tabla
-    let filas = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-    
-    //recorro las tr
-    for (let i = 0; i < filas.length; i++) {
-        let fila = filas[i];
-         //se lee el ID oculto
-        let idFila = fila.getAttribute("data-profesor");
-        
-        //si el value es todos
-        if (idSeleccionado == "todos") {
-            //se muestra todo y quito cualquier display none que pudiera tener
-            fila.style.display = ""; 
-        } else if (idSeleccionado == idFila) {
-            //si el id de la fila (data-profesor) que estoy recorriendo coincide con el id del select, se muestra
-            fila.style.display = "";
-        } else {
-            //si no, se oculta
-            fila.style.display = "none";
+function pintoClases(filtroSeleccionado) {
+    //para saber que contenedor uso
+    let contenedor = (tipoUsuario == "alumno") ? document.getElementById("tabla_clases") : document.getElementById("proximas_clases_alumno");
+    //elemento html en el que digo que no hay clases.
+    let infoVacio = document.getElementById('info-clases-alumno');
+
+    //limpio el contenedor
+    contenedor.innerHTML = "";
+
+    //php si no hay clases devuelve un 0.
+    if (datosClasesGlobal == 0) {
+        if (infoVacio) infoVacio.innerHTML = "No hay clases disponibles";
+        return;
+    } else {
+        if (infoVacio) infoVacio.innerHTML = "";
+    }
+
+    //creo un array con el que trabajar los datos seleccionados
+    let clasesAFiltrar = [];
+
+    if (filtroSeleccionado == 'todos') {
+        //si en el select elige todos, copio la lista completa de clases
+        clasesAFiltrar = datosClasesGlobal;
+    } else {
+        //si elige un profesor, recorro la lista y selecciono las clases de este profesor
+        for (let i = 0; i < datosClasesGlobal.length; i++) {
+            //selecciono la clase a analizar
+            let claseActual = datosClasesGlobal[i];
+
+            //compruebo si le pertenece al profesor seleccionado en el select
+            if (claseActual.id_profesor == filtroSeleccionado) {
+                //si coincide, meto esta clase en el array
+                clasesAFiltrar.push(claseActual);
+            }
         }
+    }
+
+    if (clasesAFiltrar.length == 0) {
+        contenedor.innerHTML = "<div class='mensaje-vacio-filtro'>Este profesor no tiene clases disponibles.</div>";
+        return;
+    }
+
+    let diaAnterior = "";
+    //variable para guardar el div donde meteremos las horas de ese día
+    let divContenedorHoras = null;
+
+    for (let i = 0; i < clasesAFiltrar.length; i++) {
+        let clase = clasesAFiltrar[i];
+        let fecha = new Date(clase.fecha_hora);
+        let diaActual = fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
+
+        //Compruebo si el dia de esta clase es distinto al dia con el que se estaba trabajando.
+        //esto sirve ya que 2 profesores pueden tener clases en el mismo dia, por tanto no tengo que
+        //crear un nuevo contenedor para ese dia.
+
+        //por ejemplo si carlos tiene clases el lunes y marta tambien, primero genero las clases de carlos
+        //y pongo arriba lunes y después genero las clases de marta. Como el lunes ya está creado, no lo hago de nuevo
+        //y por tanto ignoro este if. Cuando llegue al martes, crearé un nuevo div
+        if (diaActual != diaAnterior) {
+            //guardo el nuevo dia
+            diaAnterior = diaActual;
+
+            //div con el nombre del día
+            let divBloqueDia = document.createElement('div');
+            divBloqueDia.className = 'tarjeta-dia-reserva';
+
+            let divCabeceraDia = document.createElement('div');
+            divCabeceraDia.className = 'cabecera-dia';
+            divCabeceraDia.textContent = diaActual;
+            //lo inserto justo debajo de divBloqueDia
+            divBloqueDia.appendChild(divCabeceraDia);
+
+            //Creo el contenedor de las pildoras y lo guardo en la variable para poder seguir
+            //metiéndole horas en las siguientes vueltas del bucle
+            divContenedorHoras = document.createElement('div');
+            divContenedorHoras.className = 'contenedor-pildoras';
+
+            //lo añado a la pantalla
+            divBloqueDia.appendChild(divContenedorHoras);
+            contenedor.appendChild(divBloqueDia);
+        }
+
+        //se dibuja la pildora con las horas.
+        //aqui el contenedor del dia concreto ya está creado, por lo que solo tengo que meter dentro las horas
+
+        let horaFormateada = fecha.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) + 'h';
+
+        //de forma predeterminada, en cada boton pone debajo reservar,
+        //pero si en el select se ponen todos los profesores, se pone el nombre del profesor para diferenciar
+        let textoInferior = "Reservar";
+        if (filtroSeleccionado == 'todos') {
+            textoInferior = clase.nombre_profesor.charAt(0).toUpperCase() + clase.nombre_profesor.slice(1);
+        }
+
+        let botonPildora = document.createElement('button');
+        botonPildora.className = 'pildora-hora-boton';
+        botonPildora.onclick = function() { reservar(clase.id_clase); };
+
+        botonPildora.innerHTML = `
+            <label class="pildora-hora-texto">${horaFormateada}</label>
+            <label class="pildora-accion-texto">${textoInferior}</label>
+        `;
+
+        //Se añade la píldora al contenedor del día actual
+        divContenedorHoras.appendChild(botonPildora);
     }
 }
 
@@ -414,9 +423,9 @@ function datosHistorial(datos) {
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
             if (estadoFormateado == "Activa") {
                 fila.insertCell(3).innerHTML = "<label class='estado-activa'>" + estadoFormateado + "</label>";
-            } else if(estadoFormateado=="Realizada"){
+            } else if (estadoFormateado == "Realizada") {
                 fila.insertCell(3).innerHTML = "<label class='estado-realizada'>" + estadoFormateado + "</label>";
-            }else{
+            } else {
                 fila.insertCell(3).innerHTML = "<label class='estado-cancelada'>Cancelada</label>";
             }
             if (estadoFormateado == "Activa") {
