@@ -574,6 +574,13 @@ hr {
     background-color: #f8fafc;
 }
 
+.pildora-hora-boton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #f8fafc;
+    border-color: #e2e8f0;
+}
+
 /* --- TEXTOS DENTRO DEL BOTÓN --- */
 .pildora-hora-texto {
     display: block;
@@ -604,6 +611,19 @@ hr {
     background-color: #f8fafc;
     border-radius: 8px;
     border: 1px dashed #cbd5e1;
+}
+
+/* --- CLASE RESERVADA CON EXITO --- */
+.pildora-reservada-exito {
+    background-color: #ecfdf5 !important;
+    border-color: #10b981 !important;
+    cursor: not-allowed !important;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.pildora-reservada-exito .pildora-accion-texto {
+    color: #10b981 !important;
+    font-weight: 700;
 }
 
 /*************************** FOOTER ***********************************/

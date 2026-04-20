@@ -34,7 +34,7 @@
     <!-- **************************** FOOTER ************************************************ -->
 
     <!-- Ejemplo de notificacion con la que trabajar generado por IA. Luego la modificare para hacer yo una-->
-    <!-- <div id="notificacion_global" style="
+    <div id="notificacion_global" style="
         position: fixed; 
         top: 80px; 
         right: 20px; 
@@ -45,7 +45,7 @@
         display: block; 
         border-radius: 5px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-    </div> -->
+    </div>
 </body>
 
 </html>

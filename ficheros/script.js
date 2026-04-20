@@ -298,7 +298,11 @@ function pintoClases(filtroSeleccionado) {
     for (let i = 0; i < clasesAFiltrar.length; i++) {
         let clase = clasesAFiltrar[i];
         let fecha = new Date(clase.fecha_hora);
-        let diaActual = fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
+        let diaActual = fecha.toLocaleDateString('es-ES', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long'
+        }).toUpperCase();
 
         //Compruebo si el dia de esta clase es distinto al dia con el que se estaba trabajando.
         //esto sirve ya que 2 profesores pueden tener clases en el mismo dia, por tanto no tengo que
@@ -334,7 +338,10 @@ function pintoClases(filtroSeleccionado) {
         //se dibuja la pildora con las horas.
         //aqui el contenedor del dia concreto ya está creado, por lo que solo tengo que meter dentro las horas
 
-        let horaFormateada = fecha.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) + 'h';
+        let horaFormateada = fecha.toLocaleTimeString('es-ES', {
+            hour: '2-digit',
+            minute: '2-digit'
+        }) + 'h';
 
         //de forma predeterminada, en cada boton pone debajo reservar,
         //pero si en el select se ponen todos los profesores, se pone el nombre del profesor para diferenciar
@@ -345,7 +352,9 @@ function pintoClases(filtroSeleccionado) {
 
         let botonPildora = document.createElement('button');
         botonPildora.className = 'pildora-hora-boton';
-        botonPildora.onclick = function() { reservar(clase.id_clase); };
+        botonPildora.onclick = function () {
+            reservar(clase.id_clase, this);
+        };
 
         botonPildora.innerHTML = `
             <label class="pildora-hora-texto">${horaFormateada}</label>
@@ -501,40 +510,95 @@ function cambiarPassword() {
 // PANEL ALUMNO/ADMIN - BOTON RESERVAR
 // ============================================================
 
-function reservar(idClase) {
+function reservar(idClase, elBoton) {
     let url = "php/alumno/reservar_clase.php";
+
+    elBoton.disabled = true;
+
+    //Desde HTML5, se pueden crear atributos personalizados que empiecen por data-*
+    //En este caso le he puesto data-html-original, pero lo de después del guion no importa.
+    //Esto sirve para guardar dentro del botón su contenido original (las <label> con la hora y "Reservar")
+    //sin que el usuario lo vea. Así, antes de borrar el texto para poner el icono de carga girando,
+    //guardo una copia de seguridad en este atributo invisible.
+
+    //Si luego hay un error (por ejemplo saldo insuficiente), será mucho más fácil restaurar el botón
+    //porque solo tengo que buscar lo que guardé en su atributo 'data-html-original' y volver a meterlo dentro.
+
+    //POR EJEMPLO:
+
+    //Sin el data-html-original, si el servidor da error tras mostrar la estrella, el botón se quedaría así:
+
+    /*
+    <button class="pildora-hora-boton" disabled>
+        <img src="imagenes/estrella2.svg">
+    </button>
+    */
+    //Se habría perdido la información de qué hora ponía originalmente y no se podría restaurar.
+
+    //Ahora, al añadir este atributo antes de poner el cargando, se vería así:
+
+    /*
+    <button class="pildora-hora-boton" data-html-original=
+    "<label class='pildora-hora-texto'>10:00h</label>
+    <label class='pildora-accion-texto'>Reservar</label>" disabled>
+        <img src="imagenes/estrella2.svg">
+    </button>
+    */
+
+    //De esta forma, en el 'else' del error, solo tengo que coger el valor del data-html-original
+    //y volver a pintar las <label> de las 10:00h para que el botón vuelva a la normalidad.
+
+    elBoton.setAttribute('data-html-original', elBoton.innerHTML);
+
+    elBoton.innerHTML = `<img id="estrella" src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />`;
 
     if (tipoUsuario == "alumno") {
         $.post(url, {
             laclase: idClase
-        }, reservarClase);
+        }, function (datos) {
+            reservarClase(datos, elBoton);
+        });
     } else {
         $.post(url, {
             elid: idAlumnoSeleccionadoAdmin,
             laclase: idClase
-        }, reservarClase);
+        }, function (datos) {
+            reservarClase(datos, elBoton);
+        });
     }
 }
 
-function reservarClase(datos) {
+function reservarClase(datos, elBoton) {
     if (datos == 1) {
         //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
         document.getElementById('notificacion_global').innerHTML = "Reserva registrada correctamente";
-        if (tipoUsuario == "alumno") {
-            historialClases();
-            inicio_alumno();
-        } else {
-            seleccionarAlumno(idAlumnoSeleccionadoAdmin);
+        elBoton.classList.add('pildora-reservada-exito');
+        elBoton.innerHTML = `<label>Reservada</label>`;
+
+        if (tipoUsuario != "alumno") {
+            eleccionarAlumno(idAlumnoSeleccionadoAdmin);
         }
-    } else if (datos == -1) {
-        document.getElementById('notificacion_global').innerHTML = "Saldo de clases insuficiente";
-    } else if (datos == -2) {
-        document.getElementById('notificacion_global').innerHTML = "Límite máximo de 2 reservas simultáneas alcanzado.";
-    } else if (datos == -3) {
-        document.getElementById('notificacion_global').innerHTML = "Debe existir un margen mínimo de 45 minutos entre reservas.";
-    } else if (datos == -4) {
-        document.getElementById('notificacion_global').innerHTML = "La clase seleccionada ya no se encuentra disponible.";
-        clasesDisponibles();
+    } else {
+        elBoton.disabled = false;
+        //lo restauro a como estaba antes de poner el loading
+        elBoton.innerHTML = elBoton.getAttribute('data-html-original');
+
+        if (datos == -1) {
+            document.getElementById('notificacion_global').innerHTML = "Saldo de clases insuficiente";
+        }
+
+        if (datos == -2) {
+            document.getElementById('notificacion_global').innerHTML = "Límite máximo de 2 reservas simultáneas alcanzado.";
+        }
+
+        if (datos == -3) {
+            document.getElementById('notificacion_global').innerHTML = "Debe existir un margen mínimo de 45 minutos entre reservas.";
+        }
+
+        if (datos == -4) {
+            document.getElementById('notificacion_global').innerHTML = "La clase seleccionada ya no se encuentra disponible.";
+            clasesDisponibles();
+        }
     }
 }
 
