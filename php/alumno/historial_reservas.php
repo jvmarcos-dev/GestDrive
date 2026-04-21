@@ -25,8 +25,7 @@ ON RESERVAS.ID_CLASE = CLASES_PRACTICAS.ID
 INNER JOIN USUARIOS 
 ON CLASES_PRACTICAS.ID_PROFESOR = USUARIOS.ID
 WHERE RESERVAS.ID_ALUMNO = $id
-AND RESERVAS.ESTADO <> 'cancelada_tiempo'
-ORDER BY ESTADO asc, FECHA_HORA asc";
+ORDER BY FECHA_HORA DESC";
 $resultado = mysqli_query($conexion, $consulta);
 
 $nregistros = mysqli_num_rows($resultado);

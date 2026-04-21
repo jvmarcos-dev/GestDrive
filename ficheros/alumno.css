@@ -431,10 +431,11 @@ hr {
 
 .estado-activa,
 .estado-cancelada,
-.estado-realizada {
+.estado-realizada,
+.estado-cancelada-tiempo {
     display: inline-block;
-    padding: 3px 0;
-    width: 85px;
+    padding: 4px 8px;
+    /*width: 85px;*/
     border-radius: 4px;
     font-size: 0.7rem;
     text-transform: uppercase;
@@ -458,6 +459,10 @@ hr {
     color: #c5221f;
 }
 
+.estado-cancelada-tiempo {
+    background-color: #f1f5f9;
+    color: #475569;
+}
 /*************************** TABLA CLASES ***********************************/
 .lista-clases {
     background-color: white;

@@ -430,17 +430,18 @@ function datosHistorial(datos) {
             fila.insertCell(0).innerHTML = fechaFormateada;
             fila.insertCell(1).innerHTML = horaFormateada;
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
-            if (estadoFormateado == "Activa") {
+            if (datos[i].estado == "activa") {
                 fila.insertCell(3).innerHTML = "<label class='estado-activa'>" + estadoFormateado + "</label>";
-            } else if (estadoFormateado == "Realizada") {
-                fila.insertCell(3).innerHTML = "<label class='estado-realizada'>" + estadoFormateado + "</label>";
-            } else {
-                fila.insertCell(3).innerHTML = "<label class='estado-cancelada'>Cancelada</label>";
-            }
-            if (estadoFormateado == "Activa") {
                 fila.insertCell(4).innerHTML = "<button class='boton-cancelar' id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
-            } else {
-                fila.insertCell(4).innerHTML = "<button disabled class='boton-cancelar' id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
+            } else if (datos[i].estado == "realizada") {
+                fila.insertCell(3).innerHTML = "<label class='estado-realizada'>" + estadoFormateado + "</label>";
+                fila.insertCell(4).innerHTML = "<label style=font-weight:700, font-size: 0.7rem;>-</label>";
+            } else if (datos[i].estado == "cancelada_tiempo") {
+                fila.insertCell(3).innerHTML = "<label class='estado-cancelada-tiempo'>Cancelada</label>";
+                fila.insertCell(4).innerHTML = "<label style=font-weight:700, font-size: 0.7rem;>-</label>";
+            }else{
+                fila.insertCell(3).innerHTML = "<label class='estado-cancelada'>Cancelada (Tarde)</label>";
+                fila.insertCell(4).innerHTML = "<label style=font-weight:700, font-size: 0.7rem;>-</label>";
             }
         }
     } else {
@@ -623,7 +624,6 @@ function cancelarClase(datos, idBoton) {
     let boton = document.getElementById(idBoton);
     if (datos == 1 || datos == 2) {
         if (datos == 1) {
-            //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
             document.getElementById('notificacion_global').innerHTML = "Clase cancelada correctamente";
         } else if (datos == 2) {
             document.getElementById('notificacion_global').innerHTML = "Has cancelado la clase tarde. Tu saldo no será devuelto";
@@ -633,7 +633,7 @@ function cancelarClase(datos, idBoton) {
             let celdaBoton = boton.parentElement;
             // El hermano anterior de esa celda es la celda de "Estado"
             let celdaEstado = celdaBoton.previousElementSibling;
-            celdaEstado.innerHTML = (datos == 1) ? "Cancelada" : "Cancelada Tarde";
+            celdaEstado.classList.add("estado-cancelada-tiempo")
             boton.disabled = true;
         }
         inicio_alumno();
