@@ -41,3 +41,9 @@ body {
     transform: translateY(0);
     box-shadow: 0 2px 4px -1px rgba(26, 86, 182, 0.2);
 }
+
+.estrella-oscura {
+    /*Funciona basicamente como un filtro fotografico. En este caso, convierte todo lo blanco en negro*/
+    filter: brightness(0); 
+    opacity: 0.7; 
+}

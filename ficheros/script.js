@@ -550,7 +550,7 @@ function reservar(idClase, elBoton) {
 
     elBoton.setAttribute('data-html-original', elBoton.innerHTML);
 
-    elBoton.innerHTML = `<img id="estrella" src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />`;
+    elBoton.innerHTML = `<img id="estrella" class="estrella-oscura" src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />`;
 
     if (tipoUsuario == "alumno") {
         $.post(url, {
