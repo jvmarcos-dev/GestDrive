@@ -439,7 +439,7 @@ function datosHistorial(datos) {
             } else if (datos[i].estado == "cancelada_tiempo") {
                 fila.insertCell(3).innerHTML = "<label class='estado-cancelada-tiempo'>Cancelada</label>";
                 fila.insertCell(4).innerHTML = "<label style=font-weight:700, font-size: 0.7rem;>-</label>";
-            }else{
+            } else {
                 fila.insertCell(3).innerHTML = "<label class='estado-cancelada'>Cancelada (Tarde)</label>";
                 fila.insertCell(4).innerHTML = "<label style=font-weight:700, font-size: 0.7rem;>-</label>";
             }
@@ -448,7 +448,7 @@ function datosHistorial(datos) {
         document.getElementById('info-alumno-historial').innerHTML = "Aún no has realizado ninguna práctica con nosotros.";
         document.getElementById('no-clases').innerHTML =
             `
-        <button class="boton-principal boton-reservar" onclick="cambiarVentana(2)">
+        <button class="boton-principal boton-reservar" onclick="cambiarVentana(this, 'resumen')">
             Reservar mi primera clase
         </button>
         `;
@@ -1254,6 +1254,12 @@ function registroProfesor() {
 }
 
 // ============================================================
+// PANEL ALUMNO - CAMBIAR CONTRASEÑA
+// ============================================================
+
+
+
+// ============================================================
 // ESTILOS - PANEL ALUMNO
 // ============================================================
 
@@ -1287,19 +1293,33 @@ document.addEventListener('click', function (event) {
 // ESTILOS - HEADER ALUMNO
 // ============================================================
 
-function cambiarVentana(ventana) {
-    let resumen = document.getElementById('header-resumen');
-    let reservar = document.getElementById('header-reservar');
-    if (ventana == 2 && resumen.classList.contains('activo')) {
-        resumen.classList.remove('activo')
-        reservar.classList.add('activo')
-        $("#cargar-dashboard-alumno").load("vistas/alumno/reservar.html", function () {
-            clasesDisponibles();
-        });
+function cambiarVentana(ventanaPulsada, ventanaSeleccionada) {
+    //elimino la clase activo a todas
+    let lavista = document.querySelectorAll(".cambiar-ventana");
+    lavista.forEach(function (objeto) {
+        objeto.classList.remove('activo');
+    });
 
-    } else if (ventana == 1 && reservar.classList.contains('activo')) {
-        reservar.classList.remove('activo')
-        resumen.classList.add('activo')
-        inicio_alumno()
+    //le añado la clase a la ventana pulsada. Pongo lo de null ya que el de cambiar contraseña
+    //no quiero que se le añada porque no va a tener la linea azul
+    if (ventanaPulsada != null) {
+        ventanaPulsada.classList.add('activo');
+    }
+
+    //cargo la vista
+    switch (ventanaSeleccionada) {
+        case 'resumen':
+            inicio_alumno();
+            break;
+
+        case 'reservar':
+            $("#cargar-dashboard-alumno").load("vistas/alumno/reservar.html", function () {
+                clasesDisponibles();
+            });
+            break;
+
+        case 'password':
+            $("#cargar-dashboard-alumno").load("vistas/alumno/cambiarContrasenya.html", function () {});
+            break;
     }
 }

@@ -10,8 +10,8 @@
     </div>
 
     <div id="menu-central">
-        <label class="cambiar-ventana activo" id="header-resumen" onclick="cambiarVentana(1)">Resumen</label>
-        <a class="cambiar-ventana" id="header-reservar" onclick="cambiarVentana(2)">Reservar clases</a>
+        <label class="cambiar-ventana activo" id="header-resumen" onclick="cambiarVentana(this, 'resumen')">Resumen</label>
+        <a class="cambiar-ventana" id="header-reservar" onclick="cambiarVentana(this, 'reservar')">Reservar clases</a>
     </div>
 
     <div id="datos-alumno-header" onclick="cargarDesplegableAlumno(event)" >
@@ -19,7 +19,7 @@
         <label id="nombre_alumno"></label>
         <i class="fas fa-chevron-down flecha-perfil"></i>
         <div class="desplegable-header-alumno">
-            <div class="item-desplegable">
+            <div class="item-desplegable" onclick="cambiarVentana(null, 'password')">
                 <i class="fas fa-cog"></i>
                 <button class="boton-desplegable">Cambiar contraseña</button>
             </div>
