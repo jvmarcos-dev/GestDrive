@@ -631,6 +631,98 @@ hr {
     font-weight: 700;
 }
 
+/*************************** CAMBIAR CONTRASEÑA ***********************************/
+
+.tarjeta-cambio-password {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 30px 40px;
+    margin: 20px auto;
+    max-width: 500px;
+    width: 100%;
+}
+
+.cabecera-password {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.mensaje-error-password {
+    background-color: rgba(236, 169, 169, 0.308);
+    color: brown;
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.formulario-password {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group-dashboard {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 10px 15px;
+    transition: all 0.3s;
+    background-color: white;
+}
+
+.form-group-dashboard i {
+    color: #94a3b8;
+    width: 20px;
+    text-align: center;
+    transition: color 0.3s;
+}
+
+.input-control-dashboard {
+    border: none;
+    width: 100%;
+    padding-left: 10px;
+    font-size: 1rem;
+    color: #1e293b;
+    outline: none;
+    background: transparent;
+}
+
+.form-group-dashboard:focus-within {
+    border-color: #1a56b6;
+    box-shadow: 0 0 0 3px rgba(26, 86, 182, 0.1);
+}
+
+.form-group-dashboard:focus-within i {
+    color: #1a56b6;
+}
+
+.boton-dashboard-submit {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    background-color: #1a56b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s ease;
+}
+
+.boton-dashboard-submit:hover {
+    background-color: #13428c;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.boton-dashboard-submit:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 /*************************** FOOTER ***********************************/
 
 footer {

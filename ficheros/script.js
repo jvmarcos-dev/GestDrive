@@ -461,46 +461,67 @@ function datosHistorial(datos) {
 // PANEL ALUMNO - CAMBIAR CONTRASEÑA
 // ============================================================
 function cambiarPassword() {
-    let actual = document.getElementById('contra_actual').value;
-    let nueva = document.getElementById('contra_nueva').value;
-    let confirmar = document.getElementById('contra_confirmar').value;
+    let actual = document.getElementById('contra_actual');
+    let nueva = document.getElementById('contra_nueva');
+    let confirmar = document.getElementById('contra_confirmar');
+    let divError = document.getElementById('info_password');
+    let botonSubmit = document.getElementById('boton_cambio_pass');
 
-    //compruebo si algun capo esta vacio
-    if (actual == "") {
-        document.getElementById('notificacion_global').innerHTML = "Debes rellenar todos los campos.";
-        document.getElementById('contra_actual').focus();
+    //compruebo si algun campo esta vacio
+    if (actual.value == "") {
+        divError.style.display="block"
+        divError.innerHTML = "Debes rellenar todos los campos.";
+        actual.focus();
         return;
-    } else if (nueva == "") {
-        document.getElementById('notificacion_global').innerHTML = "Debes rellenar todos los campos.";
-        document.getElementById('contra_nueva').focus();
+    } else if (nueva.value == "") {
+        divError.style.display="block"
+        divError.innerHTML = "Debes rellenar todos los campos.";
+        nueva.focus();
         return;
-    } else if (confirmar == "") {
-        document.getElementById('notificacion_global').innerHTML = "Debes rellenar todos los campos.";
-        document.getElementById('contra_confirmar').focus();
+    } else if (confirmar.value == "") {
+        divError.style.display="block";
+        divError.innerHTML = "Debes rellenar todos los campos.";
+        confirmar.focus();
         return;
     }
 
-    if (nueva != confirmar) {
-        document.getElementById('notificacion_global').innerHTML = "Las contraseñas no coinciden.";
+    if (nueva.value != confirmar.value) {
+        divError.style.display="block"
+        divError.innerHTML = "Las contraseñas no coinciden.";
         return;
     }
+
+    //en caso de estar todo rellenado y que las contraseñas coincidan
+    //guardo en el atributo data-html-original lo que ponia en el boton
+    botonSubmit.setAttribute('data-html-original', botonSubmit.innerHTML);
+    //deshabilito el boton
+    botonSubmit.disabled = true;
+    //le pongo al boton la estrella
+    botonSubmit.innerHTML = `<img id="estrella" src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />`;
 
     let url = "php/alumno/cambiar_password.php";
 
     $.post(url, {
-        pass_actual: actual,
-        pass_nueva: nueva
+        pass_actual: actual.value,
+        pass_nueva: nueva.value
     }, function (datos) {
+        //se devuelve el boton a la normalidad
+        botonSubmit.disabled = false;
+        botonSubmit.innerHTML = botonSubmit.getAttribute('data-html-original');
+
         let respuesta = datos.trim();
 
         if (respuesta == 1) {
             document.getElementById('notificacion_global').innerHTML = "Contraseña actualizada correctamente.";
+            document.getElementById('info_password').style.display="none"
+            document.getElementById('contra_actual').focus();
             //limpiao las cajas
-            document.getElementById('pass_actual').value = "";
-            document.getElementById('pass_nueva').value = "";
-            document.getElementById('pass_confirmar').value = "";
+            document.getElementById('contra_actual').value = "";
+            document.getElementById('contra_nueva').value = "";
+            document.getElementById('contra_confirmar').value = "";
         } else if (respuesta == 2) {
-            document.getElementById('notificacion_global').innerHTML = "La contraseña actual es incorrecta.";
+            document.getElementById('info_password').style.display="block"
+            document.getElementById('info_password').innerHTML = "La contraseña actual es incorrecta.";
         } else {
             document.getElementById('notificacion_global').innerHTML = "Error al actualizar la contraseña.";
         }

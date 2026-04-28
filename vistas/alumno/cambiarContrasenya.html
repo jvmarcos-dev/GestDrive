@@ -1,7 +1,28 @@
-<div id="caja_cambio_password">
-    <label>Cambiar Contraseña</label>
-    <input type="password" id="contra_actual" placeholder="Contraseña actual"><br><br>
-    <input type="password" id="contra_nueva" placeholder="Nueva contraseña"><br><br>
-    <input type="password" id="contra_confirmar" placeholder="Repite la nueva"><br><br>
-    <button onclick="cambiarPassword()">Actualizar Contraseña</button>
+<div class="tarjeta-cambio-password">
+    <div class="cabecera-password">
+        <label class="titulo-seccion-tabla">Cambiar Contraseña</label>
+    </div>
+
+    <div id="info_password" class="mensaje-error-password" style="display: none;"></div>
+
+    <div class="formulario-password">
+        
+        <div class="form-group-dashboard">
+            <i class="fas fa-unlock-alt"></i>
+            <input type="password" id="contra_actual" class="input-control-dashboard" placeholder="Contraseña actual" autocomplete="current-password">
+        </div>
+
+        <div class="form-group-dashboard">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="contra_nueva" class="input-control-dashboard" placeholder="Nueva contraseña" autocomplete="new-password">
+        </div>
+
+        <div class="form-group-dashboard">
+            <i class="fas fa-check-circle"></i>
+            <input type="password" id="contra_confirmar" class="input-control-dashboard" placeholder="Repite la nueva" autocomplete="new-password">
+        </div>
+
+        <button id="boton_cambio_pass" class="boton-dashboard-submit" onclick="cambiarPassword()">Actualizar Contraseña</button>
+        
+    </div>
 </div>
