@@ -6,6 +6,7 @@ let idAlumnoSeleccionadoAdmin;
 
 let timeoutBusqueda;
 let datosClasesGlobal = [];
+let temporizadorNotificacion;
 // ============================================================
 // INICIO Y NAVEGACIÓN
 // ============================================================
@@ -105,7 +106,7 @@ function cerrarSesion() {
     $.post("php/login/logout.php", function () {
         //redirigo a la vista general
         $("#lacaja").load("vistas/general.html");
-        document.getElementById('notificacion_global').innerHTML = "Has cerrado sesión correctamente.";
+        mostrarNotificacionGlobal("Operación exitosa", "Has cerrado sesión correctamente.", "exito");
     });
 }
 
@@ -149,7 +150,7 @@ function datosAlumno(datos) {
             document.getElementById('teorica_alumno').innerHTML = "<label class='estado-pendiente'>" + datos.teorico.toUpperCase() + "</label>";
         }
     } else {
-        document.getElementById('notificacion_global').innerHTML = "<font color='red'>Se ha producido un ERROR</font>";
+        mostrarNotificacionGlobal("Ha habido un error", "Se ha producido un error al procesar los datos.", "error");
     }
 }
 
@@ -512,7 +513,7 @@ function cambiarPassword() {
         let respuesta = datos.trim();
 
         if (respuesta == 1) {
-            document.getElementById('notificacion_global').innerHTML = "Contraseña actualizada correctamente.";
+            mostrarNotificacionGlobal("Operación exitosa", "Tu contraseña ha sido actualizada correctamente.", "exito");
             document.getElementById('info_password').style.display="none"
             document.getElementById('contra_actual').focus();
             //limpiao las cajas
@@ -523,7 +524,7 @@ function cambiarPassword() {
             document.getElementById('info_password').style.display="block"
             document.getElementById('info_password').innerHTML = "La contraseña actual es incorrecta.";
         } else {
-            document.getElementById('notificacion_global').innerHTML = "Error al actualizar la contraseña.";
+            mostrarNotificacionGlobal("Ha habido un error", "Se ha producido un error al actualizar la contraseña.", "error");
         }
     });
 }
@@ -593,7 +594,7 @@ function reservar(idClase, elBoton) {
 function reservarClase(datos, elBoton) {
     if (datos == 1) {
         //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
-        document.getElementById('notificacion_global').innerHTML = "Reserva registrada correctamente";
+        mostrarNotificacionGlobal("Operación exitosa", "Reserva registrada correctamente.", "exito");
         elBoton.classList.add('pildora-reservada-exito');
         elBoton.innerHTML = `<label>Reservada</label>`;
 
@@ -606,19 +607,19 @@ function reservarClase(datos, elBoton) {
         elBoton.innerHTML = elBoton.getAttribute('data-html-original');
 
         if (datos == -1) {
-            document.getElementById('notificacion_global').innerHTML = "Saldo de clases insuficiente";
+            mostrarNotificacionGlobal("Saldo agotado", "No tienes saldo suficiente para realizar esta reserva.", "info");
         }
 
         if (datos == -2) {
-            document.getElementById('notificacion_global').innerHTML = "Límite máximo de 2 reservas simultáneas alcanzado.";
+            mostrarNotificacionGlobal("Límite alcanzado", "Ya tienes 2 reservas activas. No puedes reservar más hasta que completes o canceles alguna.", "info");
         }
 
         if (datos == -3) {
-            document.getElementById('notificacion_global').innerHTML = "Debe existir un margen mínimo de 45 minutos entre reservas.";
+            mostrarNotificacionGlobal("Margen insuficiente", "Debes dejar al menos 45 minutos libres entre dos clases distintas.", "info");
         }
 
         if (datos == -4) {
-            document.getElementById('notificacion_global').innerHTML = "La clase seleccionada ya no se encuentra disponible.";
+            mostrarNotificacionGlobal("Clase no disponible", "Lo sentimos, otro alumno acaba de reservar esta clase hace unos instantes.", "error");
             clasesDisponibles();
         }
     }
@@ -645,9 +646,9 @@ function cancelarClase(datos, idBoton) {
     let boton = document.getElementById(idBoton);
     if (datos == 1 || datos == 2) {
         if (datos == 1) {
-            document.getElementById('notificacion_global').innerHTML = "Clase cancelada correctamente";
+            mostrarNotificacionGlobal("Operación exitosa", "La clase ha sido cancelada correctamente.", "exito");
         } else if (datos == 2) {
-            document.getElementById('notificacion_global').innerHTML = "Has cancelado la clase tarde. Tu saldo no será devuelto";
+            mostrarNotificacionGlobal("Cancelación tardía", "La clase ha sido cancelada, pero al realizarse fuera del plazo permitido, tu saldo no será devuelto.", "info");
         }
         if (boton) {
             // El botón está en una celda (td). El padre del botón es el td.
@@ -660,7 +661,7 @@ function cancelarClase(datos, idBoton) {
         inicio_alumno();
         reservaActiva();
     } else {
-        document.getElementById('notificacion_global').innerHTML = "Error al procesar la cancelación";
+        mostrarNotificacionGlobal("Se ha producido un error", "Error al procesar la cancelación.", "error");
     }
 }
 
@@ -815,7 +816,7 @@ function seleccionarAlumno(idAlumno) {
     }, function (datos) {
         //comprobamos si el alumno existe
         if (!datos.nombre) {
-            document.getElementById('notificacion_global').innerText = "Este alumno ya no existe en el sistema.";
+            mostrarNotificacionGlobal("Alumno no encontrado", "Este alumno ya no existe en el sistema.", "info");
 
             //recargamos la busqueda para que el alumno deje de aparecer
             listado_alumnos_admin();
@@ -939,7 +940,7 @@ function cancelarClaseAdminCallback(datos, boton) {
     if (datos.trim() == 1 || datos.trim() == 2) {
         if (datos.trim() == 1) {
             //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
-            document.getElementById('notificacion_global').innerHTML = "Clase cancelada correctamente";
+            mostrarNotificacionGlobal("Cancelación exitosa", "La clase ha sido cancelada correctamente.", "exito");
             let labelSaldo = document.getElementById('saldo_alumno_admin');
             if (labelSaldo) {
 
@@ -952,7 +953,7 @@ function cancelarClaseAdminCallback(datos, boton) {
                 labelSaldo.innerText = "Saldo: " + (saldoActual + 1);
             }
         } else if (datos.trim() == 2) {
-            document.getElementById('notificacion_global').innerHTML = "Al alumno le quedaban -48 horas, su saldo no será devuelto";
+            mostrarNotificacionGlobal("Cancelación tardía", "Al alumno le quedaban menos de 48 horas, su saldo no será devuelto.", "info");
         }
 
         if (boton) {
@@ -969,7 +970,7 @@ function cancelarClaseAdminCallback(datos, boton) {
         }
         clasesDisponibles();
     } else {
-        document.getElementById('notificacion_global').innerHTML = "Error al procesar la cancelación";
+        mostrarNotificacionGlobal("Error de cancelación", "No se ha podido procesar la cancelación.", "error");
     }
 }
 
@@ -991,7 +992,7 @@ function datosTeorico(datos) {
     if (datos == 1) {
         document.getElementById('teoria_admin').innerText = "apto";
     } else {
-        document.getElementById('notificacion_global').innerText = "Se ha producido un error.";
+        mostrarNotificacionGlobal("Error al actualizar", "No se ha podido marcar al alumno como apto en el examen teórico.", "error");
     }
 }
 
@@ -1001,7 +1002,7 @@ function actualizarSaldo(operacion) {
 
     //compruebo que introduce un numero al pulsar un boton y en caso de introducirlo que no sea negativo
     if (sumaSaldo == "" || sumaSaldo <= 0) {
-        document.getElementById('notificacion_global').innerText = "Introduce una cantidad válida.";
+        mostrarNotificacionGlobal("Cantidad inválida", "Por favor, introduce una cantidad numérica válida.", "info");
         inputSaldo.focus();
         return;
     }
@@ -1017,9 +1018,9 @@ function actualizarSaldo(operacion) {
 function datosSaldo(datos) {
     //aqui luego haré un boton de confirmar cambios que saldrá antes de esto.
     if (datos == 0) {
-        document.getElementById('notificacion_global').innerText = "Se ha producido un error.";
+        mostrarNotificacionGlobal("Error de operación", "No se ha podido actualizar el saldo del alumno.", "error");
     } else if (datos == -1) {
-        document.getElementById('notificacion_global').innerText = "No puedes restar esa cantidad de saldo.";
+        mostrarNotificacionGlobal("Operación denegada", "No puedes restar esta cantidad porque el alumno se quedaría con saldo negativo.", "info");
     } else {
         document.getElementById('saldo_alumno_admin').innerText = "Saldo: " + datos.elsaldo;
     }
@@ -1039,17 +1040,17 @@ function archivarAlumno() {
 function datosArchivo(datos) {
     let respuesta = datos.trim();
     if (respuesta == -1) {
-        document.getElementById('notificacion_global').innerText = "El alumno seleccionado ya ha sido archivado o no existe"
+        mostrarNotificacionGlobal("Acción no disponible", "El alumno seleccionado ya ha sido archivado o ha sido eliminado del sistema.", "error");
         volverAdmin();
     } else if (respuesta == -2) {
-        document.getElementById('notificacion_global').innerHTML = "El alumno debe tener el teorico apto";
+        mostrarNotificacionGlobal("Requisito pendiente", "Para poder archivar a un alumno, primero debe tener el examen teórico apto.", "info");
     } else if (respuesta == -3) {
-        document.getElementById('notificacion_global').innerHTML = "El alumno debe tener 18 años o más.";
+        mostrarNotificacionGlobal("Requisito de edad", "El alumno debe ser mayor de edad.", "info");
     } else if (respuesta == 1) {
-        document.getElementById('notificacion_global').innerHTML = "El alumno ha sido archivado.";
+        mostrarNotificacionGlobal("Alumno archivado", "El expediente del alumno se ha guardado en el archivo correctamente.", "exito");
         volverAdmin();
     } else {
-        document.getElementById('notificacion_global').innerHTML = "Se ha producido un error.";
+        mostrarNotificacionGlobal("Error técnico", "Se ha producido un error al intentar archivar al alumno.", "error");
     }
 }
 
@@ -1136,9 +1137,9 @@ function generoClases() {
 function generoClasesCallback(datos) {
     let respuesta = datos.trim();
     if (respuesta == 1) {
-        document.getElementById('notificacion_global').innerText = "Las clases han sido creadas correctamente"
+        mostrarNotificacionGlobal("Calendario generado", "Las clases han sido generadas y ya están disponibles para los alumnos.", "exito");
     } else {
-        document.getElementById('notificacion_global').innerText = "Las clases ya estaban generadas"
+        mostrarNotificacionGlobal("Calendario existente", "No se han creado clases nuevas porque ya estaban generadas para este periodo.", "info");
     }
 }
 
@@ -1176,13 +1177,13 @@ function registroAlumno() {
             // trato mensaje devuelto por el servidor
             let respuesta = datos.trim();
             if (respuesta == 1) {
-                document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='green' size='4'>EXITO!! en el ALTA</font></b>";
+                mostrarNotificacionGlobal("Alta completada", "El nuevo alumno ha sido registrado con éxito en el sistema.", "exito");
                 // limpio cajas formulario
                 document.formulario1.reset();
                 limpio_pantalla(0, 'formulario1');
             } else {
                 //aqui podemos tratar todos los tipos de error que se produzcan
-                document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='red' size='4'>ERROR ALTA usuario (" + datos + ")</font></b>";
+                mostrarNotificacionGlobal("Error en el registro", "No se ha podido dar de alta al alumno. Código de error: " + datos, "error");
                 limpio_pantalla(1, 'formulario1');
             }
             // Habilito botón de realizar alta
@@ -1260,13 +1261,13 @@ function registroProfesor() {
             // trato mensaje devuelto por el servidor
             let respuesta = datos.trim();
             if (respuesta == 1) {
-                document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='green' size='4'>EXITO!! en el ALTA</font></b>";
+                mostrarNotificacionGlobal("Alta completada", "El nuevo profesor ha sido registrado con éxito en el sistema.", "exito");
                 // limpio cajas formulario
                 document.formulario2.reset();
                 limpio_pantalla(0, 'formulario2');
             } else {
                 //aqui podemos tratar todos los tipos de error que se produzcan
-                document.getElementById('notificacion_global').innerHTML = "<b><font face='Calibri' color='red' size='4'>ERROR ALTA usuario (" + datos + ")</font></b>";
+                mostrarNotificacionGlobal("Error en el registro", "No se ha podido dar de alta al profesor. Código de error: " + datos, "error");
                 limpio_pantalla(1, 'formulario2');
             }
             // Habilito botón de realizar alta
@@ -1342,5 +1343,65 @@ function cambiarVentana(ventanaPulsada, ventanaSeleccionada) {
         case 'password':
             $("#cargar-dashboard-alumno").load("vistas/alumno/cambiarContrasenya.html", function () {});
             break;
+    }
+}
+
+// ============================================================
+// SISTEMA DE NOTIFICACIONES GLOBALES
+// ============================================================
+
+function mostrarNotificacionGlobal(titulo, mensaje, tipo) {
+    let notificacion = document.getElementById("notificacion_global");
+    let divTitulo = document.getElementById("notificacion_titulo");
+    let divMensaje = document.getElementById("notificacion_mensaje");
+    let icono = document.getElementById("notificacion_icono");
+
+    let barra = document.getElementById("notificacion_progreso");
+
+    //limpio el estado anterior
+    notificacion.className = "";
+    barra.className = "notificacion-progreso";
+    clearTimeout(temporizadorNotificacion);
+
+    //inserto los datos
+    divTitulo.innerHTML = titulo;
+    divMensaje.innerHTML = mensaje;
+
+    //asigno los iconos y sus colores segun el tipo de notificacion
+    if (tipo === "exito") {
+        icono.innerHTML = `<i class="fas fa-check-circle icono-exito"></i>`;
+        barra.classList.add("barra-exito");
+    } else if (tipo === "error") {
+        icono.innerHTML = `<i class="fas fa-times-circle icono-error"></i>`;
+        barra.classList.add("barra-error");
+    } else if (tipo === "info") {
+        icono.innerHTML = `<i class="fas fa-info-circle icono-info"></i>`; 
+        barra.classList.add("barra-info");
+    }
+
+    //con esto lo que hago es preguntarle al navegador cuanto mide la barra.
+    //se le pone void ya que el numero no importa.
+    //asi se obliga a recalcular las dimensiones y por tanto volver a añadirle la clase
+    //ya que si no, cuanto se pulsa 2 veces rapidas algo que salta una notificacion,
+    //la barra no se reiniciaria
+    void barra.offsetWidth;
+    barra.classList.add("animar-barra");
+
+    //muestro la animacion
+    setTimeout(() => {
+        notificacion.classList.add("mostrar-notificacion");
+    }, 10);
+
+    //se oculta automaticamente
+    temporizadorNotificacion = setTimeout(function(){
+        ocultarNotificacion();
+    }, 4500);
+}
+
+//al pulsar sobre la x se oculta la notificacion
+function ocultarNotificacion() {
+    let notificacion = document.getElementById("notificacion_global");
+    if (notificacion) {
+        notificacion.classList.remove("mostrar-notificacion");
     }
 }

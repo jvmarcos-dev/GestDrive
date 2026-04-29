@@ -21,30 +21,29 @@
     <!-- **************************** CUERPO ************************************************ -->
     <!-- **************************** CUERPO ************************************************ -->
     <!-- **************************** CUERPO ************************************************ -->
-        <div id="lacaja" class="contenedor2">
+    <div id="lacaja" class="contenedor2">
 
-            <!-- contenedor donde se cargan las vistas -->
-            <!-- contenedor donde se cargan las vistas -->
-            <!-- contenedor donde se cargan las vistas -->
+        <!-- contenedor donde se cargan las vistas -->
+        <!-- contenedor donde se cargan las vistas -->
+        <!-- contenedor donde se cargan las vistas -->
 
+    </div>
+
+    <!-- **************************** FOOTER ************************************************ -->
+    <!-- **************************** FOOTER ************************************************ -->
+    <!-- **************************** FOOTER ************************************************ -->
+
+    <div id="notificacion_global" class="notificacion-oculta">
+        <div id="notificacion_icono" class="notificacion-icono-contenedor"></div>
+        <div class="notificacion-contenido">
+            <div id="notificacion_titulo" class="notificacion-titulo"></div>
+            <div id="notificacion_mensaje" class="notificacion-mensaje"></div>
         </div>
+        <button id="notificacion_cerrar" class="notificacion-cerrar" onclick="ocultarNotificacion()">
+            <i class="fas fa-times"></i>
+        </button>
 
-    <!-- **************************** FOOTER ************************************************ -->
-    <!-- **************************** FOOTER ************************************************ -->
-    <!-- **************************** FOOTER ************************************************ -->
-
-    <!-- Ejemplo de notificacion con la que trabajar generado por IA. Luego la modificare para hacer yo una-->
-    <div id="notificacion_global" style="
-        position: fixed; 
-        top: 80px; 
-        right: 20px; 
-        background: #333; 
-        color: white; 
-        padding: 15px; 
-        z-index: 9999; 
-        display: block; 
-        border-radius: 5px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+        <div id="notificacion_progreso" class="notificacion-progreso"></div>
     </div>
 </body>
 

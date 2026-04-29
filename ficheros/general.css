@@ -47,3 +47,108 @@ body {
     filter: brightness(0); 
     opacity: 0.7; 
 }
+
+
+/***************************NOTIFICACIONES**********************************/
+#notificacion_global {
+    visibility: hidden;
+    width: 90vw;
+    min-width: 300px;
+    max-width: 400px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 9999;
+    overflow: hidden;
+    top: 30px;
+    right: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); 
+    border: 1px solid #e2e8f0; 
+    
+    display: flex;
+    align-items: flex-start; 
+    gap: 12px;
+    
+    transform: translateX(100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.notificacion-progreso {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+}
+
+@keyframes reducirBarra {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+.animar-barra {
+    animation: reducirBarra 4.5s linear forwards; 
+}
+
+#notificacion_global.mostrar-notificacion {
+    visibility: visible;
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notificacion-icono-contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.3rem; 
+    margin-top: 1px; 
+}
+
+.notificacion-contenido {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 4px;
+}
+
+.notificacion-titulo {
+    font-family: calibri;
+    font-weight: bold;
+    font-size: 1.05rem;
+    color: #0f172a; 
+}
+
+.notificacion-mensaje {
+    font-family: calibri;
+    font-size: 0.95rem;
+    color: #64748b; 
+    line-height: 1.4;
+}
+
+/* --- BOTÓN CERRAR --- */
+.notificacion-cerrar {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0;
+    margin-top: 1px;
+    transition: color 0.2s;
+}
+
+.notificacion-cerrar:hover {
+    color: #475569;
+}
+
+/* --- COLORES DE LOS ICONOS --- */
+.icono-exito { color: #10b981; } 
+.icono-error { color: #ef4444; } 
+.icono-info  { color: #3b82f6; }
+
+.barra-exito { background-color: #10b981; }
+.barra-error { background-color: #ef4444; }
+.barra-info  { background-color: #3b82f6; }
