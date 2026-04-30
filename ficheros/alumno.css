@@ -44,7 +44,8 @@ header {
 
 #menu-central {
     display: flex;
-    position: absolute;
+    flex: 1;
+    justify-content: flex-end;
     left: 50%;
     transform: translateX(-50%);
     gap: 30px;
@@ -748,7 +749,60 @@ footer {
     color: #1a56b6;
 }
 
-@media (max-width: 850px) {
+/**************************** TAMAÑO TABLET ************************************/
+/**************************** TAMAÑO TABLET ************************************/
+/**************************** TAMAÑO TABLET ************************************/
+/**************************** TAMAÑO TABLET ************************************/
+@media (max-width: 1080px) {
+    header {
+        justify-content: space-between;
+        padding: 0 15px;
+    }
+
+    #imagen-header {
+        width: auto;
+        max-width: 180px;
+    }
+
+    #menu-central {
+        position: static;
+        transform: none;
+        flex: 1;
+        justify-content: center;
+        margin: 0 20px;
+    }
+
+    #tarjetas-datos-alumno {
+        flex-wrap: wrap;
+    }
+
+    .latarjeta {
+        flex: 1 1 calc(50% - 20px);
+        min-width: 300px;
+    }
+
+    #historial_clases table th,
+    #historial_clases table td {
+        font-size: 0.95rem;
+        padding: 7px 10px;
+    }
+
+    .cabecera-tabla-controles {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .separador,
+    #contenedor-texto-header {
+        display: none;
+    }
+}
+
+/**************************** TAMAÑO MÓVIL ************************************/
+/**************************** TAMAÑO MÓVIL ************************************/
+/**************************** TAMAÑO MÓVIL ************************************/
+/**************************** TAMAÑO MÓVIL ************************************/
+@media (max-width: 750px) {
     header {
         height: auto;
         flex-wrap: wrap;
@@ -811,6 +865,7 @@ footer {
 
     #tarjetas-datos-alumno {
         flex-direction: column;
+        gap: 10px;
     }
 
     .latarjeta {
@@ -845,6 +900,9 @@ footer {
 
     #historial_clases {
         padding: 15px 5px;
+        background-color: transparent; 
+        border: none;
+        box-shadow: none;
     }
 
     #historial_clases table th,
@@ -935,4 +993,8 @@ footer {
         content: "";
         display: none;
     }
+
+    #historial_clases table td:last-child:empty {
+    display: none;
+}
 }
