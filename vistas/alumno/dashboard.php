@@ -37,7 +37,7 @@
 </div>
 
 <footer>
-    <label>&copy; 2026 GestDrive Autoescuelas. Todos los derechos reservados.</label>
+    <label>&copy; 2026 GestDrive Autoescuelas.</label>
     <label class="enlace-footer">Soporte</label>
     <label class="enlace-footer">Privacidad</label>
 </footer>
