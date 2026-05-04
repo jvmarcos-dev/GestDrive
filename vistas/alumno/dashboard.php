@@ -5,7 +5,7 @@
         </div>
         <div class="separador"></div>
         <div id="contenedor-texto-header">
-            <label id="texto-header-alumno">Panel de Control del Alumno</label>
+            <label class="texto-header">Panel de Control del Alumno</label>
         </div>
     </div>
 

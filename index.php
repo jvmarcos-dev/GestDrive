@@ -8,6 +8,7 @@
     <!-- Archivos css -->
     <link href="ficheros/login.css" rel="stylesheet">
     <link href="ficheros/alumno.css" rel="stylesheet">
+    <link href="ficheros/admin.css" rel="stylesheet">
     <link href="ficheros/general.css" rel="stylesheet">
     <link href="ficheros/all.css" rel="stylesheet">
     <!-- librería jQuery -->

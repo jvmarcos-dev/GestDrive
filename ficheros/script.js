@@ -470,24 +470,24 @@ function cambiarPassword() {
 
     //compruebo si algun campo esta vacio
     if (actual.value == "") {
-        divError.style.display="block"
+        divError.style.display = "block"
         divError.innerHTML = "Debes rellenar todos los campos.";
         actual.focus();
         return;
     } else if (nueva.value == "") {
-        divError.style.display="block"
+        divError.style.display = "block"
         divError.innerHTML = "Debes rellenar todos los campos.";
         nueva.focus();
         return;
     } else if (confirmar.value == "") {
-        divError.style.display="block";
+        divError.style.display = "block";
         divError.innerHTML = "Debes rellenar todos los campos.";
         confirmar.focus();
         return;
     }
 
     if (nueva.value != confirmar.value) {
-        divError.style.display="block"
+        divError.style.display = "block"
         divError.innerHTML = "Las contraseñas no coinciden.";
         return;
     }
@@ -514,14 +514,14 @@ function cambiarPassword() {
 
         if (respuesta == 1) {
             mostrarNotificacionGlobal("Operación exitosa", "Tu contraseña ha sido actualizada correctamente.", "exito");
-            document.getElementById('info_password').style.display="none"
+            document.getElementById('info_password').style.display = "none"
             document.getElementById('contra_actual').focus();
             //limpiao las cajas
             document.getElementById('contra_actual').value = "";
             document.getElementById('contra_nueva').value = "";
             document.getElementById('contra_confirmar').value = "";
         } else if (respuesta == 2) {
-            document.getElementById('info_password').style.display="block"
+            document.getElementById('info_password').style.display = "block"
             document.getElementById('info_password').innerHTML = "La contraseña actual es incorrecta.";
         } else {
             mostrarNotificacionGlobal("Ha habido un error", "Se ha producido un error al actualizar la contraseña.", "error");
@@ -669,12 +669,16 @@ function cancelarClase(datos, idBoton) {
 // PANEL ADMINISTRADOR - DASHBOARD
 // ============================================================
 
+
+
 function inicio_admin() {
-    //Aqui voy a llamar todas a todas las funciones que aparecen en el dashboard
-    alumnosTotales();
-    clasesHoy();
-    teoricoApto();
-    listaClasesHoy();
+    $("#cargar-dashboard-admin").load("vistas/admin/principal.html", function () {
+        //Aqui voy a llamar todas a todas las funciones que aparecen en el dashboard
+        alumnosTotales();
+        clasesHoy();
+        teoricoApto();
+        listaClasesHoy();
+    });
 }
 
 
@@ -1375,7 +1379,7 @@ function mostrarNotificacionGlobal(titulo, mensaje, tipo) {
         icono.innerHTML = `<i class="fas fa-times-circle icono-error"></i>`;
         barra.classList.add("barra-error");
     } else if (tipo === "info") {
-        icono.innerHTML = `<i class="fas fa-info-circle icono-info"></i>`; 
+        icono.innerHTML = `<i class="fas fa-info-circle icono-info"></i>`;
         barra.classList.add("barra-info");
     }
 
@@ -1388,12 +1392,12 @@ function mostrarNotificacionGlobal(titulo, mensaje, tipo) {
     barra.classList.add("animar-barra");
 
     //muestro la animacion
-    setTimeout(function() {
+    setTimeout(function () {
         notificacion.classList.add("mostrar-notificacion");
     }, 10);
 
     //se oculta automaticamente
-    temporizadorNotificacion = setTimeout(function(){
+    temporizadorNotificacion = setTimeout(function () {
         ocultarNotificacion();
     }, 4500);
 }
