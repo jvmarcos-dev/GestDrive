@@ -1,56 +1,63 @@
-/*************************** HEADER ***********************************/
 header {
     display: flex;
     width: 100%;
-    position: relative;
     height: 100px;
-    /*flex-direction:row;*/
     align-items: center;
-    /*padding:15px 15px 8px 15px;*/
-
     background-color: white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     color: black;
     margin-bottom: 20px;
+    padding: 0 20px;
+}
+
+.header-izq {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#menu-central {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    height: 100%;
+}
+
+.header-der {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 #imagen-header {
-    border: 0px solid blue;
-    width: 15%;
+    width: auto;
+    max-width: 180px;
 }
 
 #logo-header {
     width: 100%;
+    display: block;
 }
 
 .separador {
     height: 40px;
     width: 1px;
     background-color: #ddd;
-    margin: 0 10px;
+    margin: 0 15px;
 }
 
 #contenedor-texto-header {
     display: flex;
-    border: 0px solid red;
-    margin-left: 10px;
 }
 
 #texto-header-alumno {
     font-weight: bold;
     font-size: 1.5rem;
     color: #1a56b6;
-}
-
-#menu-central {
-    display: flex;
-    flex: 1;
-    justify-content: flex-end;
-    left: 50%;
-    transform: translateX(-50%);
-    gap: 30px;
-    align-items: center;
-    height: 100%;
 }
 
 .cambiar-ventana {
@@ -90,8 +97,6 @@ header {
     display: flex;
     align-items: center;
     position: relative;
-    margin-left: auto;
-    margin-right: 20px;
     gap: 10px;
     padding: 6px 16px 6px 6px;
     background-color: #f8fafc;
@@ -107,9 +112,11 @@ header {
 }
 
 #foto_alumno {
-    width: 20%;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     border: 1px solid black;
+    object-fit: cover;
 }
 
 #nombre_alumno {
@@ -126,13 +133,8 @@ header {
     transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/*Si el contenedor tiene un elemento con la clase mostrar desplegable, se rota la flecha 180 grados*/
 #datos-alumno-header:has(.mostrar-desplegable) .flecha-perfil {
     transform: rotate(180deg);
-}
-
-#logout {
-    margin-right: 20px;
 }
 
 .desplegable-header-alumno {
@@ -141,7 +143,7 @@ header {
     position: absolute;
     top: 100%;
     right: 0;
-    width: 85%;
+    width: 200px;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
@@ -166,10 +168,9 @@ header {
     padding: 12px 15px;
     gap: 12px;
     cursor: pointer;
-    border: 0px solid red;
     transition: background 0.2s;
     color: #444;
-    width: 85%;
+    width: 100%;
 }
 
 .item-desplegable:hover {
@@ -178,7 +179,7 @@ header {
 
 .item-desplegable i {
     color: #1a56b6;
-    width: 5%;
+    width: 20px;
     text-align: center;
 }
 
@@ -187,18 +188,14 @@ header {
     border: none;
     cursor: pointer;
     padding: 0;
-
-    margin-left: 7px;
 }
 
-/*Esto funciona como un separador horizontal*/
 hr {
     border: 0;
     border-top: 1px solid #eee;
     margin: 0;
 }
 
-/*Flecha que se ve señalando al usuario*/
 .desplegable-header-alumno::before {
     content: "";
     position: absolute;
@@ -743,24 +740,8 @@ footer {
 /**************************** TAMAÑO TABLET ************************************/
 /**************************** TAMAÑO TABLET ************************************/
 /**************************** TAMAÑO TABLET ************************************/
-@media (max-width: 1080px) {
-    header {
-        justify-content: space-between;
-        padding: 0 15px;
-    }
+@media (max-width: 1150px) {
 
-    #imagen-header {
-        width: auto;
-        max-width: 180px;
-    }
-
-    #menu-central {
-        position: static;
-        transform: none;
-        flex: 1;
-        justify-content: center;
-        margin: 0 20px;
-    }
 
     #tarjetas-datos-alumno {
         flex-wrap: wrap;
@@ -795,21 +776,22 @@ footer {
 @media (max-width: 750px) {
     header {
         height: auto;
-        flex-direction: column;
-        align-items: center;
         flex-wrap: wrap;
-        padding: 15px;
+        padding: 15px 20px;
         gap: 15px;
     }
 
+    .header-izq,
+    .header-der {
+        flex: auto;
+    }
+
     #menu-central {
-        display: flex;
-        position: static;
-        transform: none;
-        width: 100%;
-        justify-content: center;
+        flex: 0 0 100%;
         order: 3;
-        height: 40px;
+        margin-top: 10px;
+        height: auto;
+        padding-bottom: 5px;
     }
 
     .cambiar-ventana.activo::after {
@@ -822,16 +804,23 @@ footer {
     }
 
     #imagen-header {
-        width: 150px;
+        width: 140px;
+    }
+
+    #nombre_alumno {
+        display: none;
     }
 
     #foto_alumno {
-        width: 15%;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
     }
 
     #datos-alumno-header {
-        margin-left: 0;
-        margin-right: 0;
+        margin: 0;
+        padding: 5px 12px 5px 5px;
+        width: auto;
     }
 
     .desplegable-header-alumno {
@@ -883,7 +872,6 @@ footer {
         align-items: flex-start;
         gap: 15px;
     }
-
 
     .cabecera-der {
         width: 100%;
