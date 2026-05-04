@@ -154,3 +154,21 @@ body {
 .barra-exito { background-color: #10b981; }
 .barra-error { background-color: #ef4444; }
 .barra-info  { background-color: #3b82f6; }
+
+@media (max-width: 600px) {
+    /* --- NOTIFICACIONES EN MÓVIL --- */
+    #notificacion_global {
+        right: auto;
+        left: 50%;
+        /*Cambio animación, ahora viene desde arriba*/
+        transform: translate(-50%, -20px);
+
+        top: 20px;
+        width: 92vw; 
+        padding: 14px; 
+    }
+
+    #notificacion_global.mostrar-notificacion {
+        transform: translate(-50%, 0);
+    }
+}

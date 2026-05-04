@@ -1388,7 +1388,7 @@ function mostrarNotificacionGlobal(titulo, mensaje, tipo) {
     barra.classList.add("animar-barra");
 
     //muestro la animacion
-    setTimeout(() => {
+    setTimeout(function() {
         notificacion.classList.add("mostrar-notificacion");
     }, 10);
 
