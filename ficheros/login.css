@@ -126,3 +126,23 @@
     transform: translateY(0px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+@media (max-width: 600px) {
+    .contenedor-principal-login {
+        padding: 15px;
+    }
+
+    .contenedor3 {
+        padding: 25px 20px;
+        width: 100%;
+    }
+
+    #credenciales,
+    #info {
+        width: 100%;
+    }
+
+    #logo-login {
+        width: 70%;
+    }
+}

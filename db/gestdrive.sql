@@ -71,7 +71,7 @@ CREATE TABLE reservas (
 
 -- ============================================================
 --  TABLA 6: historico_alumnos
---  Alumnos que ya sacaron el carnet. Los mueve la app Java.
+--  Alumnos que ya sacaron el carnet.
 -- ============================================================
 CREATE TABLE historico_alumnos (
     id               INT          AUTO_INCREMENT PRIMARY KEY,
