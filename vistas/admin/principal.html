@@ -1,21 +1,51 @@
-<div class="contenedor_alumno">
-    <div id="cantidad_alumnos">
-        <label id="texto_alumnosActivos">Alumnos Activos</label>
-        <label id="total_alumnos"></label>
+<div class="contenedor-alumno c-admin">
+
+    <div id="tarjetas-datos-alumno">
+
+        <div class="latarjeta">
+            <div class="contenedor-icono">
+                <label class="titulo-tarjeta">Alumnos Activos</label>
+                <i class="fas fa-users icono-tarjeta" style="font-size: 1.5rem; color: #1a56b6;"></i>
+            </div>
+            <div class="contenedor-textos-inline">
+                <label class="resultado-label" id="total_alumnos">--</label>
+                <label class="subtitulo-label" id="texto_alumnosActivos">registrados</label>
+            </div>
+        </div>
+
+        <div class="latarjeta">
+            <div class="contenedor-icono">
+                <label class="titulo-tarjeta">Clases hoy</label>
+                <i class="fas fa-car icono-tarjeta" style="font-size: 1.5rem; color: #1a56b6;"></i>
+            </div>
+            <div class="contenedor-textos-inline">
+                <label class="resultado-label" id="total_clasesHoy">--</label>
+                <label class="subtitulo-label" id="texto_clasesHoy">programadas</label>
+            </div>
+        </div>
+
+        <div class="latarjeta">
+            <div class="contenedor-icono">
+                <label class="titulo-tarjeta">Teórico aprobado</label>
+                <i class="fas fa-check-circle icono-tarjeta" style="font-size: 1.5rem; color: #10b981;"></i>
+            </div>
+            <div class="contenedor-textos-inline">
+                <label class="resultado-label" id="total_teorico">--</label>
+                <label class="subtitulo-label" id="texto_teoricoAprobado">aptos</label>
+            </div>
+        </div>
+
     </div>
 
-    <div id="cantidad_clases_hoy">
-        <label id="texto_clasesHoy">Clases hoy</label>
-        <label id="total_clasesHoy"></label>
-    </div>
-
-    <div id="cantidad_teorico">
-        <label id="texto_teoricoAprobado">Teorico aprobado</label>
-        <label id="total_teorico"></label>
-    </div>
-    
-    <div id="tabla_clases">
+    <div id="historial_clases">
+        <label id="texto-historial">Prácticas de hoy</label>
         <table id="latabla_clases_hoy"></table>
-        <label id="noclases"></label>
+
+        <div id="contenedor-vacio-admin" class="mensaje-vacio-filtro" style="display: none;">
+            <i class="fas fa-calendar-check icono-vacio-admin"></i>
+            <label class="titulo-vacio-admin">Día despejado</label>
+            <label id="noclases"></label>
+        </div>
     </div>
+
 </div>

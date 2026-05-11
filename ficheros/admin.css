@@ -1,3 +1,5 @@
+/********************SIDEBAR*******************/
+
 #vista-admin {
     display: flex;
     min-height: 100vh;
@@ -112,6 +114,45 @@
     z-index: 90;
 }
 
+/********************PRINCIPAL*******************/
+.c-admin #historial_clases {
+    display: flex;
+    flex-direction: column;
+}
+
+#contenedor-vacio-admin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding: 40px 20px;
+    border-radius: 8px;
+    margin-top: 15px;
+    background-color: #f8fafc;
+    border: 1px dashed #cbd5e1;
+}
+
+.icono-vacio-admin {
+    font-size: 3.5rem;
+    color: #cbd5e1;
+    margin-bottom: 15px;
+}
+
+.titulo-vacio-admin {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 5px;
+}
+
+#noclases {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    font-style: normal;
+}
+
 @media (max-width: 750px) {
     #overlay-sidebar.mostrar-overlay {
         display: block;
@@ -152,4 +193,6 @@
         color: #475569;
         cursor: pointer;
     }
+
+    
 }

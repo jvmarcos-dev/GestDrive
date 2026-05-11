@@ -765,7 +765,8 @@ function datosListaClases(datos) {
             fila.insertCell(3).innerHTML = "<button onclick='seleccionarAlumno(" + datos[i].id_alumno + ")'>Ver Ficha</button>";
         }
     } else {
-        document.getElementById('noclases').innerText = "No hay clases hoy";
+        document.getElementById('contenedor-vacio-admin').style.display = "flex";
+        document.getElementById('noclases').innerText = "No hay clases programadas para hoy.";
     }
 }
 
@@ -1426,13 +1427,13 @@ function activarMenu(elemento, vista) {
 
     elemento.classList.add('activo');
 
-    // Cierra el menú en móviles tras pulsar una opción
+    //cierra el menú en móviles tras pulsar una opción
     if (window.innerWidth <= 900) {
         document.getElementById('admin-sidebar').classList.remove('mostrar-sidebar-movil');
         document.getElementById('overlay-sidebar').classList.remove('mostrar-overlay');
     }
 
-    //Cargo la vista correspondiente
+    //cargo la vista correspondiente
     switch (vista) {
         case 'dashboard':
             inicio_admin();
