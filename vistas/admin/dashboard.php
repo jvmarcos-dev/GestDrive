@@ -25,9 +25,14 @@
                 <label class="texto-menu">Gestión de Clases</label>
             </div>
 
-            <div class="item-sidebar" onclick="activarMenu(this, 'registros')">
+            <div class="item-sidebar" onclick="activarMenu(this, 'registroAlumno')">
+                <i class="fas fa-graduation-cap"></i>
+                <label class="texto-menu">Nuevo alumno</label>
+            </div>
+
+             <div class="item-sidebar" onclick="activarMenu(this, 'registroProfesor')">
                 <i class="fas fa-user-plus"></i>
-                <label class="texto-menu">Altas / Registros</label>
+                <label class="texto-menu">Nuevo profesor</label>
             </div>
         </div>
 

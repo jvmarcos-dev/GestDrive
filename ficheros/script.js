@@ -770,7 +770,7 @@ function datosListaClases(datos) {
 }
 
 function cargarAlumno() {
-    $("#lacaja").load("vistas/admin/alumno.html", function () {
+    $("#cargar-dashboard-admin").load("vistas/admin/alumno.html", function () {
         listado_alumnos_admin();
     });
 }
@@ -828,7 +828,7 @@ function seleccionarAlumno(idAlumno) {
         }
 
         //si existe, cargamos la vista del alumno
-        $("#lacaja").load("vistas/admin/datosAlumno.html", function () {
+        $("#cargar-dashboard-admin").load("vistas/admin/datosAlumno.html", function () {
             datosAlumnoAdmin(datos);
 
             //cargamos el historial
@@ -1059,7 +1059,7 @@ function datosArchivo(datos) {
 }
 
 function cargarProfesores() {
-    $("#lacaja").load("vistas/admin/profesor.html", function () {
+    $("#cargar-dashboard-admin").load("vistas/admin/profesor.html", function () {
         listadoProfesores();
     });
 }
@@ -1129,7 +1129,7 @@ function listadoProfesoresCallback(datos) {
 }
 
 function cargarCalendario() {
-    $("#lacaja").load("vistas/admin/generar_calendario.html");
+    $("#cargar-dashboard-admin").load("vistas/admin/generar_calendario.html");
 }
 
 function generoClases() {
@@ -1148,7 +1148,7 @@ function generoClasesCallback(datos) {
 }
 
 function nuevoAlumno() {
-    $("#lacaja").load("vistas/admin/registroAlumno.php");
+    $("#cargar-dashboard-admin").load("vistas/admin/registroAlumno.php");
 }
 
 function registroAlumno() {
@@ -1232,7 +1232,7 @@ function visualizo(id_input, id_imagen) {
 }
 
 function nuevoProfesor() {
-    $("#lacaja").load("vistas/admin/registroProfesor.html");
+    $("#cargar-dashboard-admin").load("vistas/admin/registroProfesor.html");
 }
 
 function registroProfesor() {
@@ -1426,10 +1426,36 @@ function activarMenu(elemento, vista) {
 
     elemento.classList.add('activo');
 
-    if (window.innerWidth <= 750) {
+    // Cierra el menú en móviles tras pulsar una opción
+    if (window.innerWidth <= 900) {
         document.getElementById('admin-sidebar').classList.remove('mostrar-sidebar-movil');
         document.getElementById('overlay-sidebar').classList.remove('mostrar-overlay');
     }
 
-    // Aquí llamarías a tu función para cargar la vista en #cargar-dashboard-admin
+    //Cargo la vista correspondiente
+    switch (vista) {
+        case 'dashboard':
+            inicio_admin();
+            break;
+
+        case 'alumnos':
+            cargarAlumno();
+            break;
+
+        case 'profesores':
+            cargarProfesores();
+            break;
+
+        case 'calendario':
+            cargarCalendario();
+            break;
+
+        case 'registroAlumno':
+            nuevoAlumno();
+            break;
+
+        case 'registroProfesor':
+            nuevoProfesor();
+            break;
+    }
 }
