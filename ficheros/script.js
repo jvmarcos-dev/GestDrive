@@ -1409,3 +1409,27 @@ function ocultarNotificacion() {
         notificacion.classList.remove("mostrar-notificacion");
     }
 }
+
+function alternarSidebar() {
+    let sidebar = document.getElementById('admin-sidebar');
+    let overlay = document.getElementById('overlay-sidebar');
+
+    // Mostramos/Ocultamos la barra
+    sidebar.classList.toggle('mostrar-sidebar-movil');
+    // Mostramos/Ocultamos el fondo oscuro
+    overlay.classList.toggle('mostrar-overlay');
+}
+
+function activarMenu(elemento, vista) {
+    let items = document.querySelectorAll('.item-sidebar');
+    items.forEach(item => item.classList.remove('activo'));
+
+    elemento.classList.add('activo');
+
+    if (window.innerWidth <= 750) {
+        document.getElementById('admin-sidebar').classList.remove('mostrar-sidebar-movil');
+        document.getElementById('overlay-sidebar').classList.remove('mostrar-overlay');
+    }
+
+    // Aquí llamarías a tu función para cargar la vista en #cargar-dashboard-admin
+}

@@ -1,6 +1,155 @@
-/*************************** HEADER ***********************************/
-#contenedor-texto-header-admin {
+#vista-admin {
     display: flex;
+    min-height: 100vh;
+    background-color: #f8fafc;
+}
+
+#admin-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    background-color: white;
+    border-right: 1px solid #e2e8f0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+}
+
+#admin-sidebar #imagen-header {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    flex-grow: 1;
+    width: 100%; 
+    max-width: none; /* Anulamos el límite de 180px antiguo */
+    height: 100px;
+    padding: 0; 
+    margin: 0;
+    border-bottom: 1px solid #e2e8f0;
+    box-sizing: border-box;
+}
+
+/* Centramos la imagen de forma absoluta dentro de su contenedor */
+#admin-sidebar #logo-header {
+    width: 70%; /* Ajusta este porcentaje si lo quieres más grande o pequeño */
+    max-width: 160px;
+    margin: 0 auto;
+    display: block;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 20px 15px;
+    gap: 8px;
+}
+
+.sidebar-footer {
+    padding: 15px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.item-sidebar {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 8px;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.item-sidebar i {
+    width: 24px;
+    font-size: 1.1rem;
+    margin-right: 12px;
+    text-align: center;
+}
+
+.texto-menu {
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.item-sidebar:hover {
+    background-color: #f1f5f9;
+    color: #1a56b6;
+}
+
+.item-sidebar.activo {
+    background-color: #eff6ff;
+    color: #1a56b6;
+    font-weight: 600;
+}
+
+.item-logout:hover {
+    background-color: #fef2f2;
+    color: #ef4444;
+}
+
+#admin-main-content {
+    flex: 1;
+    margin-left: 260px;
+    padding: 30px;
+    width: calc(100% - 260px);
+}
+
+.admin-topbar-mobile {
+    display: none;
+}
+
+#overlay-sidebar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.4);
+    z-index: 90;
+}
+
+@media (max-width: 750px) {
+    #overlay-sidebar.mostrar-overlay {
+        display: block;
+    }
+    #admin-sidebar {
+        left: -260px;
+        transition: left 0.3s ease;
+    }
+
+    #admin-sidebar.mostrar-sidebar-movil {
+        left: 0;
+    }
+
+    #admin-main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 15px;
+    }
+
+    .admin-topbar-mobile {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background-color: white;
+        padding: 15px 20px;
+        margin: -15px -15px 20px -15px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .texto-header-mobile {
+        font-weight: bold;
+        color: #1a56b6;
+        font-size: 1.2rem;
+    }
+
+    #btn-mobile-sidebar {
+        font-size: 1.3rem;
+        color: #475569;
+        cursor: pointer;
+    }
 }
