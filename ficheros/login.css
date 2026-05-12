@@ -127,6 +127,27 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.boton-accion-tabla {
+    background-color: white;
+    border: 1px solid #cbd5e1;
+    color: #1a56b6;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.boton-accion-tabla:hover {
+    background-color: #eff6ff;
+    border-color: #1a56b6;
+}
+
+.boton-accion-tabla:active {
+    transform: scale(0.97);
+}
+
 @media (max-width: 600px) {
     .contenedor-principal-login {
         padding: 15px;

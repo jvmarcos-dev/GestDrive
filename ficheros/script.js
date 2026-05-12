@@ -762,7 +762,7 @@ function datosListaClases(datos) {
             fila.insertCell(0).innerHTML = horaFormateada;
             fila.insertCell(1).innerHTML = nombreAlumno + ' ' + apellidosAlumno;
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
-            fila.insertCell(3).innerHTML = "<button onclick='seleccionarAlumno(" + datos[i].id_alumno + ")'>Ver Ficha</button>";
+            fila.insertCell(3).innerHTML = "<button class='boton-accion-tabla' onclick='seleccionarAlumno(" + datos[i].id_alumno + ")'>Ver Ficha</button>";
         }
     } else {
         document.getElementById('contenedor-vacio-admin').style.display = "flex";
@@ -813,6 +813,15 @@ function busquedaAlumnos(datos) {
 }
 
 function seleccionarAlumno(idAlumno) {
+    let items = document.querySelectorAll('.item-sidebar');
+    
+    //el índice 1 corresponde a la opción buscar alumno
+    //si no está activo, quito la clase a todos y se la pongo a este
+    if (items[1] && !items[1].classList.contains('activo')) {
+        items.forEach(item => item.classList.remove('activo'));
+        items[1].classList.add('activo');
+    }
+    
     idAlumnoSeleccionadoAdmin = idAlumno;
     let url = "php/alumno/datos_alumno.php";
 

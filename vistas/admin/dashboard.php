@@ -12,7 +12,7 @@
 
             <div class="item-sidebar" onclick="activarMenu(this, 'alumnos')">
                 <i class="fas fa-user-graduate"></i>
-                <label class="texto-menu">Alumnos Activos</label>
+                <label class="texto-menu">Buscar alumno</label>
             </div>
 
             <div class="item-sidebar" onclick="activarMenu(this, 'profesores')">
