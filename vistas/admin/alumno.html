@@ -1,7 +1,19 @@
-<div id="buscador">
-    <input id="buscar_alumno" oninput="listado_alumnos_admin()" name="alumnos" type="text"
-        minlength="1" maxlength="163" placeholder="Buscar un alumno">
-    <i onclick="listado_alumnos_admin()" class="fas fa-search lupa"></i>
-    
-    <div id="resultados_busqueda"></div>
+<div class="c-admin contenedor-alumno">
+    <div class="cabecera-tabla-controles" style="align-items: flex-start;">
+        
+        <div id="buscador" style="margin-bottom: 0; width: 100%; max-width: 400px;">
+            <input id="buscar_alumno" oninput="listado_alumnos_admin()" type="text" placeholder="Buscar un alumno...">
+            <i class="fas fa-search lupa"></i>
+            <div id="resultados_busqueda"></div>
+        </div>
+
+        <button class="boton-principal" onclick="nuevoAlumno()" style="padding: 12px 20px;">
+            <i class="fas fa-user-plus" style="margin-right: 8px;"></i> Nuevo Alumno
+        </button>
+    </div>
+
+    <div id="historial_clases">
+        <label id="texto-historial">Últimos alumnos matriculados</label>
+        <table id="tabla_alumnos_defecto"></table>
+    </div>
 </div>

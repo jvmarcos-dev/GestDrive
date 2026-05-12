@@ -772,13 +772,46 @@ function datosListaClases(datos) {
 
 function cargarAlumno() {
     $("#cargar-dashboard-admin").load("vistas/admin/alumno.html", function () {
-        listado_alumnos_admin();
+        //al cargar la vista, envio la búsqueda vacía para que PHP devuelva los 20 últimos
+        $.post("php/admin/buscar_alumno.php", { labusqueda: "" }, pintoTablaPrincipal);
     });
+}
+
+function pintoTablaPrincipal(datos) {
+    var table = document.getElementById("tabla_alumnos_defecto");
+    table.innerHTML = "";
+
+    if (datos != 0 && datos.length > 0) {
+        var header = table.createTHead();
+        var filaH = header.insertRow(0);
+        filaH.innerHTML = "<th><b>Foto</b></th><th><b>DNI</b></th><th><b>Alumno</b></th><th style='text-align: center;'><b>Acción</b></th>";
+
+        var body = table.createTBody();
+        for (let i = 0; i < datos.length; i++) {
+            let nombre = datos[i].nombre.charAt(0).toUpperCase() + datos[i].nombre.slice(1);
+            let apellidos = datos[i].apellidos.charAt(0).toUpperCase() + datos[i].apellidos.slice(1);
+            
+            var fila = body.insertRow(i);
+            fila.insertCell(0).innerHTML = "<img class='avatar-tabla' src='" + datos[i].foto + "'>";
+            fila.insertCell(1).innerHTML = datos[i].dni;
+            fila.insertCell(2).innerHTML = nombre + " " + apellidos;
+            fila.insertCell(3).innerHTML = "<button class='boton-accion-tabla' onclick='seleccionarAlumno(" + datos[i].id + ")'>Ver Ficha</button>";
+        }
+    } else {
+        table.innerHTML = "<tr><td colspan='4' style='text-align: center; color: #64748b; font-style: italic; padding: 20px;'>No hay alumnos registrados.</td></tr>";
+    }
 }
 
 function listado_alumnos_admin() {
     clearTimeout(timeoutBusqueda);
     let busqueda = document.getElementById('buscar_alumno').value;
+    let contenedor = document.getElementById('resultados_busqueda');
+
+    //si el input está vacío, vacio la caja flotante y abortamos la petición
+    if (busqueda.trim() == "") {
+        contenedor.innerHTML = ""; 
+        return; 
+    }
 
     //hago un timeout ya que estoy usando un evento oninput. Esto significa que cada vez que introduzco
     //un caracter en la barra de busqueda, va a llamar a esta funcion, y por tanto, si el usuario que teclea
@@ -804,11 +837,13 @@ function busquedaAlumnos(datos) {
             // con esto cada alumno que aparezca en la lista será un div nuevo
             // al hacer click en el, iremos a la funcion seleccionarAlumno de este alumno que estamos llamando
             // y obtendremos todos sus datos en una nueva pantalla.
-            contenedor.innerHTML += "<div style='cursor:pointer; padding:5px; border-bottom:1px solid #ccc;' onclick='seleccionarAlumno(" + datos[i].id + ")'>" +
-                "<img src='" + imagen + "'>" + " " + nombre + " " + apellidos + "</div>";
+            contenedor.innerHTML += "<div class='item-resultado-busqueda' onclick='seleccionarAlumno(" + datos[i].id + ")'>" +
+                "<img class='img-resultado-busqueda' src='" + imagen + "'>" + 
+                "<span class='texto-resultado-busqueda'>" + nombre + " " + apellidos + "</span>" +
+                "</div>";
         }
     } else {
-        contenedor.innerHTML = "<div style='padding:5px;'>No se han encontrado alumnos.</div>";
+        contenedor.innerHTML = "<div class='item-resultado-vacio'>No se han encontrado alumnos.</div>";
     }
 }
 
