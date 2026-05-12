@@ -773,7 +773,9 @@ function datosListaClases(datos) {
 function cargarAlumno() {
     $("#cargar-dashboard-admin").load("vistas/admin/alumno.html", function () {
         //al cargar la vista, envio la búsqueda vacía para que PHP devuelva los 20 últimos
-        $.post("php/admin/buscar_alumno.php", { labusqueda: "" }, pintoTablaPrincipal);
+        $.post("php/admin/buscar_alumno.php", {
+            labusqueda: ""
+        }, pintoTablaPrincipal);
     });
 }
 
@@ -790,7 +792,7 @@ function pintoTablaPrincipal(datos) {
         for (let i = 0; i < datos.length; i++) {
             let nombre = datos[i].nombre.charAt(0).toUpperCase() + datos[i].nombre.slice(1);
             let apellidos = datos[i].apellidos.charAt(0).toUpperCase() + datos[i].apellidos.slice(1);
-            
+
             var fila = body.insertRow(i);
             fila.insertCell(0).innerHTML = "<img class='avatar-tabla' src='" + datos[i].foto + "'>";
             fila.insertCell(1).innerHTML = datos[i].dni;
@@ -809,8 +811,8 @@ function listado_alumnos_admin() {
 
     //si el input está vacío, vacio la caja flotante y abortamos la petición
     if (busqueda.trim() == "") {
-        contenedor.innerHTML = ""; 
-        return; 
+        contenedor.innerHTML = "";
+        return;
     }
 
     //hago un timeout ya que estoy usando un evento oninput. Esto significa que cada vez que introduzco
@@ -838,7 +840,7 @@ function busquedaAlumnos(datos) {
             // al hacer click en el, iremos a la funcion seleccionarAlumno de este alumno que estamos llamando
             // y obtendremos todos sus datos en una nueva pantalla.
             contenedor.innerHTML += "<div class='item-resultado-busqueda' onclick='seleccionarAlumno(" + datos[i].id + ")'>" +
-                "<img class='img-resultado-busqueda' src='" + imagen + "'>" + 
+                "<img class='img-resultado-busqueda' src='" + imagen + "'>" +
                 "<span class='texto-resultado-busqueda'>" + nombre + " " + apellidos + "</span>" +
                 "</div>";
         }
@@ -849,14 +851,14 @@ function busquedaAlumnos(datos) {
 
 function seleccionarAlumno(idAlumno) {
     let items = document.querySelectorAll('.item-sidebar');
-    
+
     //el índice 1 corresponde a la opción buscar alumno
     //si no está activo, quito la clase a todos y se la pongo a este
     if (items[1] && !items[1].classList.contains('activo')) {
         items.forEach(item => item.classList.remove('activo'));
         items[1].classList.add('activo');
     }
-    
+
     idAlumnoSeleccionadoAdmin = idAlumno;
     let url = "php/alumno/datos_alumno.php";
 
@@ -1193,7 +1195,16 @@ function generoClasesCallback(datos) {
 }
 
 function nuevoAlumno() {
-    $("#cargar-dashboard-admin").load("vistas/admin/registroAlumno.php");
+    $("#cargar-dashboard-admin").load("vistas/admin/registroAlumno.php", function () {
+        let items = document.querySelectorAll('.item-sidebar');
+
+        //el índice 1 corresponde a la opción buscar alumno
+        //si no está activo, quito la clase a todos y se la pongo a este
+        if (items[4] && !items[4].classList.contains('activo')) {
+            items.forEach(item => item.classList.remove('activo'));
+            items[4].classList.add('activo');
+        }
+    });
 }
 
 function registroAlumno() {
