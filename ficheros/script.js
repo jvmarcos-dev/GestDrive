@@ -1211,7 +1211,7 @@ function registroAlumno() {
     // borro div mensaje
     document.getElementById('notificacion_global').innerHTML = ""
     // visualizo la estrellita
-    document.getElementById('estrella').style.visibility = 'visible';
+    document.getElementById('elboton').innerHTML = '<img id="estrella" src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />';
     // inhabilito botón de realizar alta
     document.getElementById('elboton').disabled = true;
 

@@ -4,7 +4,7 @@
 ?>
 
 <form id="formulario1" name="formulario1" ENCTYPE="multipart/form-data"
-					ACTION="PHP_Alta_Usuario.php" METHOD="POST" TARGET="mensaje" autocomplete="off"
+					METHOD="POST" TARGET="mensaje" autocomplete="off"
 					onsubmit="registroAlumno(event); return false;">
 					<p class="leyenda">REGISTRAR ALUMNO</p><br>
 					<div class="form-group">
