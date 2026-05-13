@@ -153,22 +153,16 @@
     font-style: normal;
 }
 
-/* =========================================================
-   BUSCADOR DE ALUMNOS (ADMIN)
-   ========================================================= */
-
-/* 1. Contenedor principal: define el área de trabajo */
 #buscador {
     position: relative;
     width: 100%;
-    max-width: 500px; /* Evita que el buscador ocupe toda la pantalla en PC */
+    max-width: 500px;
     margin-bottom: 25px;
 }
 
-/* 2. El Input: redondeado, borde suave y espacio interior para la lupa */
 #buscar_alumno {
     width: 100%;
-    padding: 12px 15px 12px 42px; /* 42px por la izquierda para no pisar el icono */
+    padding: 12px 15px 12px 42px;
     font-size: 1rem;
     color: #334155;
     background-color: white;
@@ -179,18 +173,16 @@
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
-/* Efecto al hacer clic en el buscador (halo azul corporativo) */
 #buscar_alumno:focus {
     border-color: #1a56b6;
     box-shadow: 0 0 0 3px rgba(26, 86, 182, 0.1);
 }
 
-/* 3. La Lupa: la colocamos dentro del input matemáticamente */
 .lupa {
     position: absolute;
     left: 14px;
     top: 50%;
-    transform: translateY(-50%); /* Centrado vertical perfecto */
+    transform: translateY(-50%);
     color: #94a3b8;
     cursor: pointer;
     transition: color 0.2s;
@@ -202,32 +194,25 @@
     color: #1a56b6;
 }
 
-/* =========================================================
-   CAJA DE RESULTADOS FLOTANTE
-   ========================================================= */
-
-/* 4. El menú desplegable */
 #resultados_busqueda {
     position: absolute;
-    top: 100%; /* Se coloca exactamente debajo del input */
+    top: 100%;
     left: 0;
     width: 100%;
     margin-top: 6px;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    z-index: 100; /* Asegura que pase por encima de cualquier otro elemento */
-    overflow: hidden; /* Redondea los bordes de los hijos */
+    z-index: 100;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
-/* Si JS vacía el contenedor, esto lo oculta por completo */
 #resultados_busqueda:empty {
     display: none;
 }
 
-/* 5. Diseño de cada alumno encontrado */
 .item-resultado-busqueda {
     display: flex;
     align-items: center;
@@ -238,7 +223,6 @@
     transition: background-color 0.2s;
 }
 
-/* Quitamos la raya al último para que quede limpio */
 .item-resultado-busqueda:last-child {
     border-bottom: none;
 }
@@ -247,12 +231,11 @@
     background-color: #f8fafc;
 }
 
-/* 6. Formato de la foto del alumno (circular y recortada) */
 .img-resultado-busqueda {
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    object-fit: cover; /* Evita que la foto se deforme si no es cuadrada */
+    object-fit: cover;
     border: 1px solid #e2e8f0;
 }
 
@@ -262,7 +245,6 @@
     color: #334155;
 }
 
-/* 7. Mensaje cuando no hay resultados */
 .item-resultado-vacio {
     padding: 15px;
     text-align: center;
