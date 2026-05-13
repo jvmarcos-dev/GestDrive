@@ -628,6 +628,12 @@
     border-bottom: 3px solid #1a56b6;
 }
 
+#info_alumno_admin:empty, 
+#no_clases_proximas:empty,
+#no_profesores:empty {
+    display: none !important;
+}
+
 @media (max-width: 750px) {
 
     /* Transformación de tabla de Ficha en Móvil */
@@ -790,4 +796,12 @@
     #historial_clases #tabla_alumnos_defecto td:nth-child(4)::before {
         content: "";
     }
+
+    #datos_profesores td:nth-child(1)::before { content: "Foto:"; }
+    #datos_profesores td:nth-child(2)::before { content: "DNI:"; }
+    #datos_profesores td:nth-child(3)::before { content: "Nombre:"; }
+    #datos_profesores td:nth-child(4)::before { content: "Apellidos:"; }
+    #datos_profesores td:nth-child(5)::before { content: "Email:"; }
+    #datos_profesores td:nth-child(6)::before { content: "Teléfono:"; }
+    #datos_profesores td:nth-child(7)::before { content: "Licencia:"; }
 }
