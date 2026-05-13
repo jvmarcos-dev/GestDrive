@@ -8,7 +8,7 @@ if (isset($_POST['elid']) && !empty($_POST['elid'])) {
     $id = $_POST['elid'];
 } else {
     //si no llega, la petición la hace el propio Alumno. Usamos su ID de la sesión.
-    $id = $_SESSION['id_usuario'];
+    $id = $_SESSION['idusuario'];
 }
 
 $clase = $_POST['laclase'];
