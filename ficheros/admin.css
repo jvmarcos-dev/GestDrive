@@ -581,17 +581,21 @@
     gap: 12px;
 }
 
-.boton-principal{
+.boton-principal {
     padding: 10px;
 }
 
 /* Animaciones Keyframes */
 @keyframes fadeIn {
-    to { opacity: 1; }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes slideUp {
-    to { transform: translateY(0); }
+    to {
+        transform: translateY(0);
+    }
 }
 
 /*********************PESTAÑAS PARA ENTRAR A HISTORIAL O RESERVAR******************************/
@@ -628,7 +632,7 @@
     border-bottom: 3px solid #1a56b6;
 }
 
-#info_alumno_admin:empty, 
+#info_alumno_admin:empty,
 #no_clases_proximas:empty,
 #no_profesores:empty {
     display: none !important;
@@ -772,6 +776,7 @@
 }
 
 .boton-generar-gigante {
+    display: flex;
     background-color: #1a56b6;
     color: white;
     border: none;
@@ -781,7 +786,6 @@
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
-    display: inline-flex;
     align-items: center;
     gap: 12px;
     box-shadow: 0 4px 6px -1px rgba(26, 86, 182, 0.2);
@@ -798,6 +802,184 @@
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+}
+
+   /******************************REGISTRO ALUMNO**********************************/
+
+#formulario1 {
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.cabecera-formulario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.titulo-form {
+    display: flex;
+    font-size: 1.4rem;
+    color: #1e293b;
+    font-weight: 700;
+    margin: 0;
+    align-items: center;
+    gap: 10px;
+}
+
+.titulo-form i {
+    color: #1a56b6;
+}
+
+/* Asterisco rojo para campos requeridos */
+.req {
+    color: #ef4444;
+}
+
+.layout-dos-columnas-form {
+    display: flex;
+    gap: 35px;
+    margin-bottom: 30px;
+}
+
+.columna-form-izq {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.columna-form-der {
+    flex: 1;
+}
+
+.fila-form-doble {
+    display: flex;
+    gap: 20px;
+}
+
+.latarjeta-gris {
+    display: flex;
+    flex-direction: column;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 25px;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group .titulo {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.elinput,
+#formulario1 input[type="date"],
+#formulario1 input[type="number"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #1e293b;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.elinput:focus,
+#formulario1 input[type="date"]:focus,
+#formulario1 input[type="number"]:focus {
+    border-color: #1a56b6;
+    box-shadow: 0 0 0 3px rgba(26, 86, 182, 0.1);
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Fotografía */
+.avatar-form {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin: 10px auto;
+    background-color: #f1f5f9;
+}
+
+.input-file-custom {
+    font-size: 0.85rem;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Radio Buttons */
+#lasopciones {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+}
+
+.elradio {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/*accent-color sirve para poder cambiar el color predeterminado de los radios*/
+.elradio input {
+    accent-color: #1a56b6;
+}
+
+/* Botón Finalizar */
+#elboton {
+    display: flex;
+    background-color: #1a56b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#elboton:hover {
+    background-color: #1e40af;
+}
+
+#elboton:disabled {
+    background-color: #cbd5e1;
+    cursor: not-allowed;
+    color: #f8fafc;
 }
 
 @media (max-width: 750px) {
@@ -847,7 +1029,7 @@
     .paneles-generador {
         flex-direction: column;
     }
-    
+
     .boton-generar-gigante {
         width: 100%;
         justify-content: center;
@@ -927,15 +1109,25 @@
     .modal-pie {
         flex-direction: column;
     }
-    
+
     .modal-pie button {
         width: 100%;
         margin: 0 !important;
     }
-    
+
     .modal-pie .boton-cancelar {
-        order: 3; 
+        order: 3;
         margin-top: 10px !important;
+    }
+
+    .layout-dos-columnas-form {
+        flex-direction: column;
+        gap: 25px;
+    }
+    
+    .fila-form-doble {
+        flex-direction: column;
+        gap: 20px;
     }
 
     /* Etiquetas para la tabla del Dashboard (Prácticas de hoy) */
@@ -972,11 +1164,31 @@
         content: "";
     }
 
-    #datos_profesores td:nth-child(1)::before { content: "Foto:"; }
-    #datos_profesores td:nth-child(2)::before { content: "DNI:"; }
-    #datos_profesores td:nth-child(3)::before { content: "Nombre:"; }
-    #datos_profesores td:nth-child(4)::before { content: "Apellidos:"; }
-    #datos_profesores td:nth-child(5)::before { content: "Email:"; }
-    #datos_profesores td:nth-child(6)::before { content: "Teléfono:"; }
-    #datos_profesores td:nth-child(7)::before { content: "Licencia:"; }
+    #datos_profesores td:nth-child(1)::before {
+        content: "Foto:";
+    }
+
+    #datos_profesores td:nth-child(2)::before {
+        content: "DNI:";
+    }
+
+    #datos_profesores td:nth-child(3)::before {
+        content: "Nombre:";
+    }
+
+    #datos_profesores td:nth-child(4)::before {
+        content: "Apellidos:";
+    }
+
+    #datos_profesores td:nth-child(5)::before {
+        content: "Email:";
+    }
+
+    #datos_profesores td:nth-child(6)::before {
+        content: "Teléfono:";
+    }
+
+    #datos_profesores td:nth-child(7)::before {
+        content: "Licencia:";
+    }
 }

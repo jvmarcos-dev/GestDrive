@@ -3,81 +3,85 @@
     $fecha_maxima = date('Y-m-d', strtotime('-16 years'));
 ?>
 
-<form id="formulario1" name="formulario1" ENCTYPE="multipart/form-data"
-					METHOD="POST" TARGET="mensaje" autocomplete="off"
-					onsubmit="registroAlumno(event); return false;">
-					<p class="leyenda">REGISTRAR ALUMNO</p><br>
-					<div class="form-group">
-						<label class="titulo" for="dni">DNI / NIE:</label>
-						<input class="elinput" id="dni" name="dni" type="text" pattern="([0-9]{8}[A-Za-z])|([XYZxyz][0-9]{7}[A-Za-z])"
-                            title="Introduce 8 números y 1 letra (DNI) o Letra X,Y,Z, 7 números y 1 letra (NIE)"
-							minlength="9" maxlength="9"
-							style="text-transform: uppercase;" required autofocus
-							placeholder="Ej: 11267905K">
-					</div>
+<form id="formulario1" name="formulario1" ENCTYPE="multipart/form-data" METHOD="POST" autocomplete="off" onsubmit="registroAlumno(event); return false;">
+    
+    <div class="cabecera-formulario">
+        <h2 class="titulo-form"><i class="fas fa-user-plus"></i> Registrar Nuevo Alumno</h2>
+    </div>
 
-					<div class="form-group">
-						<label class="titulo" for="nombre">Nombre:</label>
-						<input class="elinput" id="nombre" name="nombre" type="text" minlength="1" maxlength="60"
-						style="text-transform: capitalize;" required
-						placeholder="Ej: Juan Valentín">
-					</div>
+    <div class="layout-dos-columnas-form">
+        
+        <div class="columna-form-izq">
+            <div class="form-group">
+                <label class="titulo" for="dni">DNI / NIE <span class="req">*</span></label>
+                <input class="elinput" id="dni" name="dni" type="text" pattern="([0-9]{8}[A-Za-z])|([XYZxyz][0-9]{7}[A-Za-z])"
+                    title="Introduce 8 números y 1 letra (DNI) o Letra X,Y,Z, 7 números y 1 letra (NIE)"
+                    minlength="9" maxlength="9" style="text-transform: uppercase;" required autofocus
+                    placeholder="Ej: 11267905K">
+            </div>
 
-                    <div class="form-group">
-						<label class="titulo" for="apellidos">Apellidos:</label>
-						<input class="elinput" id="apellidos" name="apellidos" type="text" minlength="1" maxlength="100"
-						style="text-transform: capitalize;" required
-						placeholder="Ej: Marcos Argandoña">
-					</div>
+            <div class="fila-form-doble">
+                <div class="form-group">
+                    <label class="titulo" for="nombre">Nombre <span class="req">*</span></label>
+                    <input class="elinput" id="nombre" name="nombre" type="text" minlength="1" maxlength="60"
+                    style="text-transform: capitalize;" required placeholder="Ej: Juan Valentín">
+                </div>
+                <div class="form-group">
+                    <label class="titulo" for="apellidos">Apellidos <span class="req">*</span></label>
+                    <input class="elinput" id="apellidos" name="apellidos" type="text" minlength="1" maxlength="100"
+                    style="text-transform: capitalize;" required placeholder="Ej: Marcos Argandoña">
+                </div>
+            </div>
 
-                    <div class="form-group">
-						<label class="titulo" for="email">Email:</label>
-						<input class="elinput" id="email" name="email" type="email" minlength="1" maxlength="100" required
-							placeholder="Ej: jm7023333@gmail.com">
-					</div>
+            <div class="fila-form-doble">
+                <div class="form-group">
+                    <label class="titulo" for="email">Email <span class="req">*</span></label>
+                    <input class="elinput" id="email" name="email" type="email" minlength="1" maxlength="100" required
+                        placeholder="Ej: jm7023333@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label class="titulo" for="telefono">Teléfono <span class="req">*</span></label>
+                    <input class="elinput" id="telefono" name="telefono" type="tel" minlength="1" maxlength="15" pattern="[0-9]{9,15}"
+                    title="Introduce entre 9 y 15 números" required placeholder="Ej: 691087441">
+                </div>
+            </div>
 
-                    <div class="form-group">
-						<label class="titulo" for="telefono">Telefono:</label>
-						<input class="elinput" id="telefono" name="telefono" type="tel" minlength="1" maxlength="15" pattern="[0-9]{9,15}"
-                        title="Introduce entre 9 y 15 números" required
-						placeholder="Ej: 691087441">
-					</div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label class="titulo" for="fecha_nac">Fecha de Nacimiento <span class="req">*</span></label>
+                <input class="elinput" id="fecha_nac" name="fecha_nac" type="date" max="<?php echo $fecha_maxima; ?>" required>
+            </div>
+        </div>
 
-                    <div class="form-group">
-						<label class="titulo" for="fecha_nac">Fecha de Nacimiento:</label>
-						<input class="elinput" id="fecha_nac" name="fecha_nac" type="date" max="<?php echo $fecha_maxima; ?>" required>
-					</div>
+        <div class="columna-form-der latarjeta-gris">
+            
+            <div class="form-group" style="text-align: center;">
+                <label class="titulo">Fotografía</label>
+                <img id="img1" src="imagenes/usuarios/default.png" class="avatar-form">
+                <input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png, image/jpg" 
+                onchange="visualizo('imagen', 'img1')" class="input-file-custom">
+            </div>
 
-					<div style="text-align: center; margin-bottom: 15px;">
-						<img id="img1" src="imagenes/usuarios/default.png">
-					</div>
+            <div class="form-group">
+                <label class="titulo" for="saldo_inicial">Saldo de clases inicial</label>
+                <input class="elinput text-center" id="saldo_inicial" name="saldo_inicial" type="number" value="0" min="0" required>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 0;">
+                <p class="titulo">Estado del Teórico</p>
+                <div id="lasopciones">
+                    <label for="pendiente" class="elradio">
+                        <input id="pendiente" name="estado_teorico" type="radio" value="pendiente" checked> Pendiente
+                    </label>
+                    <label for="apto" class="elradio">
+                        <input id="apto" name="estado_teorico" type="radio" value="apto"> Apto
+                    </label>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 
-					<div class="form-group">
-						<label class="titulo" for="imagen">Imagen:</label>
-						<input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png, image/jpg" 
-						onchange="visualizo('imagen', 'img1')">
-					</div>
-
-					<div class="form-group">
-						<label class="titulo" for="saldo_inicial">Saldo de clases inicial:</label>
-						<input class="elinput" id="saldo_inicial" name="saldo_inicial" type="number" value="0" min="0" required>
-					</div>
-					
-					<div class="form-group">
-						<p class="titulo">Estado del Teórico:</p>
-						<div id="lasopciones">
-							<label for="pendiente" class="elradio">
-								<input id="pendiente" name="estado_teorico" type="radio" value="pendiente" checked>
-								Pendiente
-							</label>
-							<label for="apto" class="elradio">
-								<input id="apto" name="estado_teorico" type="radio" value="apto">
-								Apto
-							</label>
-						</div>
-					</div>
-
-					<div id="boton_confirmar">
-						<button id="elboton" form="formulario1" type="submit">Realizar Alta</button>
-					</div>
+    <div id="boton_confirmar">
+        <button id="elboton" form="formulario1" type="submit"><i class="fas fa-check-circle"></i> REGISTRAR ALUMNO</button>
+    </div>
 </form>
