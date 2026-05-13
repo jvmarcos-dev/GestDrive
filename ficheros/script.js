@@ -920,6 +920,9 @@ function datosAlumnoAdmin(datos) {
     document.getElementById('saldo_alumno_admin').innerText = "Saldo: " + datos.saldo;
 
     //div estado_teorico_admin
+    if(datos.teorico=='apto'){
+        document.getElementById('boton_aprobado').disabled = true;
+    }
     document.getElementById('teoria_admin').innerText = datos.teorico;
 }
 
@@ -1086,6 +1089,7 @@ function datosTeorico(datos) {
     //aqui luego haré un boton de confirmar cambios que saldrá antes de esto.
     if (datos == 1) {
         document.getElementById('teoria_admin').innerText = "apto";
+        document.getElementById('boton_aprobado').disabled = true;
     } else {
         mostrarNotificacionGlobal("Error al actualizar", "No se ha podido marcar al alumno como apto en el examen teórico.", "error");
     }
@@ -1557,5 +1561,26 @@ function activarMenu(elemento, vista) {
         case 'registroProfesor':
             nuevoProfesor();
             break;
+    }
+}
+
+// ============================================================
+// PANEL ADMINISTRADOR - PESTAÑAS (TABS)
+// ============================================================
+function cambiarTabAdmin(tabSeleccionada) {
+    //Oculto ambas tablas
+    document.getElementById('historial_reservas_admin').style.display = 'none';
+    document.getElementById('proximas_clases_admin').style.display = 'none';
+    
+    //Quito la clase activa de botones
+    document.getElementById('btn-tab-historial').classList.remove('activa');
+    document.getElementById('btn-tab-disponibles').classList.remove('activa');
+
+    if (tabSeleccionada == 'historial') {
+        document.getElementById('historial_reservas_admin').style.display = 'block';
+        document.getElementById('btn-tab-historial').classList.add('activa');
+    } else {
+        document.getElementById('proximas_clases_admin').style.display = 'block';
+        document.getElementById('btn-tab-disponibles').classList.add('activa');
     }
 }

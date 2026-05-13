@@ -1,11 +1,5 @@
 <div class="c-admin contenedor-alumno">
 
-    <div class="cabecera-tabla-controles" style="border: none; padding-bottom: 0;">
-        <button class="boton-volver" onclick="volverAdmin()">
-            <i class="fas fa-arrow-left"></i> Volver al listado
-        </button>
-    </div>
-
     <div class="layout-perfil-admin">
         
         <div class="latarjeta tarj tarjeta-perfil-info">
@@ -49,20 +43,28 @@
         </div>
     </div>
 
-    <div id="historial_reservas_admin" class="contenedor-tabla-admin" style="margin-bottom: 25px;">
+    <div class="tabs-admin-contenedor">
+        <button id="btn-tab-historial" class="tab-admin activa" onclick="cambiarTabAdmin('historial')">
+            <i class="fas fa-history"></i> Historial de Clases
+        </button>
+        <button id="btn-tab-disponibles" class="tab-admin" onclick="cambiarTabAdmin('disponibles')">
+            <i class="fas fa-calendar-plus"></i> Clases Disponibles
+        </button>
+    </div>
+
+    <div id="historial_reservas_admin" class="contenedor-tabla-admin">
         <label class="titulo-seccion-tabla" style="margin-bottom: 15px; display: block;">Historial de Clases</label>
         <table id="el_historial_alumno" class="tabla-estilo-general"></table>
         <label id="info_alumno_admin" class="mensaje-vacio-filtro" style="display: block;"></label>
     </div>
 
-    <div id="proximas_clases_admin" class="contenedor-tabla-admin">
+    <div id="proximas_clases_admin" class="contenedor-tabla-admin" style="display: none;">
         <div class="cabecera-tabla-controles" style="border: none; padding-bottom: 0; margin-bottom: 15px;">
             <label class="titulo-seccion-tabla" style="margin: 0;">Clases Disponibles para Inscribir</label>
             <select id="filtro-profesor" class="select-profesor" onchange="filtrarPorProfesor()">
                 <option value="todos">Todos</option>
             </select>
         </div>
-        
         <div id="proximas_clases_alumno"></div>
         <label id="no_clases_proximas" class="mensaje-vacio-filtro" style="display: block;"></label>
     </div>

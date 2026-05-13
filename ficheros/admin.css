@@ -416,12 +416,9 @@
     background-color: #10b981;
 }
 
-/* Verde */
 .boton-restar {
     background-color: #ef4444;
 }
-
-/* Rojo */
 
 .fila-teorico {
     display: flex;
@@ -450,6 +447,17 @@
 
 .boton-aprobado:hover {
     background-color: #059669;
+}
+
+.boton-aprobado:disabled {
+    background-color: #cbd5e1;
+    color: #f8fafc;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.boton-aprobado:disabled:hover {
+    background-color: #cbd5e1;
 }
 
 .boton-archivar {
@@ -584,6 +592,40 @@
 
 @keyframes slideUp {
     to { transform: translateY(0); }
+}
+
+/*********************PESTAÑAS PARA ENTRAR A HISTORIAL O RESERVAR******************************/
+.tabs-admin-contenedor {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+
+    padding-bottom: 0;
+}
+
+.tab-admin {
+    display: flex;
+    background: none;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s ease;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-admin:hover {
+    color: #1a56b6;
+}
+
+.tab-admin.activa {
+    color: #1a56b6;
+    border-bottom: 3px solid #1a56b6;
 }
 
 @media (max-width: 750px) {
