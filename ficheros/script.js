@@ -7,6 +7,9 @@ let idAlumnoSeleccionadoAdmin;
 let timeoutBusqueda;
 let datosClasesGlobal = [];
 let temporizadorNotificacion;
+
+let reservaActivaParaCancelar = null;
+let botonActivoParaCancelar = null;
 // ============================================================
 // INICIO Y NAVEGACIÓN
 // ============================================================
@@ -592,35 +595,50 @@ function reservar(idClase, elBoton) {
 }
 
 function reservarClase(datos, elBoton) {
-    if (datos == 1) {
-        //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
+    let respuesta = datos.trim();
+    
+    if (respuesta == 1) {
         mostrarNotificacionGlobal("Operación exitosa", "Reserva registrada correctamente.", "exito");
+        
         elBoton.classList.add('pildora-reservada-exito');
         elBoton.innerHTML = `<label>Reservada</label>`;
+        elBoton.disabled = true;
 
-        if (tipoUsuario != "alumno") {
-            eleccionarAlumno(idAlumnoSeleccionadoAdmin);
+        if (tipoUsuario == "alumno") {
+            let labelSaldo = document.getElementById('saldo_alumno');
+            if (labelSaldo) labelSaldo.innerText = parseInt(labelSaldo.innerText) - 1;
+        } else {
+            let labelSaldo = document.getElementById('saldo_alumno_admin');
+            if (labelSaldo) {
+                let textoSeparado = labelSaldo.innerText.split(" ");
+                labelSaldo.innerText = "Saldo: " + (parseInt(textoSeparado[1]) - 1);
+            }
         }
+
+        if (tipoUsuario == "alumno") {
+            historialClases();
+            reservaActiva();
+        } else {
+            $.post("php/alumno/historial_reservas.php", {
+                elid: idAlumnoSeleccionadoAdmin
+            }, historialAlumnoAdmin);
+        }
+
     } else {
+        //en caso de error, restauramos el botón original
         elBoton.disabled = false;
-        //lo restauro a como estaba antes de poner el loading
         elBoton.innerHTML = elBoton.getAttribute('data-html-original');
 
-        if (datos == -1) {
+        if (respuesta == -1) {
             mostrarNotificacionGlobal("Saldo agotado", "No tienes saldo suficiente para realizar esta reserva.", "info");
-        }
-
-        if (datos == -2) {
+        } else if (respuesta == -2) {
             mostrarNotificacionGlobal("Límite alcanzado", "Ya tienes 2 reservas activas. No puedes reservar más hasta que completes o canceles alguna.", "info");
-        }
-
-        if (datos == -3) {
+        } else if (respuesta == -3) {
             mostrarNotificacionGlobal("Margen insuficiente", "Debes dejar al menos 45 minutos libres entre dos clases distintas.", "info");
-        }
-
-        if (datos == -4) {
+        } else if (respuesta == -4) {
             mostrarNotificacionGlobal("Clase no disponible", "Lo sentimos, otro alumno acaba de reservar esta clase hace unos instantes.", "error");
-            clasesDisponibles();
+            //aquí sí recargo las clases porque otra persona se ha adelantado
+            clasesDisponibles(); 
         }
     }
 }
@@ -960,8 +978,19 @@ function historialAlumnoAdmin(datos) {
             fila.insertCell(0).innerHTML = fechaFormateada;
             fila.insertCell(1).innerHTML = horaFormateada;
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
-            fila.insertCell(3).innerHTML = estadoFormateado;
-            fila.insertCell(4).innerHTML = "<button onclick='cancelarClaseAdmin(" + datos[i].id_reserva + ", this)'>Cancelar</button>";
+            if (datos[i].estado == "activa") {
+                fila.insertCell(3).innerHTML = "<label class='estado-activa'>" + estadoFormateado + "</label>";
+                fila.insertCell(4).innerHTML = "<button class='boton-cancelar' onclick='cancelarClaseAdmin(" + datos[i].id_reserva + ", this)'>Cancelar</button>";
+            } else if (datos[i].estado == "realizada") {
+                fila.insertCell(3).innerHTML = "<label class='estado-realizada'>" + estadoFormateado + "</label>";
+                fila.insertCell(4).innerHTML = "<label style='font-weight:700; font-size: 0.7rem;'>-</label>";
+            } else if (datos[i].estado == "cancelada_tiempo") {
+                fila.insertCell(3).innerHTML = "<label class='estado-cancelada-tiempo'>Cancelada</label>";
+                fila.insertCell(4).innerHTML = "<label style='font-weight:700; font-size: 0.7rem;'>-</label>";
+            } else {
+                fila.insertCell(3).innerHTML = "<label class='estado-cancelada'>Cancelada (Tarde)</label>";
+                fila.insertCell(4).innerHTML = "<label style='font-weight:700; font-size: 0.7rem;'>-</label>";
+            }
         }
     } else {
         document.getElementById('info_alumno_admin').innerText = "No hay clases realizadas";
@@ -969,28 +998,42 @@ function historialAlumnoAdmin(datos) {
 }
 
 function cancelarClaseAdmin(idReserva, boton) {
-    //Luego en vez de este confirm lo que haré es un menú que aparezca encima de la pantalla
-    //Y puedas pulsar uno de los dos botones y en funcion de cual pulses se haga una cosa u otra
-    let decision = confirm("¿Quieres devolver el saldo de esta clase al alumno?\n\n- Si.\n- No.");
+    reservaActivaParaCancelar = idReserva;
+    botonActivoParaCancelar = boton;
 
-    //convertimos el true/false en 1/0 para enviarlo a PHP
-    let valorDevolver = decision ? 1 : 0;
+    //Se muestra el modal
+    document.getElementById('modal-cancelar-clase').style.display = 'flex';
+}
+
+function cerrarModalCancelar() {
+    //si el usuario se arrepiente, ocultamos el modal y vaciamos las variables
+    document.getElementById('modal-cancelar-clase').style.display = 'none';
+    reservaActivaParaCancelar = null;
+    botonActivoParaCancelar = null;
+}
+
+function ejecutarCancelacionAdmin(devolverSaldo) {
+    document.getElementById('modal-cancelar-clase').style.display = 'none';
 
     let url = "php/admin/cancelar_clase_admin.php";
 
+    botonActivoParaCancelar.disabled = true;
+    botonActivoParaCancelar.style.display = "none";
+
     $.post(url, {
-        lareserva: idReserva,
-        devolver_saldo: valorDevolver
+        lareserva: reservaActivaParaCancelar,
+        devolver_saldo: devolverSaldo
     }, function (datos) {
-        // Llamamos manualmente a la función pasando ambos parámetros
-        cancelarClaseAdminCallback(datos, boton);
+        cancelarClaseAdminCallback(datos, botonActivoParaCancelar);
+
+        reservaActivaParaCancelar = null;
+        botonActivoParaCancelar = null;
     });
 }
 
 function cancelarClaseAdminCallback(datos, boton) {
     if (datos.trim() == 1 || datos.trim() == 2) {
         if (datos.trim() == 1) {
-            //Aqui cuando haga el sistema de notificacion pondre un mensaje de reserva exitosa
             mostrarNotificacionGlobal("Cancelación exitosa", "La clase ha sido cancelada correctamente.", "exito");
             let labelSaldo = document.getElementById('saldo_alumno_admin');
             if (labelSaldo) {
@@ -1013,11 +1056,12 @@ function cancelarClaseAdminCallback(datos, boton) {
 
             // Cambiamos el texto de la celda de Estado a "Cancelada"
             if (datos.trim() == 1) {
-                fila.cells[3].innerHTML = "Cancelada";
+                fila.cells[3].innerHTML = "<label class='estado-cancelada-tiempo'>Cancelada</label>";
             } else {
-                fila.cells[3].innerHTML = "Cancelada Tarde";
+                fila.cells[3].innerHTML = "<label class='estado-cancelada'>Cancelada (Tarde)</label>";
             }
-            boton.disabled = true;
+            
+            fila.cells[4].innerHTML = "<label style='font-weight:700; font-size: 0.7rem;'>-</label>";
         }
         clasesDisponibles();
     } else {

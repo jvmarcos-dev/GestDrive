@@ -1,36 +1,88 @@
-<div id="datos_alumno_admin">
-    <img id="foto_alumno_admin">
-    <label id="nombre_alumno_admin"></label>
-    <label id="dni_alumno_admin"></label>
-    <label id="email_alumno_admin"></label>
-    <label id="telefono_alumno_admin"></label>
-</div>
+<div class="c-admin contenedor-alumno">
 
-<div id="estado_academico">
-    <div id="modificar_saldo_admin">
-        <label id="saldo_alumno_admin"></label>
-        <input type="number" id="recargar_saldo" name="recargar_saldo" maxlength="2" style="width: 65%; " autocomplete="off">
-        <button onclick="actualizarSaldo(1)" id="aceptar_saldo">SUMAR</button>
-        <button onclick="actualizarSaldo(-1)" id="aceptar_saldo">RESTAR</button>
+    <div class="cabecera-tabla-controles" style="border: none; padding-bottom: 0;">
+        <button class="boton-volver" onclick="volverAdmin()">
+            <i class="fas fa-arrow-left"></i> Volver al listado
+        </button>
     </div>
 
-    <div id="estado_teorico_admin">
-        <label id="teoria_admin"></label>
-        <button onclick="aprobarTeorico()" id="boton_aprobado">APROBADO</button>
+    <div class="layout-perfil-admin">
+        
+        <div class="latarjeta tarj tarjeta-perfil-info">
+            <img id="foto_alumno_admin" class="avatar-perfil-admin">
+            <label id="nombre_alumno_admin" class="nombre-admin-grande"></label>
+            
+            <div class="caja-datos-contacto">
+                <div class="fila-dato-admin"><i class="fas fa-id-card"></i> <label id="dni_alumno_admin"></label></div>
+                <div class="fila-dato-admin"><i class="fas fa-envelope"></i> <label id="email_alumno_admin"></label></div>
+                <div class="fila-dato-admin"><i class="fas fa-phone"></i> <label id="telefono_alumno_admin"></label></div>
+            </div>
+        </div>
+
+        <div class="latarjeta tarjeta-estado-admin">
+            <label class="titulo-seccion-tabla" style="margin-bottom: 20px; display: block;">Estado del Alumno</label>
+            
+            <div class="flex-subtarjetas">
+                <div class="sub-tarjeta">
+                    <label class="subtitulo-label">Saldo de Clases</label>
+                    <label id="saldo_alumno_admin" class="resultado-label saldo-destacado"></label>
+                    
+                    <div class="controles-saldo-admin">
+                        <input type="number" id="recargar_saldo" placeholder="1" maxlength="2" autocomplete="off" class="input-saldo">
+                        <button onclick="actualizarSaldo(1)" class="boton-sumar btn-icono" title="Sumar"><i class="fas fa-plus"></i></button>
+                        <button onclick="actualizarSaldo(-1)" class="boton-restar btn-icono" title="Restar"><i class="fas fa-minus"></i></button>
+                    </div>
+                </div>
+
+                <div class="sub-tarjeta">
+                    <label class="subtitulo-label">Examen Teórico</label>
+                    <div class="fila-teorico">
+                        <label id="teoria_admin" class="texto-apto-admin"></label>
+                        <button onclick="aprobarTeorico()" id="boton_aprobado" class="boton-aprobado btn-pequeno">Marcar Aprobado</button>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="archivarAlumno()" id="boton_archivar_alumno" class="boton-archivar">
+                <i class="fas fa-graduation-cap" style="margin-right: 8px;"></i> APROBAR PRÁCTICO (ARCHIVAR)
+            </button>
+        </div>
     </div>
-    <div id="archivar_alumno">
-        <button onclick="archivarAlumno()" id="boton_archivar_alumno">APROBAR PRACTICO</button>
+
+    <div id="historial_reservas_admin" class="contenedor-tabla-admin" style="margin-bottom: 25px;">
+        <label class="titulo-seccion-tabla" style="margin-bottom: 15px; display: block;">Historial de Clases</label>
+        <table id="el_historial_alumno" class="tabla-estilo-general"></table>
+        <label id="info_alumno_admin" class="mensaje-vacio-filtro" style="display: block;"></label>
     </div>
-</div>
 
-<div id="historial_reservas_admin">
-    <table id="el_historial_alumno"></table>
-    <label id="info_alumno_admin"></label>
-</div>
+    <div id="proximas_clases_admin" class="contenedor-tabla-admin">
+        <div class="cabecera-tabla-controles" style="border: none; padding-bottom: 0; margin-bottom: 15px;">
+            <label class="titulo-seccion-tabla" style="margin: 0;">Clases Disponibles para Inscribir</label>
+            <select id="filtro-profesor" class="select-profesor" onchange="filtrarPorProfesor()">
+                <option value="todos">Todos</option>
+            </select>
+        </div>
+        
+        <div id="proximas_clases_alumno"></div>
+        <label id="no_clases_proximas" class="mensaje-vacio-filtro" style="display: block;"></label>
+    </div>
 
-<div id="proximas_clases_admin">
-    <table id="proximas_clases_alumno"></table>
-    <label id="no_clases_proximas"></label>
-</div>
+    <div id="modal-cancelar-clase" class="modal-overlay" style="display: none;">
+        <div class="modal-caja">
+            <div class="modal-cabecera">
+                <i class="fas fa-exclamation-triangle icono-warning"></i>
+                <h3 class="modal-titulo">Confirmar Cancelación</h3>
+            </div>
+            <div class="modal-cuerpo">
+                <p style="margin-top: 0;">Vas a cancelar la reserva de este alumno. ¿Deseas devolverle el saldo de esta clase a su cuenta?</p>
+            </div>
+            <div class="modal-pie">
+                <button class="boton-cancelar" onclick="cerrarModalCancelar()" style="margin-right: auto;">Volver</button>
+                
+                <button class="boton-principal boton-restar" onclick="ejecutarCancelacionAdmin(0)">NO devolver</button>
+                <button class="boton-principal boton-sumar" onclick="ejecutarCancelacionAdmin(1)">SÍ, devolver saldo</button>
+            </div>
+        </div>
+    </div>
 
-<button onclick="volverAdmin()">VOLVER</button>
+</div>

@@ -3,7 +3,14 @@ require('../../ficheros/conexion.php');
 
 session_start();
 
-$id = $_SESSION['idusuario'];
+if (isset($_POST['elid']) && !empty($_POST['elid'])) {
+    //si llega elid por POST, la petición la hace el Admin. Usamos el ID del alumno seleccionado.
+    $id = $_POST['elid'];
+} else {
+    //si no llega, la petición la hace el propio Alumno. Usamos su ID de la sesión.
+    $id = $_SESSION['id_usuario'];
+}
+
 $clase = $_POST['laclase'];
 
 // Llamamos al procedimiento con una variable de sesión MySQL para la salida

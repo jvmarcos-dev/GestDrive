@@ -23,10 +23,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%; 
-    max-width: none; /* Anulamos el límite de 180px antiguo */
+    width: 100%;
+    max-width: none;
+    /* Anulamos el límite de 180px antiguo */
     height: 100px;
-    padding: 0; 
+    padding: 0;
     margin: 0;
     border-bottom: 1px solid #e2e8f0;
     box-sizing: border-box;
@@ -34,7 +35,8 @@
 
 /* Centramos la imagen de forma absoluta dentro de su contenedor */
 #admin-sidebar #logo-header {
-    width: 70%; /* Ajusta este porcentaje si lo quieres más grande o pequeño */
+    width: 70%;
+    /* Ajusta este porcentaje si lo quieres más grande o pequeño */
     max-width: 160px;
     margin: 0 auto;
     display: block;
@@ -170,7 +172,7 @@
     border-radius: 8px;
     outline: none;
     transition: all 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 #buscar_alumno:focus {
@@ -189,7 +191,7 @@
 }
 
 /* Si el input está activo o pasas el ratón, la lupa se vuelve azul */
-#buscar_alumno:focus + .lupa,
+#buscar_alumno:focus+.lupa,
 .lupa:hover {
     color: #1a56b6;
 }
@@ -202,7 +204,7 @@
     margin-top: 6px;
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     z-index: 100;
     overflow: hidden;
     display: flex;
@@ -260,13 +262,400 @@
     border-radius: 50%;
     object-fit: cover;
     border: 1px solid #e2e8f0;
-    display: block; 
+    display: block;
+}
+
+/*******************VISTA AL PULSAR EN ALUMNO**********************/
+
+.layout-perfil-admin {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.tarj {
+    flex: 1;
+    min-width: 0;
+}
+
+/* --- Botón Volver --- */
+.boton-volver {
+    display: flex;
+    background-color: #64748b;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.boton-volver:hover {
+    background-color: #475569;
+}
+
+/* --- Tarjeta Izquierda (Perfil) --- */
+.tarjeta-perfil-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+}
+
+.avatar-perfil-admin {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #f1f5f9;
+    margin-bottom: 15px;
+}
+
+.nombre-admin-grande {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 25px;
+}
+
+.caja-datos-contacto {
+    display: flex;
+    flex-direction: column;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    gap: 12px;
+    text-align: left;
+}
+
+.fila-dato-admin {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #475569;
+    font-size: 0.95rem;
+}
+
+.fila-dato-admin i {
+    color: #1a56b6;
+    width: 16px;
+    text-align: center;
+}
+
+/* --- Tarjeta Derecha (Estado) --- */
+.tarjeta-estado-admin {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.flex-subtarjetas {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.sub-tarjeta {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fafbfd;
+}
+
+.saldo-destacado {
+    display: block;
+    color: #1a56b6;
+    font-size: 2rem;
+    margin: 10px 0 15px 0;
+}
+
+.controles-saldo-admin {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.input-saldo {
+    width: 60px;
+    padding: 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 1rem;
+    outline: none;
+}
+
+.input-saldo:focus {
+    border-color: #1a56b6;
+}
+
+.btn-icono {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.btn-icono:active {
+    transform: scale(0.95);
+}
+
+.boton-sumar {
+    background-color: #10b981;
+}
+
+/* Verde */
+.boton-restar {
+    background-color: #ef4444;
+}
+
+/* Rojo */
+
+.fila-teorico {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.texto-apto-admin {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+}
+
+.boton-aprobado {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.boton-aprobado:hover {
+    background-color: #059669;
+}
+
+.boton-archivar {
+    background-color: #f59e0b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+.boton-archivar:hover {
+    background-color: #d97706;
+}
+
+/* --- Tablas del Historial --- */
+.contenedor-tabla-admin {
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.tabla-estilo-general {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.tabla-estilo-general th,
+.tabla-estilo-general td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+}
+
+.tabla-estilo-general th {
+    font-weight: bold;
+    color: black;
+}
+
+.tabla-estilo-general tr:hover td {
+    background-color: #f8fafc;
+}
+
+/*Si está vacio, no se muestra para asi no ocupar espacio innecesario*/
+#info_alumno_admin:empty,
+#no_clases_proximas:empty {
+    display: none !important;
+}
+
+/********************MODAL CANCELAR CLASE*****************/
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    animation: fadeIn 0.2s forwards ease-out;
+}
+
+.modal-caja {
+    background-color: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+
+    transform: translateY(20px);
+    animation: slideUp 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-cabecera {
+    padding: 20px 25px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #f8fafc;
+}
+
+.modal-titulo {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.icono-warning {
+    color: #f59e0b;
+    font-size: 1.5rem;
+}
+
+.modal-cuerpo {
+    padding: 25px;
+    color: #475569;
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+.modal-pie {
+    display: flex;
+    padding: 15px 25px;
+    background-color: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+}
+
+.boton-principal{
+    padding: 10px;
+}
+
+/* Animaciones Keyframes */
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    to { transform: translateY(0); }
 }
 
 @media (max-width: 750px) {
+
+    /* Transformación de tabla de Ficha en Móvil */
+    .tabla-estilo-general,
+    .tabla-estilo-general thead,
+    .tabla-estilo-general tbody,
+    .tabla-estilo-general th,
+    .tabla-estilo-general td,
+    .tabla-estilo-general tr {
+        display: block;
+    }
+
+    .tabla-estilo-general thead tr {
+        display: none;
+    }
+
+    .tabla-estilo-general tr {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        background-color: white;
+    }
+
+    .tabla-estilo-general td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #f1f5f9;
+        text-align: right;
+    }
+
+    .tabla-estilo-general td:last-child {
+        border-bottom: none;
+        background-color: #f8fafc;
+        justify-content: center;
+    }
+
+    .tabla-estilo-general td::before {
+        font-weight: 600;
+        color: #64748b;
+        text-align: left;
+        padding-right: 15px;
+    }
+
+    /* Textos para el historial de la ficha */
+    #el_historial_alumno td:nth-child(1)::before {
+        content: "Fecha:";
+    }
+
+    #el_historial_alumno td:nth-child(2)::before {
+        content: "Hora:";
+    }
+
+    #el_historial_alumno td:nth-child(3)::before {
+        content: "Profesor:";
+    }
+
+    #el_historial_alumno td:nth-child(4)::before {
+        content: "Estado:";
+    }
+
+    #el_historial_alumno td:nth-child(5)::before {
+        content: "Acción:";
+        display: none;
+    }
+
     #overlay-sidebar.mostrar-overlay {
         display: block;
     }
+
     #admin-sidebar {
         left: -260px;
         transition: left 0.3s ease;
@@ -304,9 +693,59 @@
         cursor: pointer;
     }
 
-    /* Corrección de etiquetas falsas para la tabla de alumnos en móvil */
-    .c-admin #historial_clases table td:nth-child(1)::before { content: "Foto:"; }
-    .c-admin #historial_clases table td:nth-child(2)::before { content: "DNI:"; }
-    .c-admin #historial_clases table td:nth-child(3)::before { content: "Alumno:"; }
-    .c-admin #historial_clases table td:nth-child(4)::before { content: "Acción:"; }
+    .layout-perfil-admin {
+        flex-direction: column;
+    }
+
+    .flex-subtarjetas {
+        flex-direction: column;
+    }
+
+    .modal-pie {
+        flex-direction: column;
+    }
+    
+    .modal-pie button {
+        width: 100%;
+        margin: 0 !important;
+    }
+    
+    .modal-pie .boton-cancelar {
+        order: 3; 
+        margin-top: 10px !important;
+    }
+
+    /* Etiquetas para la tabla del Dashboard (Prácticas de hoy) */
+    #historial_clases #latabla_clases_hoy td:nth-child(1)::before {
+        content: "Hora:";
+    }
+
+    #historial_clases #latabla_clases_hoy td:nth-child(2)::before {
+        content: "Alumno:";
+    }
+
+    #historial_clases #latabla_clases_hoy td:nth-child(3)::before {
+        content: "Profesor:";
+    }
+
+    #historial_clases #latabla_clases_hoy td:nth-child(4)::before {
+        content: "";
+    }
+
+    /* Etiquetas para la tabla de la sección Alumnos Activos */
+    #historial_clases #tabla_alumnos_defecto td:nth-child(1)::before {
+        content: "Foto:";
+    }
+
+    #historial_clases #tabla_alumnos_defecto td:nth-child(2)::before {
+        content: "DNI:";
+    }
+
+    #historial_clases #tabla_alumnos_defecto td:nth-child(3)::before {
+        content: "Alumno:";
+    }
+
+    #historial_clases #tabla_alumnos_defecto td:nth-child(4)::before {
+        content: "";
+    }
 }
