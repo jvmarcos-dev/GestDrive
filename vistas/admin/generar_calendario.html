@@ -1,22 +1,38 @@
-<div id="panel_izquierda">
-    <!-- En este panel pondre un texto de este estilo (generado por IA, luego lo hare yo):
-    Título: Parámetros de Generación
+<div class="c-admin contenedor-herramienta-central">
+    
+    <div class="cabecera-generador">
+        <div class="icono-fondo-azul">
+            <i class="fas fa-calendar-alt"></i>
+        </div>
+        <h2 class="titulo-admin-grande">Generar Calendario</h2>
+        <p class="subtitulo-admin">Crea las clases semanales de todos los profesores.</p>
+    </div>
 
-    Texto: "El sistema generará el horario aplicando las siguientes reglas operativas:"
+    <div class="paneles-generador">
+        <div class="panel-info-generador">
+            <h3 class="titulo-panel-gen"><i class="fas fa-cogs"></i> Funcionamiento</h3>
+            <ul class="lista-parametros-gen">
+                <li><i class="fas fa-calendar-week"></i> <strong>Días:</strong> Lunes a Viernes</li>
+                <li><i class="fas fa-sun"></i> <strong>Mañanas:</strong> 09:00h - 13:00h</li>
+                <li><i class="fas fa-moon"></i> <strong>Tardes:</strong> 16:00h - 20:00h</li>
+                <li><i class="fas fa-hourglass-half"></i> <strong>Duración:</strong> 45 min por clase</li>
+            </ul>
+        </div>
 
-    📅 De Lunes a Viernes.
+        <div class="panel-info-generador panel-destacado-gen">
+            <h3 class="titulo-panel-gen"><i class="fas fa-calendar-check"></i> Próxima Generación</h3>
+            <p class="texto-explicativo-gen">El sistema generará el calendario para la semana del:</p>
+            
+            <div class="caja-fecha-dinamica">
+                <label id="texto_rango_fechas"></label>
+            </div>
+        </div>
+    </div>
 
-    ⏰ Horario de Mañana: 09:00h - 13:00h.
+    <div class="contenedor-accion-generador">
+        <button onclick="generoClases()" id="btn_generar_clases" class="boton-generar-gigante">
+            <i class="fas fa-magic"></i> GENERAR CLASES
+        </button>
+    </div>
 
-    🌇 Horario de Tarde: 16:00h - 20:00h.
-    -->
-</div>
-
-<button onclick="generoClases()" id="btn_generar_clases">GENERAR CLASES</button>
-
-<div id="panel_derecha">
-    <!--
-    Título: Próxima Generación
-    Texto dinámico (JS): "Vas a generar el calendario para la semana del [Lunes X] al [Viernes Y] de Abril."
-    -->
 </div>

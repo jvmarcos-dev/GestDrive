@@ -1226,7 +1226,9 @@ function listadoProfesoresCallback(datos) {
 }
 
 function cargarCalendario() {
-    $("#cargar-dashboard-admin").load("vistas/admin/generar_calendario.html");
+    $("#cargar-dashboard-admin").load("vistas/admin/generar_calendario.html", function(){
+        calcularFechasProximaGeneracion()
+    });
 }
 
 function generoClases() {
@@ -1584,5 +1586,28 @@ function cambiarTabAdmin(tabSeleccionada) {
     } else {
         document.getElementById('proximas_clases_admin').style.display = 'block';
         document.getElementById('btn-tab-disponibles').classList.add('activa');
+    }
+}
+
+function calcularFechasProximaGeneracion() {
+    let hoy = new Date();
+    //calcular días hasta el próximo lunes
+    let diasHastaLunes = (7 - hoy.getDay() + 1) % 7;
+    //si hoy es lunes (0), queremos ir al próximo lunes (+7)
+    if (diasHastaLunes == 0) diasHastaLunes = 7;
+    
+    let proximoLunes = new Date(hoy);
+    proximoLunes.setDate(hoy.getDate() + diasHastaLunes);
+    
+    let proximoViernes = new Date(proximoLunes);
+    proximoViernes.setDate(proximoLunes.getDate() + 4);
+
+    let opciones = { day: 'numeric', month: 'long' };
+    let txtLunes = "Lunes " + proximoLunes.toLocaleDateString('es-ES', opciones);
+    let txtViernes = "Viernes " + proximoViernes.toLocaleDateString('es-ES', opciones);
+
+    let contenedorText = document.getElementById('texto_rango_fechas');
+    if(contenedorText) {
+        contenedorText.innerText = txtLunes + " al " + txtViernes;
     }
 }

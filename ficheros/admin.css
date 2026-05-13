@@ -634,6 +634,172 @@
     display: none !important;
 }
 
+/**************************GENERAR CALENDARIO*********************************/
+
+.contenedor-herramienta-central {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    max-width: 850px;
+    margin: 20px auto;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Cabecera */
+.cabecera-generador {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.icono-fondo-azul {
+    display: flex;
+    width: 60px;
+    height: 60px;
+    background-color: #eff6ff;
+    color: #1a56b6;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin: 0 auto 15px auto;
+}
+
+.titulo-admin-grande {
+    font-size: 1.6rem;
+    color: #1e293b;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.subtitulo-admin {
+    color: #64748b;
+    font-size: 1.05rem;
+}
+
+.paneles-generador {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.panel-info-generador {
+    flex: 1;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.panel-destacado-gen {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.titulo-panel-gen {
+    display: flex;
+    font-size: 1.1rem;
+    color: #334155;
+    margin-top: 0;
+    margin-bottom: 20px;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 10px;
+}
+
+.panel-destacado-gen .titulo-panel-gen {
+    color: #166534;
+    border-bottom-color: #bbf7d0;
+}
+
+/* Lista del Panel Izquierdo */
+.lista-parametros-gen {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    gap: 12px;
+}
+
+.lista-parametros-gen li {
+    color: #475569;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.lista-parametros-gen i {
+    color: #64748b;
+    width: 20px;
+    text-align: center;
+}
+
+/* Textos del Panel Derecho */
+.texto-explicativo-gen {
+    color: #166534;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+.caja-fecha-dinamica {
+    background-color: white;
+    border: 1px dashed #22c55e;
+    border-radius: 6px;
+    padding: 15px;
+    text-align: center;
+    font-weight: 700;
+    color: #15803d;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.texto-ayuda-gen {
+    color: #16a34a;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.contenedor-accion-generador {
+    text-align: center;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 30px;
+}
+
+.boton-generar-gigante {
+    background-color: #1a56b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 18px 25px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 6px -1px rgba(26, 86, 182, 0.2);
+}
+
+.boton-generar-gigante:hover {
+    background-color: #1e40af;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(26, 86, 182, 0.3);
+}
+
+.boton-generar-gigante:disabled {
+    background-color: #cbd5e1;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
 @media (max-width: 750px) {
 
     /* Transformación de tabla de Ficha en Móvil */
@@ -676,6 +842,15 @@
         color: #64748b;
         text-align: left;
         padding-right: 15px;
+    }
+
+    .paneles-generador {
+        flex-direction: column;
+    }
+    
+    .boton-generar-gigante {
+        width: 100%;
+        justify-content: center;
     }
 
     /* Textos para el historial de la ficha */
