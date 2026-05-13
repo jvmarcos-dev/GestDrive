@@ -89,63 +89,113 @@ CREATE TABLE historico_alumnos (
 --  DATOS DE PRUEBA
 -- ============================================================
 
-INSERT INTO usuarios (dni, nombre, apellidos, email, password, telefono, tipo, foto) VALUES
-('00000000A', 'Admin', 'Sistema', 'admin@gestdrive.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '600000000', 'admin', ''),
-('11111111B', 'Carlos', 'Ruiz Soler', 'carlos@gestdrive.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '611222333', 'profesor', ''),
-('22222222C', 'Marta', 'Gómez Rey', 'marta@gestdrive.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '622333444', 'profesor', ''),
-('33333333D', 'Laura', 'Pérez Gil', 'laura@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '633444555', 'alumno', ''),
-('44444444E', 'Jorge', 'Sanz León', 'jorge@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '644555666', 'alumno', ''),
-('55555555F', 'Ana', 'López Vega', 'ana@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '655666777', 'alumno', '');
+INSERT INTO usuarios (id, dni, nombre, apellidos, email, password, telefono, tipo, foto) VALUES
+(1, '00000000A', 'Admin', 'Sistema', 'admin@gestdrive.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '600000000', 'admin', ''),
+-- Nuevos Profesores (IDs 7 al 10)
+(7, '77777777G', 'Roberto', 'Navarro Torres', 'roberto@gestdrive.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '677111222', 'profesor', 'imagenes/usuarios/2.jpg'),
+(8, '88888888H', 'Elena', 'Martín Silva', 'elena@gestdrive.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '688222333', 'profesor', 'imagenes/usuarios/7.jpg'),
+(9, '99999999I', 'David', 'Gómez Castro', 'david@gestdrive.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '699333444', 'profesor', 'imagenes/usuarios/12.jpg'),
+(10, '10101010J', 'Carmen', 'López Díaz', 'carmen@gestdrive.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '610444555', 'profesor', 'imagenes/usuarios/4.jpg'),
+
+-- Nuevos Alumnos (IDs 11 al 25)
+(11, '11223344K', 'Mario', 'García López', 'mario@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '611555666', 'alumno', 'imagenes/usuarios/1.jpg'),
+(12, '22334455L', 'Sara', 'Fernández Ruiz', 'sara@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '622666777', 'alumno', 'imagenes/usuarios/8.jpg'),
+(13, '33445566M', 'Pablo', 'Sánchez Gil', 'pablo@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '633777888', 'alumno', 'imagenes/usuarios/14.jpg'),
+(14, '44556677N', 'Lucía', 'Martínez Vega', 'lucia@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '644888999', 'alumno', 'imagenes/usuarios/3.jpg'),
+(15, '55667788O', 'Hugo', 'Pérez Moreno', 'hugo@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '655999000', 'alumno', 'imagenes/usuarios/9.jpg'),
+(16, '66778899P', 'Paula', 'Gómez Alonso', 'paula@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '666000111', 'alumno', 'imagenes/usuarios/11.jpg'),
+(17, '77889900Q', 'Álvaro', 'Martín Blanco', 'alvaro@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '677111222', 'alumno', 'imagenes/usuarios/5.jpg'),
+(18, '88990011R', 'Alba', 'Jiménez Cano', 'alba@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '688222333', 'alumno', 'imagenes/usuarios/10.jpg'),
+(19, '99001122S', 'Diego', 'Ruiz Ortiz', 'diego@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '699333444', 'alumno', 'imagenes/usuarios/6.jpg'),
+(20, '00112233T', 'María', 'Díaz Rubio', 'maria.d@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '600444555', 'alumno', 'imagenes/usuarios/13.jpg'),
+(21, '12312312U', 'Javier', 'Hernández Paz', 'javier@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '612123123', 'alumno', 'imagenes/usuarios/1.jpg'),
+(22, '23423423V', 'Nerea', 'Molina Castro', 'nerea@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '623234234', 'alumno', 'imagenes/usuarios/8.jpg'),
+(23, '34534534W', 'Marcos', 'Delgado Soto', 'marcos@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '634345345', 'alumno', 'imagenes/usuarios/3.jpg'),
+(24, '45645645X', 'Clara', 'Vázquez Mora', 'clara@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '645456456', 'alumno', 'imagenes/usuarios/12.jpg'),
+(25, '56756756Y', 'Iván', 'Ramos Núñez', 'ivan@gmail.com', '$2y$10$oGf2JZDgQbpEc3F3DlzViu8ZrW3CXFeW.dF1s2.tUEBk9nY9fMjwa', '656567567', 'alumno', 'imagenes/usuarios/7.jpg');
 
 -- ============================================================
 -- 2. PROFESORES
 -- ============================================================
 INSERT INTO profesores (id_usuario, num_licencia) VALUES
-(2, 'LIC-2015-X98'),
-(3, 'LIC-2020-Z44');
+(7, 'LIC-2018-A11'),
+(8, 'LIC-2019-B22'),
+(9, 'LIC-2021-C33'),
+(10, 'LIC-2023-D44');
 
 -- ============================================================
 -- 3. ALUMNOS (Diferentes escenarios de saldo)
 -- ============================================================
 INSERT INTO alumnos (id_usuario, fecha_nacimiento, saldo_clases, estado_teorica) VALUES
-(4, '2002-05-15', 5, 'apto'),      -- Laura: Tiene saldo y teórica OK.
-(5, '2004-10-20', 2, 'pendiente'), -- Jorge: Poco saldo y teórica pendiente.
-(6, '1999-02-10', 0, 'apto');      -- Ana: SIN SALDO (para probar error -1).
+(11, '2005-04-12', 10, 'apto'),
+(12, '2004-08-25', 0, 'pendiente'),
+(13, '2002-11-03', 4, 'apto'),
+(14, '2006-01-30', 20, 'apto'),
+(15, '1998-07-15', 1, 'pendiente'),
+(16, '2001-09-22', 8, 'apto'),
+(17, '2003-12-05', 0, 'pendiente'),
+(18, '1995-03-18', 15, 'apto'),
+(19, '2000-06-10', 3, 'pendiente'),
+(20, '2005-02-28', 5, 'apto'),
+(21, '2004-10-14', 12, 'apto'),
+(22, '2006-05-09', 2, 'pendiente'),
+(23, '1997-08-19', 0, 'apto'),
+(24, '2001-11-27', 7, 'apto'),
+(25, '2003-01-11', 1, 'pendiente');
 
 -- ============================================================
 -- 4. CLASES PRÁCTICAS (Pasado, Hoy y Futuro)
 -- ============================================================
 INSERT INTO clases_practicas (id, id_profesor, fecha_hora, estado) VALUES
--- Historial (Ya realizadas)
-(1, 2, DATE_SUB(NOW(), INTERVAL 3 DAY), 'realizada'),
-(2, 3, DATE_SUB(NOW(), INTERVAL 2 DAY), 'realizada'),
+-- Clases Pasadas (Realizadas o canceladas)
+(9, 7, DATE_SUB(NOW(), INTERVAL 5 DAY), 'realizada'),
+(10, 8, DATE_SUB(NOW(), INTERVAL 4 DAY), 'realizada'),
+(11, 9, DATE_SUB(NOW(), INTERVAL 3 DAY), 'realizada'),
+(12, 10, DATE_SUB(NOW(), INTERVAL 2 DAY), 'libre'), -- Clase que nadie reservó
+(13, 7, DATE_SUB(NOW(), INTERVAL 1 DAY), 'realizada'),
+(14, 8, DATE_SUB(NOW(), INTERVAL 1 DAY), 'realizada'),
 
--- Clases para HOY (Para probar el "Cancelada Tarde" < 48h)
-(3, 2, DATE_ADD(NOW(), INTERVAL 2 HOUR), 'reservada'), 
-(4, 3, DATE_ADD(NOW(), INTERVAL 4 HOUR), 'libre'),
+-- Clases para Hoy
+(15, 9, DATE_ADD(NOW(), INTERVAL 1 HOUR), 'reservada'),
+(16, 10, DATE_ADD(NOW(), INTERVAL 3 HOUR), 'libre'),
+(17, 7, DATE_ADD(NOW(), INTERVAL 5 HOUR), 'reservada'),
+(18, 8, DATE_ADD(NOW(), INTERVAL 6 HOUR), 'reservada'),
 
--- Clases para MAÑANA O PRÓXIMOS DÍAS (Libres para reservar)
-(5, 2, DATE_ADD(NOW(), INTERVAL 2 DAY), 'libre'),
-(6, 3, DATE_ADD(NOW(), INTERVAL 3 DAY), 'libre'),
-(7, 2, DATE_ADD(NOW(), INTERVAL 3 DAY), 'libre'),
--- Esta clase está a solo 30 min de la ID 7 (Para probar error -3 de los 45 min)
-(8, 3, DATE_ADD(DATE_ADD(NOW(), INTERVAL 3 DAY), INTERVAL 30 MINUTE), 'libre');
+-- Clases Futuras (Libres y reservadas para llenar el listado de reservas)
+(19, 9, DATE_ADD(NOW(), INTERVAL 1 DAY), 'reservada'),
+(20, 10, DATE_ADD(NOW(), INTERVAL 1 DAY), 'libre'),
+(21, 7, DATE_ADD(NOW(), INTERVAL 2 DAY), 'libre'),
+(22, 8, DATE_ADD(NOW(), INTERVAL 2 DAY), 'reservada'),
+(23, 9, DATE_ADD(NOW(), INTERVAL 3 DAY), 'libre'),
+(24, 10, DATE_ADD(NOW(), INTERVAL 3 DAY), 'reservada'),
+(25, 7, DATE_ADD(NOW(), INTERVAL 4 DAY), 'libre'),
+(26, 8, DATE_ADD(NOW(), INTERVAL 4 DAY), 'libre'),
+(27, 9, DATE_ADD(NOW(), INTERVAL 5 DAY), 'reservada'),
+(28, 10, DATE_ADD(NOW(), INTERVAL 5 DAY), 'libre');
 
 -- ============================================================
 -- 5. RESERVAS ACTIVAS E HISTORIAL
 -- ============================================================
 INSERT INTO reservas (id_clase, id_alumno, estado, notas) VALUES
--- Laura tiene una clase realizada
-(1, 4, 'realizada', 'Buen control de carriles.'),
+-- Reservas pasadas (Historial)
+(9, 11, 'realizada', 'Aparcamiento perfecto en línea.'),
+(10, 14, 'realizada', 'Falta soltura en las rotondas.'),
+(11, 16, 'realizada', 'Muy buena progresión con las marchas.'),
+(13, 11, 'realizada', 'Practicamos conducción nocturna.'),
+(14, 18, 'realizada', 'Cuidado con los pasos de cebra.'),
 
--- Jorge tiene una reserva activa para HOY (ID 3)
--- Esto permite probar: 
--- 1. Que aparezca en "Reserva Activa".
--- 2. Que si intenta cancelarla, salga "Cancelada Tarde" (porque queda < 48h).
-(3, 5, 'activa', 'Punto de encuentro: Puerta de la autoescuela.');
+-- Cancelaciones pasadas para probar los labels rojos y grises
+(11, 13, 'cancelada_tiempo', 'Canceló por enfermedad.'),
+(9, 20, 'cancelada_tarde', 'Se quedó dormido, no avisó con margen.'),
 
--- NOTA: No he insertado nada para Ana (ID 6) para que pruebes el 
--- mensaje de "No tienes saldo suficiente" al intentar reservar.
+-- Reservas activas (Clases pendientes)
+(15, 11, 'activa', 'Recoger en puerta principal.'),
+(17, 14, 'activa', 'Traer justificante de pago.'),
+(18, 18, 'activa', 'Vamos a ir a la zona de examen.'),
+(19, 21, 'activa', ''),
+(22, 24, 'activa', 'Última clase antes del práctico.'),
+(24, 16, 'activa', ''),
+(27, 20, 'activa', 'Repaso general de maniobras.');
 
 -- ============================================================
 --  PROCEDIMIENTOS ALMACENADOS
