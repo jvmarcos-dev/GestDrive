@@ -931,6 +931,7 @@ function historialAlumnoAdmin(datos) {
     table.innerHTML = "";
 
     if (datos != 0) {
+        document.getElementById('info_alumno_admin').innerText = "";
         // cabecera
         var header = table.createTHead();
         var fila = header.insertRow(0);
