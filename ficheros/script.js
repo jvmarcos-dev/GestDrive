@@ -596,10 +596,10 @@ function reservar(idClase, elBoton) {
 
 function reservarClase(datos, elBoton) {
     let respuesta = datos.trim();
-    
+
     if (respuesta == 1) {
         mostrarNotificacionGlobal("Operación exitosa", "Reserva registrada correctamente.", "exito");
-        
+
         elBoton.classList.add('pildora-reservada-exito');
         elBoton.innerHTML = `<label>Reservada</label>`;
         elBoton.disabled = true;
@@ -638,7 +638,7 @@ function reservarClase(datos, elBoton) {
         } else if (respuesta == -4) {
             mostrarNotificacionGlobal("Clase no disponible", "Lo sentimos, otro alumno acaba de reservar esta clase hace unos instantes.", "error");
             //aquí sí recargo las clases porque otra persona se ha adelantado
-            clasesDisponibles(); 
+            clasesDisponibles();
         }
     }
 }
@@ -920,7 +920,7 @@ function datosAlumnoAdmin(datos) {
     document.getElementById('saldo_alumno_admin').innerText = "Saldo: " + datos.saldo;
 
     //div estado_teorico_admin
-    if(datos.teorico=='apto'){
+    if (datos.teorico == 'apto') {
         document.getElementById('boton_aprobado').disabled = true;
     }
     document.getElementById('teoria_admin').innerText = datos.teorico;
@@ -1064,7 +1064,7 @@ function cancelarClaseAdminCallback(datos, boton) {
             } else {
                 fila.cells[3].innerHTML = "<label class='estado-cancelada'>Cancelada (Tarde)</label>";
             }
-            
+
             fila.cells[4].innerHTML = "<label style='font-weight:700; font-size: 0.7rem;'>-</label>";
         }
         clasesDisponibles();
@@ -1226,7 +1226,7 @@ function listadoProfesoresCallback(datos) {
 }
 
 function cargarCalendario() {
-    $("#cargar-dashboard-admin").load("vistas/admin/generar_calendario.html", function(){
+    $("#cargar-dashboard-admin").load("vistas/admin/generar_calendario.html", function () {
         calcularFechasProximaGeneracion()
     });
 }
@@ -1311,6 +1311,13 @@ function limpio_pantalla(estado, id_formulario, textoBoton) {
     if (estado == 0) {
         // limpio cajas
         form.reset();
+        //limpio tambien la imagen ya que no pertence al formulario
+        if (id_formulario == 'formulario1') {
+            document.getElementById('img1').src = 'imagenes/usuarios/default.png';
+        } else if (id_formulario == 'formulario2') {
+            document.getElementById('img2').src = 'imagenes/usuarios/default.png';
+        }
+
         form.dni.select();
     }
     // hay error	
@@ -1566,7 +1573,7 @@ function cambiarTabAdmin(tabSeleccionada) {
     //Oculto ambas tablas
     document.getElementById('historial_reservas_admin').style.display = 'none';
     document.getElementById('proximas_clases_admin').style.display = 'none';
-    
+
     //Quito la clase activa de botones
     document.getElementById('btn-tab-historial').classList.remove('activa');
     document.getElementById('btn-tab-disponibles').classList.remove('activa');
@@ -1586,19 +1593,22 @@ function calcularFechasProximaGeneracion() {
     let diasHastaLunes = (7 - hoy.getDay() + 1) % 7;
     //si hoy es lunes (0), queremos ir al próximo lunes (+7)
     if (diasHastaLunes == 0) diasHastaLunes = 7;
-    
+
     let proximoLunes = new Date(hoy);
     proximoLunes.setDate(hoy.getDate() + diasHastaLunes);
-    
+
     let proximoViernes = new Date(proximoLunes);
     proximoViernes.setDate(proximoLunes.getDate() + 4);
 
-    let opciones = { day: 'numeric', month: 'long' };
+    let opciones = {
+        day: 'numeric',
+        month: 'long'
+    };
     let txtLunes = "Lunes " + proximoLunes.toLocaleDateString('es-ES', opciones);
     let txtViernes = "Viernes " + proximoViernes.toLocaleDateString('es-ES', opciones);
 
     let contenedorText = document.getElementById('texto_rango_fechas');
-    if(contenedorText) {
+    if (contenedorText) {
         contenedorText.innerText = txtLunes + " al " + txtViernes;
     }
 }
