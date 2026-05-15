@@ -806,14 +806,15 @@
 
    /******************************REGISTRO ALUMNO**********************************/
 
-#formulario1 {
+#formulario1, #formulario2 {
     background-color: white;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
-    padding: 25px;
+    padding: 35px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    max-width: 900px;
+    max-width: 900px; 
     margin: 20px auto;
+    box-sizing: border-box;
 }
 
 .cabecera-formulario {
@@ -887,9 +888,10 @@
     color: #475569;
 }
 
-.elinput,
-#formulario1 input[type="date"],
-#formulario1 input[type="number"] {
+.elinput, 
+#formulario1 input[type="date"], 
+#formulario1 input[type="number"],
+#formulario2 input[type="text"] {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid #cbd5e1;
@@ -901,9 +903,10 @@
     box-sizing: border-box;
 }
 
-.elinput:focus,
-#formulario1 input[type="date"]:focus,
-#formulario1 input[type="number"]:focus {
+.elinput:focus, 
+#formulario1 input[type="date"]:focus, 
+#formulario1 input[type="number"]:focus,
+#formulario2 input[type="text"]:focus {
     border-color: #1a56b6;
     box-shadow: 0 0 0 3px rgba(26, 86, 182, 0.1);
 }
