@@ -6,7 +6,7 @@
 <form id="formulario1" name="formulario1" ENCTYPE="multipart/form-data" METHOD="POST" autocomplete="off" onsubmit="registroAlumno(event); return false;">
     
     <div class="cabecera-formulario">
-        <h2 class="titulo-form"><i class="fas fa-user-plus"></i> Registrar Nuevo Alumno</h2>
+        <h2 class="titulo-form"><i class="fas fa-graduation-cap"></i> Registrar Nuevo Alumno</h2>
     </div>
 
     <div class="layout-dos-columnas-form">
