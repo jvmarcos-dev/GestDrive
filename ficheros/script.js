@@ -1260,10 +1260,8 @@ function nuevoAlumno() {
 }
 
 function registroAlumno() {
-    // borro div mensaje
-    document.getElementById('notificacion_global').innerHTML = ""
     // visualizo la estrellita
-    document.getElementById('elboton').innerHTML = '<img id="estrella" src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />';
+    document.getElementById('elboton').innerHTML = '<img id="estrella" class="estrella-oscura" src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />';
     // inhabilito botón de realizar alta
     document.getElementById('elboton').disabled = true;
 
@@ -1284,7 +1282,6 @@ function registroAlumno() {
         // y en el parámetro "datos" tendré toda la información que me devuelva el script php (si devolviese ALGO...)
         // es obligatorio definir un callback en una funcion asincrona utilizando ajax
         {
-            $("#estrella").css("visibility", "hidden");
             // // document.getElementById('estrella').style.visibility='hidden';
             // trato mensaje devuelto por el servidor
             let respuesta = datos.trim();
@@ -1292,20 +1289,18 @@ function registroAlumno() {
                 mostrarNotificacionGlobal("Alta completada", "El nuevo alumno ha sido registrado con éxito en el sistema.", "exito");
                 // limpio cajas formulario
                 document.formulario1.reset();
-                limpio_pantalla(0, 'formulario1');
+                limpio_pantalla(0, 'formulario1', ' REGISTRAR ALUMNO');
             } else {
                 //aqui podemos tratar todos los tipos de error que se produzcan
                 mostrarNotificacionGlobal("Error en el registro", "No se ha podido dar de alta al alumno. Código de error: " + datos, "error");
-                limpio_pantalla(1, 'formulario1');
+                limpio_pantalla(1, 'formulario1', ' REGISTRAR ALUMNO');
             }
-            // Habilito botón de realizar alta
-            document.getElementById('elboton').disabled = false;
         });
 }
 
-function limpio_pantalla(estado, id_formulario) {
+function limpio_pantalla(estado, id_formulario, textoBoton) {
     // oculto estrella
-    document.getElementById('estrella').style.visibility = 'hidden';
+    document.getElementById('elboton').innerHTML = textoBoton;
     // habilito botones
     document.getElementById('elboton').disabled = false;
 
@@ -1344,10 +1339,8 @@ function nuevoProfesor() {
 }
 
 function registroProfesor() {
-    // borro div mensaje
-    document.getElementById('notificacion_global').innerHTML = ""
     // visualizo la estrellita
-    document.getElementById('estrella').style.visibility = 'visible';
+    document.getElementById('elboton').innerHTML = '<img id="estrella" class="estrella-oscura" src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />';
     // inhabilito botón de realizar alta
     document.getElementById('elboton').disabled = true;
 
@@ -1376,14 +1369,12 @@ function registroProfesor() {
                 mostrarNotificacionGlobal("Alta completada", "El nuevo profesor ha sido registrado con éxito en el sistema.", "exito");
                 // limpio cajas formulario
                 document.formulario2.reset();
-                limpio_pantalla(0, 'formulario2');
+                limpio_pantalla(0, 'formulario2', ' REGISTRAR PROFESOR');
             } else {
                 //aqui podemos tratar todos los tipos de error que se produzcan
                 mostrarNotificacionGlobal("Error en el registro", "No se ha podido dar de alta al profesor. Código de error: " + datos, "error");
-                limpio_pantalla(1, 'formulario2');
+                limpio_pantalla(1, 'formulario2', ' REGISTRAR PROFESOR');
             }
-            // Habilito botón de realizar alta
-            document.getElementById('elboton').disabled = false;
         });
 }
 
