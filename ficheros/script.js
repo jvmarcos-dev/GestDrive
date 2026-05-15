@@ -1292,7 +1292,7 @@ function registroAlumno() {
                 limpio_pantalla(0, 'formulario1', ' REGISTRAR ALUMNO');
             } else {
                 //aqui podemos tratar todos los tipos de error que se produzcan
-                mostrarNotificacionGlobal("Error en el registro", "No se ha podido dar de alta al alumno. Código de error: " + datos, "error");
+                mostrarNotificacionGlobal("Error en el registro", "No se ha podido dar de alta al alumno. El DNI o correo ya está registrado.");
                 limpio_pantalla(1, 'formulario1', ' REGISTRAR ALUMNO');
             }
         });
