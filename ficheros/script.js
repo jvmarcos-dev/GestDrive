@@ -872,6 +872,7 @@ function seleccionarAlumno(idAlumno) {
 
     //el índice 1 corresponde a la opción buscar alumno
     //si no está activo, quito la clase a todos y se la pongo a este
+    //esto lo hago ya que puedo venir a esta vista pulsando en ver ficha desde el panel principal y quedaría descuadrado
     if (items[1] && !items[1].classList.contains('activo')) {
         items.forEach(item => item.classList.remove('activo'));
         items[1].classList.add('activo');
@@ -1250,12 +1251,15 @@ function nuevoAlumno() {
     $("#cargar-dashboard-admin").load("vistas/admin/registroAlumno.php", function () {
         let items = document.querySelectorAll('.item-sidebar');
 
-        //el índice 1 corresponde a la opción buscar alumno
-        //si no está activo, quito la clase a todos y se la pongo a este
+        //el índice 4 corresponde a la opción nuevo alumno
+        //si no está activo, quito la clase a todos y se la pongo a este.
+        //esto lo pongo ya que puedo venir a esta pantalla pulsando en nuevo alumno en el panel de buscar alumno
         if (items[4] && !items[4].classList.contains('activo')) {
             items.forEach(item => item.classList.remove('activo'));
             items[4].classList.add('activo');
         }
+
+        document.getElementById("formulario1").dni.select();
     });
 }
 
@@ -1342,7 +1346,9 @@ function visualizo(id_input, id_imagen) {
 }
 
 function nuevoProfesor() {
-    $("#cargar-dashboard-admin").load("vistas/admin/registroProfesor.html");
+    $("#cargar-dashboard-admin").load("vistas/admin/registroProfesor.html", function(){
+        document.getElementById("formulario2").dni.select();
+    });
 }
 
 function registroProfesor() {
