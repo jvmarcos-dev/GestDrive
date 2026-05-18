@@ -381,9 +381,15 @@ function historialClases() {
 
 function datosHistorial(datos) {
     var table = document.getElementById("tabla_historial");
+    let contenedorHistorial = document.getElementById("historial_clases");
     table.innerHTML = "";
 
     if (datos != 0) {
+        //como hay clases, le quitamos la clase para que sea transparente en móvil
+        contenedorHistorial.classList.remove("historial-vacio");
+        table.style.display = "table";
+        document.getElementById('info-alumno-historial').style.display = "none";
+        document.getElementById('no-clases').innerHTML = "";
         // cabecera
         var header = table.createTHead();
         var fila = header.insertRow(0);
@@ -449,11 +455,14 @@ function datosHistorial(datos) {
             }
         }
     } else {
+        contenedorHistorial.classList.add("historial-vacio");
+        
+        table.style.display = "none";
         document.getElementById('info-alumno-historial').innerHTML = "Aún no has realizado ninguna práctica con nosotros.";
         document.getElementById('no-clases').innerHTML =
             //llamo a la funcion cambiarVentana pero le paso directamente la pestaña del header que se tiene que poner como activo.
             //asi la funcion cree que estoy pulsando exactamente en ese boton y se pone activo
-        `<button class="boton-principal boton-reservar" onclick="cambiarVentana(document.querySelectorAll('.cambiar-ventana')[1], 'reservar')">
+            `<button class="boton-principal boton-reservar" onclick="cambiarVentana(document.querySelectorAll('.cambiar-ventana')[1], 'reservar')">
             Reservar mi primera clase
         </button>
         `;
@@ -1347,7 +1356,7 @@ function visualizo(id_input, id_imagen) {
 }
 
 function nuevoProfesor() {
-    $("#cargar-dashboard-admin").load("vistas/admin/registroProfesor.html", function(){
+    $("#cargar-dashboard-admin").load("vistas/admin/registroProfesor.html", function () {
         document.getElementById("formulario2").dni.select();
     });
 }
