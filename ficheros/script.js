@@ -10,6 +10,110 @@ let temporizadorNotificacion;
 
 let reservaActivaParaCancelar = null;
 let botonActivoParaCancelar = null;
+
+// ============================================================
+// FUNCIONES UTILIDADES
+// ============================================================
+
+//funcion para convertir a mayusculas la primera letra de una cadena de texto
+function capitalizar(texto) {
+    //compruebo que haya texto ya que en la mayoría de casos llamo a esta funcion
+    //despues de recuperar algo del servidor y puede ser que no haya nada.
+    if (!texto) return "";
+    return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
+
+function obtenerPartesFecha(fechaString) {
+    let fecha = new Date(fechaString);
+    let diaSemana = fecha.toLocaleDateString('es-ES', { weekday: 'long' });
+    let dia = fecha.getDate();
+    let hora = fecha.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+    return {
+        diaSemana: diaSemana,
+        dia: dia,
+        hora: hora
+    };
+}
+
+//funcion que se usa cuando necesito mostrar una estrella dentro de un botón
+function mostrarCargaBoton(idBoton, oscura = false) {
+    let boton = document.getElementById(idBoton);
+    if (!boton) return;
+    
+    if (!boton.hasAttribute('data-html-original')) {
+        boton.setAttribute('data-html-original', boton.innerHTML);
+    }
+    boton.disabled = true;
+    let claseOscura = oscura ? 'class="estrella-oscura"' : '';
+    boton.innerHTML = '<img id="estrella" ' + claseOscura + ' src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />';
+}
+
+function ocultarCargaBoton(idBoton, textoOpcional = null) {
+    let boton = document.getElementById(idBoton);
+    if (!boton) return;
+    
+    boton.disabled = false;
+    if (textoOpcional) {
+        boton.innerHTML = textoOpcional;
+    } else if (boton.hasAttribute('data-html-original')) {
+        boton.innerHTML = boton.getAttribute('data-html-original');
+    }
+}
+
+function enviarFormularioAjax(idFormulario, urlScript, callbackFunc) {
+    let los_datos_f = new FormData(document.getElementById(idFormulario));
+    $.ajax({
+        url: urlScript,
+        type: "POST",
+        dataType: "HTML",
+        data: los_datos_f,
+        cache: false,
+        contentType: false,
+        processData: false
+    }).done(callbackFunc);
+}
+
+//me di cuenta de que esta linea se repetia muchas veces en las funciones de las vistas, por lo que decidi hacer una funcion para ella.
+//Esta funcion se encarga de pintar el estado de una clase en el historial de clases del alumno.
+function pintarEstadoHistorial(fila, estado, estadoFormateado, idReserva, esAdmin, idBoton = null) {
+    if (estado == "activa") {
+        fila.insertCell(3).innerHTML = "<label class='estado-activa'>" + estadoFormateado + "</label>";
+        if (esAdmin) {
+            fila.insertCell(4).innerHTML = "<button class='boton-cancelar' onclick='cancelarClaseAdmin(" + idReserva + ", this)'>Cancelar</button>";
+        } else {
+            fila.insertCell(4).innerHTML = "<button class='boton-cancelar' id='" + idBoton + "' onclick='cancelar(" + idReserva + ", " + idBoton + ")'>Cancelar</button>";
+        }
+    } else if (estado == "realizada") {
+        fila.insertCell(3).innerHTML = "<label class='estado-realizada'>" + estadoFormateado + "</label>";
+        fila.insertCell(4).innerHTML = "<label style='font-weight:700; font-size: 0.7rem;'>-</label>";
+    } else if (estado == "cancelada_tiempo") {
+        fila.insertCell(3).innerHTML = "<label class='estado-cancelada-tiempo'>Cancelada</label>";
+        fila.insertCell(4).innerHTML = "<label style='font-weight:700; font-size: 0.7rem;'>-</label>";
+    } else {
+        fila.insertCell(3).innerHTML = "<label class='estado-cancelada'>Cancelada (Tarde)</label>";
+        fila.insertCell(4).innerHTML = "<label style='font-weight:700; font-size: 0.7rem;'>-</label>";
+    }
+}
+
+
+function crearCabecerasTabla(fila, cabeceras) {
+    cabeceras.forEach(texto => {
+        let th = document.createElement('th');
+        th.innerHTML = "<b>" + texto + "</b>";
+        fila.appendChild(th);
+    });
+}
+
+//Esta funcion se encarga de activar el item del sidebar que corresponde al indice que se le pasa como parametro. 
+//Por ejemplo, si quiero que el primer item del sidebar esté activo, le paso el indice 0.
+function activarItemSidebar(indice) {
+    let items = document.querySelectorAll('.item-sidebar');
+    if (items[indice] && !items[indice].classList.contains('activo')) {
+        items.forEach(item => item.classList.remove('activo'));
+        items[indice].classList.add('activo');
+    }
+}
+
 // ============================================================
 // INICIO Y NAVEGACIÓN
 // ============================================================
@@ -46,7 +150,7 @@ function cargarPanel() {
 
 function envio_datos() {
     //VALIDACION
-    // compruebo que las cajas de texto no estén vacías	
+    //compruebo que las cajas de texto no estén vacías	
     if ((document.getElementById('dni').value == "")) {
         document.getElementById('dni').focus();
         document.getElementById('info').style.visibility = 'visible';
@@ -56,27 +160,25 @@ function envio_datos() {
         document.getElementById('info').style.visibility = 'visible';
         document.getElementById('info').innerHTML = "Debes introducir la contraseña";
     } else {
-        // visualizo estrella
-        document.getElementById('boton1').innerHTML = '<img id="estrella" src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />';
-        // deshabilito botón
-        document.getElementById('boton1').disabled = true;
-        // borro mensaje etiqueta
+        //visualizo estrella
+        mostrarCargaBoton('boton1');
+        //borro mensaje etiqueta
         document.getElementById('info').innerHTML = "";
         document.getElementById('info').style.visibility = 'hidden';
 
-        // estos 2 valores habría que pasarlos por un filtro de seguridad.
+        //estos 2 valores habría que pasarlos por un filtro de seguridad.
         let elusuario = document.getElementById('dni').value;
         let lacontasenia = document.getElementById('password').value;
 
-        // tenemos que comprobar si el check está marcado
+        //tenemos que comprobar si el check está marcado
         let elcheck = 0;
         if (document.getElementById('recordar').checked) {
             elcheck = 1;
         }
 
         var url = "php/login/verificacion.php";
-        // hago la llamada AJAX
-        // utilizamos método "$.post" de jQuery
+        //hago la llamada AJAX
+        //utilizamos método "$.post" de jQuery
 
         $.post(url, {
             eldni: elusuario.trim(),
@@ -86,17 +188,15 @@ function envio_datos() {
     }
 }
 
-// se produce cuando se crea una nueva sesión
+//se produce cuando se crea una nueva sesión
 function llegadaDatos1(datos) {
-    // oculto estrella
-    document.getElementById('boton1').innerHTML = "Iniciar Sesión";
-    // habilito botón
-    document.getElementById('boton1').disabled = false;
+    //oculto estrella
+    ocultarCargaBoton('boton1', "Iniciar Sesión");
 
-    // trato error de validación.
+    //trato error de validación.
     //lo que hago es buscar lo que he mandado por php. En este caso lo estoy mandando como un json
-    // y tengo que buscar en el json el tipo de usuario. En este json el tipo aparece como
-    // usuario_tipo. El json seria algo como { "usuario_tipo": "alumno", "usuario_id": "5" }
+    //y tengo que buscar en el json el tipo de usuario. En este json el tipo aparece como
+    //usuario_tipo. El json seria algo como { "usuario_tipo": "alumno", "usuario_id": "5" }
 
     if (datos.usuario_tipo) {
         tipoUsuario = datos.usuario_tipo.trim();
@@ -122,25 +222,18 @@ function cerrarSesion() {
     });
 }
 
-
 // ============================================================
 // PANEL ALUMNO - DASHBOARD
 // ============================================================
 
 function inicio_alumno() {
     $("#cargar-dashboard-alumno").load("vistas/alumno/principal.html", function () {
-        //borro contenido de las label por si hubiera algo
-        document.getElementById('nombre_alumno').innerHTML = "";
-        document.getElementById('saldo_alumno').innerHTML = "";
-        document.getElementById('teorica_alumno').innerHTML = "";
-
         let url = "php/alumno/datos_alumno.php";
-
         $.post(url, {}, datosAlumno);
     });
 }
 
-// callback datos del alumno
+//callback datos del alumno
 function datosAlumno(datos) {
     if (datos.nombre) {
         reservaActiva();
@@ -152,8 +245,8 @@ function datosAlumno(datos) {
             //muestro imagen predeterminada
             document.getElementById('foto_alumno').src = 'imagenes/usuarios/default.png'
         }
-        document.getElementById('nombre_alumno').innerHTML = datos.nombre.charAt(0).toUpperCase() + datos.nombre.slice(1) +
-            " " + datos.apellidos.charAt(0).toUpperCase() + datos.apellidos.slice(1);
+        document.getElementById('nombre_alumno').innerHTML = capitalizar(datos.nombre) +
+            " " + capitalizar(datos.apellidos);
         document.getElementById('saldo_alumno').innerHTML = datos.saldo
         document.getElementById('resultado2').innerHTML = "clases restantes";
         if (datos.teorico == "apto") {
@@ -179,20 +272,14 @@ function datosReserva(datos) {
     if (datos.proxima_clase) {
 
         //Le doy formato a la fecha y la hora
-        let fecha = new Date(datos.fecha_hora);
-
-        let diaSemana = fecha.toLocaleDateString('es-ES', {
-            weekday: 'long'
-        });
-        let dia = fecha.getDate();
-        let hora = fecha.toLocaleTimeString('es-ES', {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
+        let partes = obtenerPartesFecha(datos.fecha_hora);
+        let diaSemana = partes.diaSemana;
+        let dia = partes.dia;
+        let hora = partes.hora;
 
         let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia + ', ' + hora + 'h';
         document.getElementById('fecha').innerHTML = fechaFormateada;
-        document.getElementById('profesor').innerHTML = datos.profesor.charAt(0).toUpperCase() + datos.profesor.slice(1);
+        document.getElementById('profesor').innerHTML = capitalizar(datos.profesor);
     } else {
         document.getElementById('info_alumno').style.display = "block";
         document.getElementById('info_alumno').innerHTML = "No hay clases proximas";
@@ -217,6 +304,8 @@ function datosClases(datos) {
     let selectProfesor = document.getElementById("filtro-profesor");
 
     if (datos != 0) {
+        //compruebo si existe el select ya que si el usuario cambia rapidamente entre
+        //una vista y otra, podria no haberse llegado a cargar el select y se produciría un error
         if (selectProfesor) {
             selectProfesor.innerHTML = '<option value="todos">Todos</option>';
             //array para no repetir ids
@@ -224,8 +313,8 @@ function datosClases(datos) {
 
             for (let i = 0; i < datos.length; i++) {
                 let idProfesor = datos[i].id_profesor;
-                let nombreP = datos[i].nombre_profesor.charAt(0).toUpperCase() + datos[i].nombre_profesor.slice(1);
-                let apellidosP = datos[i].apellidos_profesor.charAt(0).toUpperCase() + datos[i].apellidos_profesor.slice(1);
+                let nombreP = capitalizar(datos[i].nombre_profesor);
+                let apellidosP = capitalizar(datos[i].apellidos_profesor);
                 let nombreCompleto = nombreP + ' ' + apellidosP;
 
                 //si el ID de este profesor aún no está en el array, se añade al select
@@ -360,7 +449,7 @@ function pintoClases(filtroSeleccionado) {
         //pero si en el select se ponen todos los profesores, se pone el nombre del profesor para diferenciar
         let textoInferior = "Reservar";
         if (filtroSeleccionado == 'todos') {
-            textoInferior = clase.nombre_profesor.charAt(0).toUpperCase() + clase.nombre_profesor.slice(1);
+            textoInferior = capitalizar(clase.nombre_profesor);
         }
 
         let botonPildora = document.createElement('button');
@@ -402,66 +491,29 @@ function datosHistorial(datos) {
         // cabecera
         var header = table.createTHead();
         var fila = header.insertRow(0);
+        crearCabecerasTabla(fila, ["Fecha", "Hora", "Profesor", "Estado", "Acción"]);
 
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Fecha</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Hora</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Profesor</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Estado</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Acción</b>";
-        fila.appendChild(th);
 
         // cuerpo
         var body = table.createTBody();
         for (var i = 0; i < datos.length; i++) {
             //Con esto parseo la fecha y hora para que salgan en un buen formato
-            let fecha = new Date(datos[i].fecha_hora);
-
-            //Aqui tomo el nombre del dia de la semana correspondiente
-            let diaSemana = fecha.toLocaleDateString('es-ES', {
-                weekday: 'long'
-            });
-            let dia = fecha.getDate();
-            let hora = fecha.toLocaleTimeString('es-ES', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
+            let partes = obtenerPartesFecha(datos[i].fecha_hora);
+            let diaSemana = partes.diaSemana;
+            let dia = partes.dia;
+            let hora = partes.hora;
 
             //Este es el resultado de la conversión
             let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia;
             let horaFormateada = hora + 'h';
-            let nombreProfesor = datos[i].nombre_profesor.charAt(0).toUpperCase() + datos[i].nombre_profesor.slice(1);
-            let apellidosProfesor = datos[i].apellidos_profesor.charAt(0).toUpperCase() + datos[i].apellidos_profesor.slice(1);
-            let estadoFormateado = datos[i].estado.charAt(0).toUpperCase() + datos[i].estado.slice(1);
+            let nombreProfesor = capitalizar(datos[i].nombre_profesor);
+            let apellidosProfesor = capitalizar(datos[i].apellidos_profesor);
+            let estadoFormateado = capitalizar(datos[i].estado);
             var fila = body.insertRow(i);
             fila.insertCell(0).innerHTML = fechaFormateada;
             fila.insertCell(1).innerHTML = horaFormateada;
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
-            if (datos[i].estado == "activa") {
-                fila.insertCell(3).innerHTML = "<label class='estado-activa'>" + estadoFormateado + "</label>";
-                fila.insertCell(4).innerHTML = "<button class='boton-cancelar' id='" + i + "' onclick='cancelar(" + datos[i].id_reserva + ", " + i + ")'>Cancelar</button>";
-            } else if (datos[i].estado == "realizada") {
-                fila.insertCell(3).innerHTML = "<label class='estado-realizada'>" + estadoFormateado + "</label>";
-                fila.insertCell(4).innerHTML = "<label style=font-weight:700, font-size: 0.7rem;>-</label>";
-            } else if (datos[i].estado == "cancelada_tiempo") {
-                fila.insertCell(3).innerHTML = "<label class='estado-cancelada-tiempo'>Cancelada</label>";
-                fila.insertCell(4).innerHTML = "<label style=font-weight:700, font-size: 0.7rem;>-</label>";
-            } else {
-                fila.insertCell(3).innerHTML = "<label class='estado-cancelada'>Cancelada (Tarde)</label>";
-                fila.insertCell(4).innerHTML = "<label style=font-weight:700, font-size: 0.7rem;>-</label>";
-            }
+            pintarEstadoHistorial(fila, datos[i].estado, estadoFormateado, datos[i].id_reserva, false, i);
         }
     } else {
         contenedorHistorial.classList.add("historial-vacio");
@@ -516,11 +568,7 @@ function cambiarPassword() {
 
     //en caso de estar todo rellenado y que las contraseñas coincidan
     //guardo en el atributo data-html-original lo que ponia en el boton
-    botonSubmit.setAttribute('data-html-original', botonSubmit.innerHTML);
-    //deshabilito el boton
-    botonSubmit.disabled = true;
-    //le pongo al boton la estrella
-    botonSubmit.innerHTML = `<img id="estrella" src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />`;
+    mostrarCargaBoton('boton_cambio_pass');
 
     let url = "php/alumno/cambiar_password.php";
 
@@ -529,16 +577,14 @@ function cambiarPassword() {
         pass_nueva: nueva.value
     }, function (datos) {
         //se devuelve el boton a la normalidad
-        botonSubmit.disabled = false;
-        botonSubmit.innerHTML = botonSubmit.getAttribute('data-html-original');
-
+        ocultarCargaBoton('boton_cambio_pass');
         let respuesta = datos.trim();
-
         if (respuesta == 1) {
             mostrarNotificacionGlobal("Operación exitosa", "Tu contraseña ha sido actualizada correctamente.", "exito");
             document.getElementById('info_password').style.display = "none"
             document.getElementById('contra_actual').focus();
-            //limpiao las cajas
+
+            //limpia las cajas
             document.getElementById('contra_actual').value = "";
             document.getElementById('contra_nueva').value = "";
             document.getElementById('contra_confirmar').value = "";
@@ -667,8 +713,6 @@ function reservarClase(datos, elBoton) {
 // ============================================================
 
 function cancelar(idReserva, idBoton) {
-    //Al llamar a esta funcion antes tendré que hacer un botón de confirmar y ya al confirmar entonces se cancele.
-    //En este botón tendré que mirar si ha cancelado a tiempo o tarde para variar el texto.
     let url = "php/alumno/cancelar_clase.php";
 
     $.post(url, {
@@ -688,9 +732,9 @@ function cancelarClase(datos, idBoton) {
             mostrarNotificacionGlobal("Cancelación tardía", "La clase ha sido cancelada, pero al realizarse fuera del plazo permitido, tu saldo no será devuelto.", "info");
         }
         if (boton) {
-            // El botón está en una celda (td). El padre del botón es el td.
+            //El botón está en una celda (td). El padre del botón es el td.
             let celdaBoton = boton.parentElement;
-            // El hermano anterior de esa celda es la celda de "Estado"
+            //El hermano anterior de esa celda es la celda de "Estado"
             let celdaEstado = celdaBoton.previousElementSibling;
             celdaEstado.classList.add("estado-cancelada-tiempo")
             boton.disabled = true;
@@ -762,39 +806,21 @@ function datosListaClases(datos) {
         // cabecera
         var header = table.createTHead();
         var fila = header.insertRow(0);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Hora</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Alumno</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Profesor</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Acción</b>";
-        fila.appendChild(th);
+        crearCabecerasTabla(fila, ["Hora", "Alumno", "Profesor", "Acción"]);
 
         // cuerpo
         var body = table.createTBody();
         for (var i = 0; i < datos.length; i++) {
             //Con esto parseo la fecha y hora para que salgan en un buen formato
-            let fecha = new Date(datos[i].fecha_hora);
-            let hora = fecha.toLocaleTimeString('es-ES', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
+            let partes = obtenerPartesFecha(datos[i].fecha_hora);
+            let hora = partes.hora;
 
             //Este es el resultado de la conversión
             let horaFormateada = hora + 'h';
-            let nombreAlumno = datos[i].nombre_alumno.charAt(0).toUpperCase() + datos[i].nombre_alumno.slice(1);
-            let apellidosAlumno = datos[i].apellidos_alumno.charAt(0).toUpperCase() + datos[i].apellidos_alumno.slice(1);
-            let nombreProfesor = datos[i].nombre_profesor.charAt(0).toUpperCase() + datos[i].nombre_profesor.slice(1);
-            let apellidosProfesor = datos[i].apellidos_profesor.charAt(0).toUpperCase() + datos[i].apellidos_profesor.slice(1);
+            let nombreAlumno = capitalizar(datos[i].nombre_alumno);
+            let apellidosAlumno = capitalizar(datos[i].apellidos_alumno);
+            let nombreProfesor = capitalizar(datos[i].nombre_profesor);
+            let apellidosProfesor = capitalizar(datos[i].apellidos_profesor);
             var fila = body.insertRow(i);
             fila.insertCell(0).innerHTML = horaFormateada;
             fila.insertCell(1).innerHTML = nombreAlumno + ' ' + apellidosAlumno;
@@ -827,8 +853,8 @@ function pintoTablaPrincipal(datos) {
 
         var body = table.createTBody();
         for (let i = 0; i < datos.length; i++) {
-            let nombre = datos[i].nombre.charAt(0).toUpperCase() + datos[i].nombre.slice(1);
-            let apellidos = datos[i].apellidos.charAt(0).toUpperCase() + datos[i].apellidos.slice(1);
+            let nombre = capitalizar(datos[i].nombre);
+            let apellidos = capitalizar(datos[i].apellidos);
 
             var fila = body.insertRow(i);
             fila.insertCell(0).innerHTML = "<img class='avatar-tabla' src='" + datos[i].foto + "'>";
@@ -870,12 +896,12 @@ function busquedaAlumnos(datos) {
 
     if (datos != 0 && datos.length > 0) {
         for (let i = 0; i < datos.length; i++) {
-            let nombre = datos[i].nombre.charAt(0).toUpperCase() + datos[i].nombre.slice(1);
-            let apellidos = datos[i].apellidos.charAt(0).toUpperCase() + datos[i].apellidos.slice(1);
+            let nombre = capitalizar(datos[i].nombre);
+            let apellidos = capitalizar(datos[i].apellidos);
             let imagen = datos[i].foto;
-            // con esto cada alumno que aparezca en la lista será un div nuevo
-            // al hacer click en el, iremos a la funcion seleccionarAlumno de este alumno que estamos llamando
-            // y obtendremos todos sus datos en una nueva pantalla.
+            //con esto cada alumno que aparezca en la lista será un div nuevo
+            //al hacer click en el, iremos a la funcion seleccionarAlumno de este alumno que estamos llamando
+            //y obtendremos todos sus datos en una nueva pantalla.
             contenedor.innerHTML += "<div class='item-resultado-busqueda' onclick='seleccionarAlumno(" + datos[i].id + ")'>" +
                 "<img class='img-resultado-busqueda' src='" + imagen + "'>" +
                 "<span class='texto-resultado-busqueda'>" + nombre + " " + apellidos + "</span>" +
@@ -887,15 +913,8 @@ function busquedaAlumnos(datos) {
 }
 
 function seleccionarAlumno(idAlumno) {
-    let items = document.querySelectorAll('.item-sidebar');
-
     //el índice 1 corresponde a la opción buscar alumno
-    //si no está activo, quito la clase a todos y se la pongo a este
-    //esto lo hago ya que puedo venir a esta vista pulsando en ver ficha desde el panel principal y quedaría descuadrado
-    if (items[1] && !items[1].classList.contains('activo')) {
-        items.forEach(item => item.classList.remove('activo'));
-        items[1].classList.add('activo');
-    }
+    activarItemSidebar(1);
 
     idAlumnoSeleccionadoAdmin = idAlumno;
     let url = "php/alumno/datos_alumno.php";
@@ -955,66 +974,28 @@ function historialAlumnoAdmin(datos) {
         // cabecera
         var header = table.createTHead();
         var fila = header.insertRow(0);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Fecha</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Hora</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Profesor</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Estado</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Acción</b>";
-        fila.appendChild(th);
+        crearCabecerasTabla(fila, ["Fecha", "Hora", "Profesor", "Estado", "Acción"]);
 
         // cuerpo
         var body = table.createTBody();
         for (var i = 0; i < datos.length; i++) {
             //Con esto parseo la fecha y hora para que salgan en un buen formato
-            let fecha = new Date(datos[i].fecha_hora);
-
-            //Aqui tomo el nombre del dia de la semana correspondiente
-            let diaSemana = fecha.toLocaleDateString('es-ES', {
-                weekday: 'long'
-            });
-            let dia = fecha.getDate();
-            let hora = fecha.toLocaleTimeString('es-ES', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
+            let partes = obtenerPartesFecha(datos[i].fecha_hora);
+            let diaSemana = partes.diaSemana;
+            let dia = partes.dia;
+            let hora = partes.hora;
 
             //Este es el resultado de la conversión
             let fechaFormateada = diaSemana.toUpperCase() + ' ' + dia;
             let horaFormateada = hora + 'h';
-            let nombreProfesor = datos[i].nombre_profesor.charAt(0).toUpperCase() + datos[i].nombre_profesor.slice(1);
-            let apellidosProfesor = datos[i].apellidos_profesor.charAt(0).toUpperCase() + datos[i].apellidos_profesor.slice(1);
-            let estadoFormateado = datos[i].estado.charAt(0).toUpperCase() + datos[i].estado.slice(1);
+            let nombreProfesor = capitalizar(datos[i].nombre_profesor);
+            let apellidosProfesor = capitalizar(datos[i].apellidos_profesor);
+            let estadoFormateado = capitalizar(datos[i].estado);
             var fila = body.insertRow(i);
             fila.insertCell(0).innerHTML = fechaFormateada;
             fila.insertCell(1).innerHTML = horaFormateada;
             fila.insertCell(2).innerHTML = nombreProfesor + ' ' + apellidosProfesor;
-            if (datos[i].estado == "activa") {
-                fila.insertCell(3).innerHTML = "<label class='estado-activa'>" + estadoFormateado + "</label>";
-                fila.insertCell(4).innerHTML = "<button class='boton-cancelar' onclick='cancelarClaseAdmin(" + datos[i].id_reserva + ", this)'>Cancelar</button>";
-            } else if (datos[i].estado == "realizada") {
-                fila.insertCell(3).innerHTML = "<label class='estado-realizada'>" + estadoFormateado + "</label>";
-                fila.insertCell(4).innerHTML = "<label style='font-weight:700; font-size: 0.7rem;'>-</label>";
-            } else if (datos[i].estado == "cancelada_tiempo") {
-                fila.insertCell(3).innerHTML = "<label class='estado-cancelada-tiempo'>Cancelada</label>";
-                fila.insertCell(4).innerHTML = "<label style='font-weight:700; font-size: 0.7rem;'>-</label>";
-            } else {
-                fila.insertCell(3).innerHTML = "<label class='estado-cancelada'>Cancelada (Tarde)</label>";
-                fila.insertCell(4).innerHTML = "<label style='font-weight:700; font-size: 0.7rem;'>-</label>";
-            }
+            pintarEstadoHistorial(fila, datos[i].estado, estadoFormateado, datos[i].id_reserva, true);
         }
     } else {
         document.getElementById('info_alumno_admin').innerText = "No hay clases realizadas";
@@ -1195,42 +1176,16 @@ function listadoProfesoresCallback(datos) {
         // cabecera
         var header = table.createTHead();
         var fila = header.insertRow(0);
+        crearCabecerasTabla(fila, ["Foto", "DNI", "Nombre", "Apellidos", "Email", "Telefono", "Num licencia"]);
 
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Foto</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>DNI</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Nombre</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Apellidos</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Email</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Telefono</b>";
-        fila.appendChild(th);
-
-        var th = document.createElement('th');
-        th.innerHTML = "<b>Num licencia</b>";
-        fila.appendChild(th);
 
         // cuerpo
         var body = table.createTBody();
         for (var i = 0; i < datos.length; i++) {
             //con esto convierto la primera letra en mayuscula y dejo todo lo demas igual 
             // (slice coge desde el caracter 1 hasta el final para concatenar sin repetir la primera letra)
-            let nombreProfesor = datos[i].nombre.charAt(0).toUpperCase() + datos[i].nombre.slice(1);
-            let apellidosProfesor = datos[i].apellidos.charAt(0).toUpperCase() + datos[i].apellidos.slice(1);
+            let nombreProfesor = capitalizar(datos[i].nombre);
+            let apellidosProfesor = capitalizar(datos[i].apellidos);
             var fila = body.insertRow(i);
             fila.insertCell(0).innerHTML = "<img class='avatar-tabla' src='" + datos[i].foto + "'>";
             fila.insertCell(1).innerHTML = datos[i].dni;
@@ -1268,15 +1223,8 @@ function generoClasesCallback(datos) {
 
 function nuevoAlumno() {
     $("#cargar-dashboard-admin").load("vistas/admin/registroAlumno.php", function () {
-        let items = document.querySelectorAll('.item-sidebar');
-
         //el índice 4 corresponde a la opción nuevo alumno
-        //si no está activo, quito la clase a todos y se la pongo a este.
-        //esto lo pongo ya que puedo venir a esta pantalla pulsando en nuevo alumno en el panel de buscar alumno
-        if (items[4] && !items[4].classList.contains('activo')) {
-            items.forEach(item => item.classList.remove('activo'));
-            items[4].classList.add('activo');
-        }
+        activarItemSidebar(4);
 
         document.getElementById("formulario1").dni.select();
     });
@@ -1284,28 +1232,10 @@ function nuevoAlumno() {
 
 function registroAlumno() {
     // visualizo la estrellita
-    document.getElementById('elboton').innerHTML = '<img id="estrella" class="estrella-oscura" src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />';
-    // inhabilito botón de realizar alta
-    document.getElementById('elboton').disabled = true;
+    mostrarCargaBoton('elboton', true);
 
     //RECUPERO -> los datos del formulario
-    let los_datos_f = new FormData(document.getElementById("formulario1"));
-
-    //llamada AJAX
-    $.ajax({
-        url: "php/admin/registrar_alumno.php", //script php que quiero ejecutar
-        type: "POST", //forma en la que voy a pasar la información al formulario -> Metodo de envio de informacion, en este caso es POST
-        dataType: "HTML", //el formato de los datos que envía el servidor (siempre JSON, esta es una excepcion)
-        data: los_datos_f, //Datos que le paso al script
-        cache: false,
-        contentType: false,
-        processData: false
-    }).done(function (datos)
-        // esta función es el callback()
-        // y en el parámetro "datos" tendré toda la información que me devuelva el script php (si devolviese ALGO...)
-        // es obligatorio definir un callback en una funcion asincrona utilizando ajax
-        {
-            // // document.getElementById('estrella').style.visibility='hidden';
+    enviarFormularioAjax("formulario1", "php/admin/registrar_alumno.php", function (datos) {
             // trato mensaje devuelto por el servidor
             let respuesta = datos.trim();
             if (respuesta == 1) {
@@ -1323,9 +1253,7 @@ function registroAlumno() {
 
 function limpio_pantalla(estado, id_formulario, textoBoton) {
     // oculto estrella
-    document.getElementById('elboton').innerHTML = textoBoton;
-    // habilito botones
-    document.getElementById('elboton').disabled = false;
+    ocultarCargaBoton('elboton', textoBoton);
 
     let form = document.getElementById(id_formulario);
 
@@ -1372,29 +1300,10 @@ function nuevoProfesor() {
 
 function registroProfesor() {
     // visualizo la estrellita
-    document.getElementById('elboton').innerHTML = '<img id="estrella" class="estrella-oscura" src="imagenes/estrella2.svg" style="display:block; margin: 0 auto; width:45px" />';
-    // inhabilito botón de realizar alta
-    document.getElementById('elboton').disabled = true;
+    mostrarCargaBoton('elboton', true);
 
     //RECUPERO -> los datos del formulario
-    let los_datos_f = new FormData(document.getElementById("formulario2"));
-
-    //llamada AJAX
-    $.ajax({
-        url: "php/admin/registrar_profesor.php", //script php que quiero ejecutar
-        type: "POST", //forma en la que voy a pasar la información al formulario -> Metodo de envio de informacion, en este caso es POST
-        dataType: "HTML", //el formato de los datos que envía el servidor (siempre JSON, esta es una excepcion)
-        data: los_datos_f, //Datos que le paso al script
-        cache: false,
-        contentType: false,
-        processData: false
-    }).done(function (datos)
-        // esta función es el callback()
-        // y en el parámetro "datos" tendré toda la información que me devuelva el script php (si devolviese ALGO...)
-        // es obligatorio definir un callback en una funcion asincrona utilizando ajax
-        {
-            $("#estrella").css("visibility", "hidden");
-            // // document.getElementById('estrella').style.visibility='hidden';
+    enviarFormularioAjax("formulario2", "php/admin/registrar_profesor.php", function (datos) {
             // trato mensaje devuelto por el servidor
             let respuesta = datos.trim();
             if (respuesta == 1) {
@@ -1409,12 +1318,6 @@ function registroProfesor() {
             }
         });
 }
-
-// ============================================================
-// PANEL ALUMNO - CAMBIAR CONTRASEÑA
-// ============================================================
-
-
 
 // ============================================================
 // ESTILOS - PANEL ALUMNO
