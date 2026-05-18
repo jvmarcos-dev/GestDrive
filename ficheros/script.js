@@ -452,7 +452,7 @@ function datosHistorial(datos) {
         document.getElementById('info-alumno-historial').innerHTML = "Aún no has realizado ninguna práctica con nosotros.";
         document.getElementById('no-clases').innerHTML =
             `
-        <button class="boton-principal boton-reservar" onclick="cambiarVentana(this, 'resumen')">
+        <button class="boton-principal boton-reservar" onclick="cambiarVentana(this, 'reservar')">
             Reservar mi primera clase
         </button>
         `;
