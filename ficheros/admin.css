@@ -581,10 +581,6 @@
     gap: 12px;
 }
 
-.boton-principal {
-    padding: 10px;
-}
-
 /* Animaciones Keyframes */
 @keyframes fadeIn {
     to {
@@ -1117,7 +1113,7 @@
         margin: 0 !important;
     }
 
-    .modal-pie .boton-cancelar {
+    .modal-pie {
         order: 3;
         margin-top: 10px !important;
     }
