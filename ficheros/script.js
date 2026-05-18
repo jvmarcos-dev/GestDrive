@@ -23,6 +23,7 @@ function inicio() {
 // LOGIN
 // ============================================================
 
+//se produce cuando ya estaba la sesión inciada anteriormente
 function cargarPanel() {
     $.post("php/login/comprobar_sesion.php", function (datos) {
         if (datos == 0) {
@@ -30,6 +31,11 @@ function cargarPanel() {
             $("#lacaja").load("vistas/login.html");
         } else {
             tipoUsuario = datos.trim();
+
+            if(tipoUsuario=="profesor"){
+                mostrarNotificacionGlobal("Acceso restringido", "El panel de acceso para el profesor no está disponible.", "info");ç
+                return;
+            }
             //si hay sesión, redirigimos a la vista correspondiente. Datos siempre tiene el tipo de usuario por lo que no hay que especificar
             $("#lacaja").load("vistas/" + datos + "/dashboard.php", function () {
                 window["inicio_" + datos]();
@@ -80,7 +86,7 @@ function envio_datos() {
     }
 }
 
-// callback llamada
+// se produce cuando se crea una nueva sesión
 function llegadaDatos1(datos) {
     // oculto estrella
     document.getElementById('boton1').innerHTML = "Iniciar Sesión";
@@ -93,8 +99,11 @@ function llegadaDatos1(datos) {
     // usuario_tipo. El json seria algo como { "usuario_tipo": "alumno", "usuario_id": "5" }
 
     if (datos.usuario_tipo) {
-
         tipoUsuario = datos.usuario_tipo.trim();
+        if(tipoUsuario=="profesor"){
+                mostrarNotificacionGlobal("Acceso restringido", "El panel de acceso para el profesor no está disponible.", "info");ç
+                return;
+            }
         //cargo la vista correspondiente con su onload correspondiente.
         $("#lacaja").load("vistas/" + datos.usuario_tipo + "/dashboard.php", function () {
             window["inicio_" + datos.usuario_tipo]();
