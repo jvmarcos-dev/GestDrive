@@ -36,7 +36,6 @@ body {
 
 .boton-principal:hover {
     background-color: #13428c;
-    transform: translateY(-2px);
     box-shadow: 0 6px 8px -1px rgba(26, 86, 182, 0.35);
 }
 
