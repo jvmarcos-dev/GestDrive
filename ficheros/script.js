@@ -451,8 +451,9 @@ function datosHistorial(datos) {
     } else {
         document.getElementById('info-alumno-historial').innerHTML = "Aún no has realizado ninguna práctica con nosotros.";
         document.getElementById('no-clases').innerHTML =
-            `
-        <button class="boton-principal boton-reservar" onclick="cambiarVentana(this, 'reservar')">
+            //llamo a la funcion cambiarVentana pero le paso directamente la pestaña del header que se tiene que poner como activo.
+            //asi la funcion cree que estoy pulsando exactamente en ese boton y se pone activo
+        `<button class="boton-principal boton-reservar" onclick="cambiarVentana(document.querySelectorAll('.cambiar-ventana')[1], 'reservar')">
             Reservar mi primera clase
         </button>
         `;

@@ -10,7 +10,7 @@
     </div>
 
     <div id="menu-central">
-        <label class="cambiar-ventana activo" id="header-resumen" onclick="cambiarVentana(this, 'resumen')">Resumen</label>
+        <a class="cambiar-ventana activo" id="header-resumen" onclick="cambiarVentana(this, 'resumen')">Resumen</a>
         <a class="cambiar-ventana" id="header-reservar" onclick="cambiarVentana(this, 'reservar')">Reservar clases</a>
     </div>
 
