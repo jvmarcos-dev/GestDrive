@@ -325,7 +325,7 @@
         }
     }
 
-    @media (max-width: 750px) {
+    @media (max-width: 780px) {
         .header-publico {
             height: auto;
             flex-direction: column;

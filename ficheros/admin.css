@@ -25,7 +25,6 @@
     justify-content: center;
     width: 100%;
     max-width: none;
-    /* Anulamos el límite de 180px antiguo */
     height: 100px;
     padding: 0;
     margin: 0;
@@ -33,10 +32,8 @@
     box-sizing: border-box;
 }
 
-/* Centramos la imagen de forma absoluta dentro de su contenedor */
 #admin-sidebar #logo-header {
     width: 70%;
-    /* Ajusta este porcentaje si lo quieres más grande o pequeño */
     max-width: 160px;
     margin: 0 auto;
     display: block;
@@ -581,7 +578,6 @@
     gap: 12px;
 }
 
-/* Animaciones Keyframes */
 @keyframes fadeIn {
     to {
         opacity: 1;
@@ -650,7 +646,6 @@
     align-items: center;
 }
 
-/* Cabecera */
 .cabecera-generador {
     text-align: center;
     margin-bottom: 35px;
@@ -717,7 +712,6 @@
     border-bottom-color: #bbf7d0;
 }
 
-/* Lista del Panel Izquierdo */
 .lista-parametros-gen {
     display: flex;
     flex-direction: column;
@@ -910,7 +904,6 @@
     text-align: center;
 }
 
-/* Fotografía */
 .avatar-form {
     width: 120px;
     height: 120px;
@@ -928,7 +921,6 @@
     margin-top: 10px;
 }
 
-/* Radio Buttons */
 #lasopciones {
     display: flex;
     gap: 20px;
@@ -947,12 +939,10 @@
     font-weight: 500;
 }
 
-/*accent-color sirve para poder cambiar el color predeterminado de los radios*/
 .elradio input {
     accent-color: #1a56b6;
 }
 
-/* Botón Finalizar */
 #elboton {
     display: flex;
     background-color: #1a56b6;
@@ -980,9 +970,7 @@
     color: #f8fafc;
 }
 
-@media (max-width: 750px) {
-
-    /* Transformación de tabla de Ficha en Móvil */
+@media (max-width: 780px) {
     .tabla-estilo-general,
     .tabla-estilo-general thead,
     .tabla-estilo-general tbody,
@@ -1033,7 +1021,6 @@
         justify-content: center;
     }
 
-    /* Textos para el historial de la ficha */
     #el_historial_alumno td:nth-child(1)::before {
         content: "Fecha:";
     }
@@ -1128,7 +1115,6 @@
         gap: 20px;
     }
 
-    /* Etiquetas para la tabla del Dashboard (Prácticas de hoy) */
     #historial_clases #latabla_clases_hoy td:nth-child(1)::before {
         content: "Hora:";
     }
@@ -1145,7 +1131,6 @@
         content: "";
     }
 
-    /* Etiquetas para la tabla de la sección Alumnos Activos */
     #historial_clases #tabla_alumnos_defecto td:nth-child(1)::before {
         content: "Foto:";
     }

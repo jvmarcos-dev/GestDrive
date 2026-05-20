@@ -3,24 +3,24 @@
 }
 
 body {
-	display: flex;
-	flex-direction: column;
-	margin: 0;
-	min-height: 100vh;
-	font-family: calibri;
-	background-color: #eff4fa;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    min-height: 100vh;
+    font-family: calibri;
+    background-color: #eff4fa;
 }
 
 #lacaja {
-	display: flex;
-	flex-direction: column;
-	margin: 0;
-	min-height: 100vh;
-	font-family: calibri;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    min-height: 100vh;
+    font-family: calibri;
 }
 
 .boton-principal {
-	display: flex;
+    display: flex;
     background-color: #1a56b6;
     color: white;
     border: none;
@@ -48,8 +48,8 @@ body {
 
 .estrella-oscura {
     /*Funciona basicamente como un filtro fotografico. En este caso, convierte todo lo blanco en negro*/
-    filter: brightness(0); 
-    opacity: 0.7; 
+    filter: brightness(0);
+    opacity: 0.7;
 }
 
 
@@ -68,9 +68,9 @@ body {
     overflow: hidden;
     top: 30px;
     right: 30px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); 
-    border: 1px solid #e2e8f0; 
-    align-items: flex-start; 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+    align-items: flex-start;
     gap: 12px;
     transform: translateX(100px);
     opacity: 0;
@@ -86,12 +86,17 @@ body {
 }
 
 @keyframes reducirBarra {
-    from { width: 100%; }
-    to { width: 0%; }
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
 }
 
 .animar-barra {
-    animation: reducirBarra 4.5s linear forwards; 
+    animation: reducirBarra 4.5s linear forwards;
 }
 
 #notificacion_global.mostrar-notificacion {
@@ -105,8 +110,8 @@ body {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    font-size: 1.3rem; 
-    margin-top: 1px; 
+    font-size: 1.3rem;
+    margin-top: 1px;
 }
 
 .notificacion-contenido {
@@ -120,13 +125,13 @@ body {
     font-family: calibri;
     font-weight: bold;
     font-size: 1.05rem;
-    color: #0f172a; 
+    color: #0f172a;
 }
 
 .notificacion-mensaje {
     font-family: calibri;
     font-size: 0.95rem;
-    color: #64748b; 
+    color: #64748b;
     line-height: 1.4;
 }
 
@@ -147,13 +152,29 @@ body {
 }
 
 /* --- COLORES DE LOS ICONOS --- */
-.icono-exito { color: #10b981; } 
-.icono-error { color: #ef4444; } 
-.icono-info  { color: #3b82f6; }
+.icono-exito {
+    color: #10b981;
+}
 
-.barra-exito { background-color: #10b981; }
-.barra-error { background-color: #ef4444; }
-.barra-info  { background-color: #3b82f6; }
+.icono-error {
+    color: #ef4444;
+}
+
+.icono-info {
+    color: #3b82f6;
+}
+
+.barra-exito {
+    background-color: #10b981;
+}
+
+.barra-error {
+    background-color: #ef4444;
+}
+
+.barra-info {
+    background-color: #3b82f6;
+}
 
 .contenedor-alumno {
     display: flex;
@@ -188,6 +209,7 @@ body {
 }
 
 @media (max-width: 600px) {
+
     /* --- NOTIFICACIONES EN MÓVIL --- */
     #notificacion_global {
         right: auto;
@@ -196,8 +218,8 @@ body {
         transform: translate(-50%, -20px);
 
         top: 20px;
-        width: 92vw; 
-        padding: 14px; 
+        width: 92vw;
+        padding: 14px;
     }
 
     #notificacion_global.mostrar-notificacion {
@@ -669,8 +691,8 @@ body {
 }
 
 /**************************** TAMAÑO MÓVIL ************************************/
-@media (max-width: 750px) {
-    
+@media (max-width: 780px) {
+
     #tarjetas-datos-alumno {
         flex-direction: column;
         gap: 10px;
