@@ -1,6 +1,5 @@
 <?php
 session_start();
-usleep(600000);
 require('../../ficheros/conexion.php');
 
 // prueba directa
