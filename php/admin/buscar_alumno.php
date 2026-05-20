@@ -4,8 +4,8 @@ require('../../ficheros/conexion.php');
 session_start();
 
 // prueba directa
-//$dni="00000000A";
-//$lacontrasenia="1234";
+//$dni=\"00000000A\";\r
+//$lacontrasenia=\"1234\";\r
 
 //esto es una comprobacion de seguridad para saber que quien ejecuta esto es un administrador real.
 //si no, se podria desde la propia consola ejecutar la funcion js que llama a este script php pasando cualquier id como parametro
@@ -20,7 +20,7 @@ $busqueda = $_POST['labusqueda'];
 if (empty($_POST['labusqueda'])) {
     $consulta = "SELECT id, dni, nombre, apellidos, foto 
     FROM usuarios 
-    WHERE tipo = 'alumno' 
+    WHERE tipo = 'alumno'
     ORDER BY id DESC 
     LIMIT 20";
 } else {

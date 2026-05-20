@@ -9,13 +9,13 @@ require('../../ficheros/conexion.php');
 
 session_start();
 
-$consulta = "SELECT CLASES_PRACTICAS.ID AS id_clase, FECHA_HORA, NOMBRE, APELLIDOS, USUARIOS.id AS ID_PROFESOR
-FROM CLASES_PRACTICAS INNER JOIN USUARIOS
-ON CLASES_PRACTICAS.ID_PROFESOR=USUARIOS.ID
-WHERE ESTADO='libre'
-AND CLASES_PRACTICAS.FECHA_HORA > NOW()
-AND CLASES_PRACTICAS.FECHA_HORA < DATE_ADD(NOW(), INTERVAL 2 WEEK)
-ORDER BY FECHA_HORA ASC";
+$consulta = "SELECT clases_practicas.id AS id_clase, fecha_hora, nombre, apellidos, usuarios.id AS id_profesor
+FROM clases_practicas INNER JOIN usuarios
+ON clases_practicas.id_profesor=usuarios.id
+WHERE estado='libre'
+AND clases_practicas.fecha_hora > NOW()
+AND clases_practicas.fecha_hora < DATE_ADD(NOW(), INTERVAL 2 WEEK)
+ORDER BY fecha_hora ASC";
 $resultado = mysqli_query($conexion, $consulta);
 
 $nregistros = mysqli_num_rows($resultado);
@@ -28,15 +28,18 @@ if ($nregistros == 0) {
     while ($fila = mysqli_fetch_assoc($resultado)) {
         $clase = array();
         $clase['id_clase'] = $fila['id_clase'];
-        $clase['fecha_hora'] = $fila['FECHA_HORA'];
-        $clase['nombre_profesor'] = $fila['NOMBRE'];
-        $clase['apellidos_profesor'] = $fila['APELLIDOS'];
-        $clase['id_profesor'] = $fila['ID_PROFESOR'];
+        $clase['fecha_hora'] = $fila['fecha_hora'];
+        $clase['nombre_profesor'] = $fila['nombre'];
+        $clase['apellidos_profesor'] = $fila['apellidos'];
+        $clase['id_profesor'] = $fila['id_profesor'];
         $respuesta[] = $clase;
     }
+
+    //Esto codifica en json la tabla.
     header("Content-type:application/json; charset=utf-8");
     echo json_encode($respuesta);
 }
 
 // cerramos la conexión 
 mysqli_close($conexion);
+?>

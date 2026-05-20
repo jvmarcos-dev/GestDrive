@@ -1,5 +1,6 @@
 <?php
 session_start();
+usleep(600000);
 require('../../ficheros/conexion.php');
 
 // prueba directa
@@ -18,7 +19,7 @@ function verificar_login($user,$password,&$losdatos)
 		// el campo por el que busque tiene que ser clave
 		// en este caso se supone que el campo "USUARIO" es clave
 		// comprobamos si existe ese usuario
-		$sql = "SELECT * FROM usuarios WHERE DNI = '$user'";
+		$sql = "SELECT * FROM usuarios WHERE dni = '$user'";
 				
 		$resultado = mysqli_query($conexion,$sql);
         

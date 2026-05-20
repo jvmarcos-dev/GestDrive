@@ -14,9 +14,9 @@ if (!isset($_SESSION['usuario_tipo']) || $_SESSION['usuario_tipo'] != 'admin') {
 // que la clase ocurra hoy
 
 $consulta = "SELECT COUNT(*) AS total
-FROM CLASES_PRACTICAS
-WHERE ESTADO = 'reservada'
-AND DATE(FECHA_HORA) = CURDATE();";
+FROM clases_practicas
+WHERE estado = 'reservada'
+AND DATE(fecha_hora) = CURDATE();";
 
 $resultado = mysqli_query($conexion, $consulta);
 

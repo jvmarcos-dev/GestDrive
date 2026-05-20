@@ -11,21 +11,21 @@ if (!isset($_SESSION['usuario_tipo']) || $_SESSION['usuario_tipo'] != 'admin') {
 // en la misma tabla y solo dependen del tipo. Por ello, tengo que relacionar dos veces la consulta con la tabla usuarios, primero
 // para recuperar los del alumno y después para recuperar los del profesor
 $consulta = "SELECT 
-USUARIOS_ALUMNO.ID AS ID_ALUMNO,
-RESERVAS.ID AS ID_RESERVA,
-CLASES_PRACTICAS.FECHA_HORA AS FECHA_HORA,
-USUARIOS_ALUMNO.NOMBRE AS NOMBRE_ALUMNO,
-USUARIOS_ALUMNO.APELLIDOS AS APELLIDOS_ALUMNO,
-USUARIOS_PROFESOR.NOMBRE AS NOMBRE_PROFESOR,
-USUARIOS_PROFESOR.APELLIDOS AS APELLIDOS_PROFESOR
-FROM RESERVAS INNER JOIN CLASES_PRACTICAS 
-ON RESERVAS.ID_CLASE = CLASES_PRACTICAS.ID
-INNER JOIN USUARIOS AS USUARIOS_ALUMNO 
-ON RESERVAS.ID_ALUMNO = USUARIOS_ALUMNO.ID
-INNER JOIN USUARIOS AS USUARIOS_PROFESOR 
-ON CLASES_PRACTICAS.ID_PROFESOR = USUARIOS_PROFESOR.ID
-WHERE DATE(CLASES_PRACTICAS.FECHA_HORA) = CURDATE()
-AND RESERVAS.ESTADO = 'activa';";
+usuarios_alumno.id AS ID_ALUMNO,
+reservas.id AS ID_RESERVA,
+clases_practicas.fecha_hora AS FECHA_HORA,
+usuarios_alumno.nombre AS NOMBRE_ALUMNO,
+usuarios_alumno.apellidos AS APELLIDOS_ALUMNO,
+usuarios_profesor.nombre AS NOMBRE_PROFESOR,
+usuarios_profesor.apellidos AS APELLIDOS_PROFESOR
+FROM reservas INNER JOIN clases_practicas 
+ON reservas.id_clase = clases_practicas.id
+INNER JOIN usuarios AS usuarios_alumno 
+ON reservas.id_alumno = usuarios_alumno.id
+INNER JOIN usuarios AS usuarios_profesor 
+ON clases_practicas.id_profesor = usuarios_profesor.id
+WHERE DATE(clases_practicas.fecha_hora) = CURDATE()
+AND reservas.estado = 'activa';";
 $resultado = mysqli_query($conexion, $consulta);
 
 $nregistros = mysqli_num_rows($resultado);

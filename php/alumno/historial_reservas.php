@@ -19,13 +19,13 @@ if ($tipo == 'admin') {
     $id = $_SESSION['idusuario'];
 }
 
-$consulta = "SELECT FECHA_HORA, NOMBRE, APELLIDOS, RESERVAS.ID AS RESERVA, RESERVAS.ESTADO AS ESTADO
-FROM RESERVAS INNER JOIN CLASES_PRACTICAS 
-ON RESERVAS.ID_CLASE = CLASES_PRACTICAS.ID
-INNER JOIN USUARIOS 
-ON CLASES_PRACTICAS.ID_PROFESOR = USUARIOS.ID
-WHERE RESERVAS.ID_ALUMNO = $id
-ORDER BY FECHA_HORA DESC";
+$consulta = "SELECT fecha_hora, nombre, apellidos, reservas.id AS reserva, reservas.estado AS estado
+FROM reservas INNER JOIN clases_practicas 
+ON reservas.id_clase = clases_practicas.id
+INNER JOIN usuarios 
+ON clases_practicas.id_profesor = usuarios.id
+WHERE reservas.id_alumno = $id
+ORDER BY fecha_hora DESC";
 $resultado = mysqli_query($conexion, $consulta);
 
 $nregistros = mysqli_num_rows($resultado);
@@ -34,11 +34,11 @@ if ($nregistros > 0) {
     $respuesta = array();
     while ($fila = mysqli_fetch_assoc($resultado)) {
         $clase = array();
-        $clase['fecha_hora'] = $fila['FECHA_HORA'];
-        $clase['nombre_profesor'] = $fila['NOMBRE'];
-        $clase['apellidos_profesor'] = $fila['APELLIDOS'];
-        $clase['estado'] = $fila['ESTADO'];
-        $clase['id_reserva'] = $fila['RESERVA'];
+        $clase['fecha_hora'] = $fila['fecha_hora'];
+        $clase['nombre_profesor'] = $fila['nombre'];
+        $clase['apellidos_profesor'] = $fila['apellidos'];
+        $clase['estado'] = $fila['estado'];
+        $clase['id_reserva'] = $fila['reserva'];
         $respuesta[] = $clase;
     }
 
@@ -49,3 +49,4 @@ if ($nregistros > 0) {
 
 // cerramos la conexión 
 mysqli_close($conexion);
+?>

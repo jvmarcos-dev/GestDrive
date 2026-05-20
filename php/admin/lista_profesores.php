@@ -12,8 +12,8 @@ if (!isset($_SESSION['usuario_tipo']) || $_SESSION['usuario_tipo'] != 'admin') {
 // en la misma tabla y solo dependen del tipo. Por ello, tengo que relacionar dos veces la consulta con la tabla usuarios, primero
 // para recuperar los del alumno y después para recuperar los del profesor
 $consulta = "SELECT FOTO, DNI, NOMBRE, APELLIDOS, EMAIL, TELEFONO, NUM_LICENCIA
-FROM USUARIOS INNER JOIN PROFESORES
-ON USUARIOS.ID=PROFESORES.ID_USUARIO";
+FROM usuarios INNER JOIN profesores
+ON usuarios.id=profesores.id_usuario";
 $resultado = mysqli_query($conexion, $consulta);
 
 $nregistros = mysqli_num_rows($resultado);

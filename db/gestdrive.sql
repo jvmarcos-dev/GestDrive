@@ -1,6 +1,4 @@
-DROP DATABASE IF EXISTS gestdrive;
-CREATE DATABASE gestdrive CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
-USE gestdrive;
+USE juanvalentin_gestdrive;
 
 -- ============================================================
 --  TABLA 1: usuarios
@@ -211,27 +209,27 @@ DECLARE v_conflicto_horario INT;
 DECLARE v_estado_clase VARCHAR(20);
 
     -- La clase existe y está libre?
-    SELECT ESTADO INTO v_estado_clase
-    FROM CLASES_PRACTICAS
-    WHERE ID = v_id_clase;
+    SELECT estado INTO v_estado_clase
+    FROM clases_practicas
+    WHERE id = v_id_clase;
 
     IF (v_estado_clase != 'libre') THEN
         SET v_salida = -4;
 
     ELSE
         -- El saldo del alumno es > 0?
-        SELECT SALDO_CLASES INTO v_saldo
-        FROM ALUMNOS
-        WHERE ID_USUARIO = v_id_alumno;
+        SELECT saldo_clases INTO v_saldo
+        FROM alumnos
+        WHERE id_usuario = v_id_alumno;
 
         IF (v_saldo <= 0) THEN 
             SET v_salida = -1;
 
         ELSE
             -- El alumno tiene ya 2 reservas activas?
-            SELECT COUNT(ESTADO) INTO v_reservas_activas
-            FROM RESERVAS
-            WHERE ID_ALUMNO = v_id_alumno AND ESTADO = 'activa';
+            SELECT COUNT(estado) INTO v_reservas_activas
+            FROM reservas
+            WHERE id_alumno = v_id_alumno AND estado = 'activa';
 
             IF (v_reservas_activas >= 2) THEN 
                 SET v_salida = -2;
@@ -239,27 +237,27 @@ DECLARE v_estado_clase VARCHAR(20);
             ELSE
                 -- El alumno tiene ya una clase en ese horario?
                 SELECT COUNT(*) INTO v_conflicto_horario
-                FROM RESERVAS
-                INNER JOIN CLASES_PRACTICAS ON RESERVAS.ID_CLASE = CLASES_PRACTICAS.ID
-                WHERE RESERVAS.ID_ALUMNO = v_id_alumno
-                AND RESERVAS.ESTADO = 'activa'
-                AND CLASES_PRACTICAS.ID <> v_id_clase
+                FROM reservas
+                INNER JOIN clases_practicas ON reservas.id_clase = clases_practicas.id
+                WHERE reservas.id_alumno = v_id_alumno
+                AND reservas.estado = 'activa'
+                AND clases_practicas.id <> v_id_clase
                 -- compruebo que las clases tengan al menos una diferencia de 45 minutos
-                AND ABS(TIMESTAMPDIFF(MINUTE, CLASES_PRACTICAS.FECHA_HORA,
-                    (SELECT FECHA_HORA FROM CLASES_PRACTICAS WHERE ID = v_id_clase))) < 45;
+                AND ABS(TIMESTAMPDIFF(MINUTE, clases_practicas.fecha_hora,
+                    (SELECT fecha_hora FROM clases_practicas WHERE id = v_id_clase))) < 45;
 
                 IF (v_conflicto_horario > 0) THEN
                     SET v_salida = -3;
 
                 ELSE
                     -- Insertar la reserva
-                    INSERT INTO RESERVAS (id_clase, id_alumno, estado, notas, created_at)
+                    INSERT INTO reservas (id_clase, id_alumno, estado, notas, created_at)
                     VALUES (v_id_clase, v_id_alumno, 'activa', '', NOW());
 
                     -- Actualizar el estado de la clase
-                    UPDATE CLASES_PRACTICAS
-                    SET ESTADO = 'reservada'
-                    WHERE ID = v_id_clase;
+                    UPDATE clases_practicas
+                    SET estado = 'reservada'
+                    WHERE id = v_id_clase;
 
                     SET v_salida = 1;
                 END IF;
@@ -279,32 +277,32 @@ DECLARE v_horas_restantes INT;
 DECLARE v_id_clase INT;
 
     -- Cuanto falta para que se haga la clase?
-    SELECT TIMESTAMPDIFF(HOUR, NOW(), clases_practicas.fecha_hora), RESERVAS.ID_CLASE
+    SELECT TIMESTAMPDIFF(HOUR, NOW(), clases_practicas.fecha_hora), reservas.id_clase
     INTO v_horas_restantes, v_id_clase
-    FROM RESERVAS INNER JOIN CLASES_PRACTICAS 
-    ON RESERVAS.ID_CLASE = CLASES_PRACTICAS.ID
-    WHERE RESERVAS.ID = v_id_reserva;
+    FROM reservas INNER JOIN clases_practicas 
+    ON reservas.id_clase = clases_practicas.id
+    WHERE reservas.id = v_id_reserva;
 
     -- Si faltan más de 48 horas la clase está cancelada a tiempo
     IF (v_horas_restantes > 48) THEN
-        UPDATE RESERVAS
-        SET ESTADO = 'cancelada_tiempo'
-        WHERE ID = v_id_reserva;
+        UPDATE reservas
+        SET estado = 'cancelada_tiempo'
+        WHERE id = v_id_reserva;
 
-        UPDATE CLASES_PRACTICAS
-        SET ESTADO = 'libre'
-        WHERE ID = v_id_clase;
+        UPDATE clases_practicas
+        SET estado = 'libre'
+        WHERE id = v_id_clase;
 
         SET v_salida = 1;
 
     ELSE
-        UPDATE RESERVAS
-        SET ESTADO = 'cancelada_tarde'
-        WHERE ID = v_id_reserva;
+        UPDATE reservas
+        SET estado = 'cancelada_tarde'
+        WHERE id = v_id_reserva;
 
-        UPDATE CLASES_PRACTICAS
-        SET ESTADO = 'libre'
-        WHERE ID = v_id_clase;
+        UPDATE clases_practicas
+        SET estado = 'libre'
+        WHERE id = v_id_clase;
 
         SET v_salida = 2;
 
@@ -330,7 +328,7 @@ DECLARE v_telefono VARCHAR(15);
 
     -- El alumno existe en la tabla alumnos?
     SELECT COUNT(*) INTO v_usuario
-    FROM ALUMNOS
+    FROM alumnos
     WHERE id_usuario = v_id_alumno;
 
         IF v_usuario=0 THEN
@@ -338,35 +336,35 @@ DECLARE v_telefono VARCHAR(15);
         ELSE
             -- Tiene el teorico como apto?
             SELECT estado_teorica INTO v_teorico
-            FROM ALUMNOS
-            WHERE ID_USUARIO = v_id_alumno;
+            FROM alumnos
+            WHERE id_usuario = v_id_alumno;
 
             IF (v_teorico <> 'apto') THEN 
                 SET v_salida = -2;
             ELSE
                 -- La edad del alumno es de 18 años o más?
                 SELECT fecha_nacimiento INTO v_fecha_nacimiento
-                FROM ALUMNOS
-                WHERE ID_USUARIO = v_id_alumno;
+                FROM alumnos
+                WHERE id_usuario = v_id_alumno;
 
             -- TIMESTAMPDIFF calcula el tiempo que ha pasado entre la Fecha 1 y la Fecha 2.
             -- Le decimos que nos lo devuelva en años (YEAR) usando CURDATE() que es la fecha de hoy sin horas.
                 IF (TIMESTAMPDIFF(YEAR, v_fecha_nacimiento, CURDATE()) < 18) THEN 
                     SET v_salida = -3;
                 ELSE
-                    SELECT DNI, NOMBRE, APELLIDOS, EMAIL, TELEFONO 
+                    SELECT dni, nombre, apellidos, email, telefono 
                     INTO v_dni, v_nombre, v_apellidos, v_email, v_telefono
-                    FROM USUARIOS 
-                    WHERE ID = v_id_alumno;
+                    FROM usuarios 
+                    WHERE id = v_id_alumno;
 
                     -- Insertar el historico de alumnos
                     INSERT INTO historico_alumnos (id_usuario_orig, dni, nombre, apellidos, email, telefono, fecha_nacimiento, fecha_archivo)
                     VALUES (v_id_alumno, v_dni, v_nombre, v_apellidos, v_email, v_telefono, v_fecha_nacimiento, NOW());
 
                     -- Marcar como libres clases practicas que el alumno pudiera tener reservadas
-                    UPDATE CLASES_PRACTICAS
-                    SET ESTADO = 'libre'
-                    WHERE ID IN (SELECT id_clase FROM RESERVAS WHERE id_alumno = v_id_alumno AND estado = 'activa');
+                    UPDATE clases_practicas
+                    SET estado = 'libre'
+                    WHERE id IN (SELECT id_clase FROM reservas WHERE id_alumno = v_id_alumno AND estado = 'activa');
 
                     -- Elimino el alumno de su tabla original y sus clases reservadas
                     DELETE FROM reservas WHERE id_alumno = v_id_alumno;
@@ -388,18 +386,18 @@ BEGIN
     DECLARE v_id_clase INT;
 
     -- consulta para saber que clase es la que se está cancelando
-    SELECT ID_CLASE INTO v_id_clase FROM RESERVAS WHERE ID = v_id_reserva;
+    SELECT id_clase INTO v_id_clase FROM reservas WHERE id = v_id_reserva;
 
     -- Evaluación de la decisión enviada por js según el confirm (1=devolver, 0=No devolver)
     IF (v_devolver = 1) THEN
         -- la cancelación se realiza a tiempo
-        UPDATE RESERVAS SET ESTADO = 'cancelada_tiempo' WHERE ID = v_id_reserva;
-        UPDATE CLASES_PRACTICAS SET ESTADO = 'libre' WHERE ID = v_id_clase;
+        UPDATE reservas SET estado = 'cancelada_tiempo' WHERE id = v_id_reserva;
+        UPDATE clases_practicas SET estado = 'libre' WHERE id = v_id_clase;
         SET v_salida = 1;
     ELSE
         -- la cancelación será tarde y no se devolverá el saldo
-        UPDATE RESERVAS SET ESTADO = 'cancelada_tarde' WHERE ID = v_id_reserva;
-        UPDATE CLASES_PRACTICAS SET ESTADO = 'libre' WHERE ID = v_id_clase;
+        UPDATE reservas SET estado = 'cancelada_tarde' WHERE id = v_id_reserva;
+        UPDATE clases_practicas SET estado = 'libre' WHERE id = v_id_clase;
         SET v_salida = 2;
     END IF;
 
@@ -415,8 +413,8 @@ AFTER
 UPDATE ON reservas
 FOR EACH ROW
 BEGIN
-    IF OLD.ESTADO='activa' AND NEW.ESTADO='cancelada_tiempo' THEN
-        UPDATE ALUMNOS
+    IF OLD.estado='activa' AND NEW.estado='cancelada_tiempo' THEN
+        UPDATE alumnos
         SET saldo_clases=saldo_clases+1
         WHERE id_usuario=NEW.id_alumno;
     END IF;
@@ -431,8 +429,8 @@ AFTER
 INSERT ON reservas
 FOR EACH ROW
 BEGIN
-    IF NEW.ESTADO='activa' THEN
-        UPDATE ALUMNOS
+    IF NEW.estado='activa' THEN
+        UPDATE alumnos
         SET saldo_clases=saldo_clases-1
         WHERE id_usuario=NEW.id_alumno;
     END IF;
@@ -456,17 +454,17 @@ BEGIN
         DECLARE v_fecha_hora_exacta DATETIME;
 
         -- Esto siempre hace falta
-		DECLARE hecho BOOLEAN;
+        DECLARE hecho BOOLEAN;
 
         -- (1) Definición del cursor
         DECLARE cursor_profesores CURSOR FOR 
-				SELECT USUARIOS.id FROM usuarios
-                WHERE USUARIOS.tipo='profesor';
-		-- Declaración de un manejador de error tipo NOT FOUND
-		-- Cuando se produzca un error de este tipo @hecho tomará valor TRUE
+                SELECT usuarios.id FROM usuarios
+                WHERE usuarios.tipo='profesor';
+        -- Declaración de un manejador de error tipo NOT FOUND
+        -- Cuando se produzca un error de este tipo @hecho tomará valor TRUE
         -- Esto siempre hace falta
-		DECLARE CONTINUE HANDLER FOR NOT FOUND SET @hecho = TRUE;
-		SET @hecho=false;
+        DECLARE CONTINUE HANDLER FOR NOT FOUND SET @hecho = TRUE;
+        SET @hecho=false;
 
         -- De esta forma, a la fecha de hoy le sumo los días que faltan para terminar esta semana y siempre será lunes.
         -- Por ejemplo: Si hoy es Jueves (WEEKDAY= 3 ya que empieza a contar en 0): 7-3=4. Súmale 4 días a hoy y llegas al lunes.
@@ -483,11 +481,11 @@ BEGIN
                 FETCH cursor_profesores INTO v_profesor_id;
                 SET el_dia = 0;
 
-				-- Si el cursor se quedó sin elementos,
-				-- entonces nos salimos del bucle
-				IF @hecho THEN
-					LEAVE profesores;
-				END IF;
+                -- Si el cursor se quedó sin elementos,
+                -- entonces nos salimos del bucle
+                IF @hecho THEN
+                    LEAVE profesores;
+                END IF;
 
                 -- Pongo la fecha con la que voy a trabajar como el proximo lunes para despues poder calcular el momento exacto de la clase
                 SET v_fecha_aux=v_proximo_lunes;
@@ -519,9 +517,9 @@ BEGIN
 
                         -- Miro si ya hay alguna clase creada a la misma hora para el mismo profesor.
                         SELECT COUNT(*) INTO v_total
-                        FROM CLASES_PRACTICAS
-                        WHERE CLASES_PRACTICAS.id_profesor=v_profesor_id
-                        AND CLASES_PRACTICAS.fecha_hora=v_fecha_hora_exacta;
+                        FROM clases_practicas
+                        WHERE clases_practicas.id_profesor=v_profesor_id
+                        AND clases_practicas.fecha_hora=v_fecha_hora_exacta;
 
                         IF v_total=0 THEN
                             INSERT INTO clases_practicas (id_profesor, fecha_hora, estado)
@@ -536,7 +534,7 @@ BEGIN
 
                     SET v_fecha_aux = DATE_ADD(v_fecha_aux, INTERVAL 1 DAY);
                 END LOOP dias_semana;
-		END LOOP profesores;
+        END LOOP profesores;
 
         -- (4) Cerramos el cursor
         CLOSE cursor_profesores;

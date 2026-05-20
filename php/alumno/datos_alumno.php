@@ -40,10 +40,9 @@ if ($nregistros == 0) {
 	$respuesta['saldo'] = $fila['saldo_clases'];
 	$respuesta['teorico'] = $fila['estado_teorica'];
 	$respuesta['foto'] = $fila['foto'];
-	$respuesta['dni'] = $fila['dni'];
-	$respuesta['email'] = $fila['email'];
-	$respuesta['telefono'] = $fila['telefono'];
-
+    $respuesta['dni'] = $fila['dni'];
+    $respuesta['email'] = $fila['email'];
+    $respuesta['telefono'] = $fila['telefono'];
 	//Esto codifica en json la tabla.
 	header("Content-type:application/json; charset=utf-8");
 	echo json_encode($respuesta);
@@ -51,3 +50,4 @@ if ($nregistros == 0) {
 
 // cerramos la conexión 
 mysqli_close($conexion);
+?>

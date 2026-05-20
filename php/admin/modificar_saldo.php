@@ -13,13 +13,13 @@ $saldo_nuevo = $_POST['saldo_nuevo'];
 $operacion = $_POST['laoperacion'];
 
 if ($operacion == 1) {
-    $consulta = "UPDATE ALUMNOS 
-    SET saldo_clases = saldo_clases + $saldo_nuevo
+    $consulta = "UPDATE alumnos 
+    SET saldo_clases = saldo_clases + $saldo_nuevo\r
     WHERE id_usuario = '$id'";
 } else {
 
     // Antes de restar, comprobamos si tiene saldo suficiente
-    $comprobacion_saldo = "SELECT saldo_clases FROM ALUMNOS WHERE id_usuario = '$id'";
+    $comprobacion_saldo = "SELECT saldo_clases FROM alumnos WHERE id_usuario = '$id'";
     $resultado_comprobacion = mysqli_query($conexion, $comprobacion_saldo);
     $fila_comprobacion = mysqli_fetch_assoc($resultado_comprobacion);
 
@@ -33,8 +33,8 @@ if ($operacion == 1) {
     }
 
     // Si tiene suficiente saldo, hacemos la resta
-    $consulta = "UPDATE ALUMNOS 
-    SET saldo_clases = saldo_clases - $saldo_nuevo
+    $consulta = "UPDATE alumnos 
+    SET saldo_clases = saldo_clases - $saldo_nuevo\r
     WHERE id_usuario = '$id'";
 }
 
@@ -42,12 +42,13 @@ $resultado = mysqli_query($conexion, $consulta);
 
 if ($resultado) {
     //hago una consulta para saber cual es el saldo nuevo
-    $consulta_select = "SELECT saldo_clases FROM ALUMNOS WHERE id_usuario = '$id'";
+    $consulta_select = "SELECT saldo_clases FROM alumnos WHERE id_usuario = '$id'";
     $resultado_select = mysqli_query($conexion, $consulta_select);
 
     $fila = mysqli_fetch_assoc($resultado_select);
     $respuesta = array();
     $respuesta['elsaldo'] = $fila['saldo_clases'];
+
     //Esto codifica en json la tabla.
     header("Content-type:application/json; charset=utf-8");
     echo json_encode($respuesta);
