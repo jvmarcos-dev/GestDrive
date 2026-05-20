@@ -1,0 +1,371 @@
+    .contenedor_general {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        font-family: calibri, sans-serif;
+        background-color: #eff4fa;
+    }
+
+    .header-publico {
+        display: flex;
+        position: sticky;
+        width: 100%;
+        height: 90px;
+        align-items: center;
+        background-color: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        padding: 0 40px;
+        justify-content: space-between;
+        top: 0;
+        z-index: 100;
+    }
+
+    .header-izq-publico {
+        display: flex;
+        align-items: center;
+    }
+
+    #logo-texto-publico {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #1e293b;
+    }
+
+    .landing-footer-brand {
+        flex: 2;
+        min-width: 250px;
+    }
+
+    #logo-texto-publico i,
+    #logo-texto-publico span {
+        color: #1a56b6;
+    }
+
+    .nav-publica {
+        display: flex;
+        gap: 30px;
+    }
+
+    .nav-publica a {
+        text-decoration: none;
+        color: #64748b;
+        font-weight: 600;
+        font-size: 1.05rem;
+        transition: color 0.2s;
+    }
+
+    .nav-publica a:hover {
+        color: #1a56b6;
+    }
+
+    #btn-acceso {
+        padding: 10px 24px;
+        font-size: 1rem;
+    }
+
+    #seccion-hero-publico {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 80px 20px;
+        gap: 15px;
+        background: linear-gradient(180deg, #eff4fa 0%, #f8fafc 100%);
+    }
+
+    #titulo-principal-publico {
+        font-size: 3.2rem;
+        font-weight: 800;
+        color: #0f172a;
+        max-width: 800px;
+        line-height: 1.1;
+        margin-bottom: 10px;
+    }
+
+    #subtitulo-principal-publico {
+        font-size: 1.25rem;
+        color: #475569;
+        max-width: 700px;
+        line-height: 1.6;
+        margin-bottom: 25px;
+    }
+
+    .btn-hero {
+        padding: 16px 32px;
+        font-size: 1.15rem;
+    }
+
+    .seccion-contenedor {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 70px 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .fondo-blanco {
+        background-color: white;
+    }
+
+    .cabecera-seccion {
+        text-align: center;
+        max-width: 600px;
+        margin-bottom: 50px;
+    }
+
+    .cabecera-seccion h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0 0 15px 0;
+    }
+
+    .cabecera-seccion p {
+        font-size: 1.1rem;
+        color: #64748b;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    #tarjetas-ventajas-publicas {
+        display: flex;
+        gap: 25px;
+        width: 100%;
+        max-width: 1100px;
+    }
+
+    .tarifas {
+        display: flex;
+        gap: 25px;
+        width: 100%;
+        max-width: 1100px;
+    }
+
+    .tarjeta-precio {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 35px 25px;
+        position: relative;
+        text-align: center;
+    }
+
+    .precio-destacado {
+        border-color: #1a56b6;
+        box-shadow: 0 10px 25px -5px rgba(26, 86, 182, 0.15);
+        transform: scale(1.03);
+        z-index: 2;
+    }
+
+    .etiqueta-recomendado {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1a56b6;
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 50px;
+        letter-spacing: 1px;
+    }
+
+    .precio-bloque {
+        margin: 25px 0;
+        color: #0f172a;
+    }
+
+    .precio-bloque .moneda {
+        font-size: 1.5rem;
+        vertical-align: top;
+        font-weight: 700;
+    }
+
+    .precio-bloque .cantidad {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1;
+    }
+
+    .lista-caracteristicas {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        padding: 0;
+        margin: 0 0 30px 0;
+        text-align: left;
+        gap: 12px;
+        color: #475569;
+    }
+
+    .lista-caracteristicas i {
+        width: 20px;
+        color: #10b981;
+    }
+
+    .boton-secundario {
+        width: 100%;
+        padding: 12px;
+        background-color: white;
+        color: #334155;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .boton-secundario:hover {
+        background-color: #f8fafc;
+        border-color: #94a3b8;
+    }
+
+    .w-100 {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.05rem;
+    }
+
+    .footer-oscuro {
+        display: flex;
+        flex-direction: column;
+        background-color: #0f172a;
+        color: #94a3b8;
+        padding: 60px 40px 25px 40px;
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: auto;
+    }
+
+    .contenedor-footer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 1100px;
+        margin-bottom: 50px;
+        gap: 40px;
+    }
+
+    .footer-columna {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        flex: 1;
+    }
+
+    .logo-footer {
+        font-size: 2rem;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 5px;
+    }
+
+    .logo-footer span {
+        color: #3b82f6;
+    }
+
+    .eslogan-footer {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin: 0;
+        max-width: 280px;
+    }
+
+    .titulo-footer {
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px 0;
+    }
+
+    .lista-footer {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: 12px;
+        font-size: 0.95rem;
+        align-items: center;
+    }
+
+    .lista-footer li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .lista-footer i {
+        width: 16px;
+        color: #cbd5e1;
+        text-align: center;
+    }
+
+    .footer-bottom {
+        width: 100%;
+        max-width: 1100px;
+        border-top: 1px solid #1e293b;
+        padding-top: 25px;
+        text-align: center;
+        font-size: 0.85rem;
+    }
+
+    @media (max-width: 1000px) {
+
+        #tarjetas-ventajas-publicas {
+            flex-wrap: wrap;
+        }
+
+        .tarifas {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 750px) {
+        .header-publico {
+            height: auto;
+            flex-direction: column;
+            padding: 20px;
+            gap: 15px;
+        }
+
+        .nav-publica {
+            order: 3;
+            width: 100%;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        #titulo-principal-publico {
+            font-size: 2.2rem;
+        }
+
+        #tarjetas-ventajas-publicas,
+        .tarifas {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .precio-destacado {
+            transform: none;
+        }
+
+        .contenedor-footer {
+            flex-direction: column;
+            gap: 40px;
+            text-align: center;
+        }
+
+        .lista-footer li,
+        .enlaces-sociales a {
+            justify-content: center;
+        }
+
+        .eslogan-footer {
+            max-width: 100%;
+        }
+    }

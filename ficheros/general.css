@@ -644,8 +644,8 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/**************************** TAMAÑO TABLET (COMPARTIDO) ************************************/
-@media (max-width: 1150px) {
+/**************************** TAMAÑO TABLET ************************************/
+@media (max-width: 1000px) {
 
     #tarjetas-datos-alumno {
         flex-wrap: wrap;
@@ -668,7 +668,7 @@ body {
     }
 }
 
-/**************************** TAMAÑO MÓVIL (COMPARTIDO) ************************************/
+/**************************** TAMAÑO MÓVIL ************************************/
 @media (max-width: 750px) {
     
     #tarjetas-datos-alumno {
