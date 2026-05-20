@@ -119,7 +119,35 @@ function activarItemSidebar(indice) {
 // ============================================================
 
 function inicio() {
-    $("#lacaja").load("vistas/general.html");
+    $("#lacaja").load("vistas/general.html", function(){
+        botonLogin();
+    });
+}
+
+function botonLogin(){
+    $.post("php/login/comprobar_sesion.php", function (datos) {
+            let boton = document.getElementById("btn-acceso");
+            if (!boton) return;
+
+            let respuesta = datos.trim();
+
+            if (respuesta != 0) {
+                if (respuesta == "alumno") {
+                    $.post("php/alumno/datos_alumno.php", {}, function (info) {
+                        if (info.nombre) {
+                            let nombreLimpio = info.nombre.toUpperCase();
+                            boton.innerHTML = `<i class="fas fa-user-circle" style="margin-right: 8px;"></i> PANEL DE ` + nombreLimpio ;
+                            boton.style.backgroundColor = "#10b981";
+                            boton.style.boxShadow = "0 4px 6px -1px rgba(16, 185, 129, 0.25)";
+                        }
+                    });
+                } else if (respuesta == "admin") {
+                    boton.innerHTML = `<i class="fas fa-user-shield" style="margin-right: 8px;"></i> PANEL ADMIN`;
+                    boton.style.backgroundColor = "#1e293b";
+                    boton.style.boxShadow = "0 4px 6px -1px rgba(30, 41, 59, 0.25)";
+                }
+            }
+        });
 }
 
 
