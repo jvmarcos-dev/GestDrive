@@ -970,8 +970,36 @@
     color: #f8fafc;
 }
 
-@media (max-width: 780px) {
-    .tabla-estilo-general,
+@media (max-width: 1000px) {
+    #admin-main-content {
+        padding: 20px;
+    }
+
+    .layout-perfil-admin {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .tarjeta-resumen-alumno, 
+    .tarjeta-acciones-admin {
+        width: 100%;
+    }
+
+    .layout-dos-columnas-form {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #tarjetas-opciones-admin {
+        flex-wrap: wrap;
+    }
+    
+    .tarjeta-opcion {
+        flex: 1 1 calc(50% - 20px);
+        min-width: 200px;
+    }
+
+     .tabla-estilo-general,
     .tabla-estilo-general thead,
     .tabla-estilo-general tbody,
     .tabla-estilo-general th,
@@ -1041,7 +1069,9 @@
         content: "Acción:";
         display: none;
     }
+}
 
+@media (max-width: 780px) {
     #overlay-sidebar.mostrar-overlay {
         display: block;
     }
