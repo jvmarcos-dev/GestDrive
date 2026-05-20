@@ -165,7 +165,7 @@ function cargarPanel() {
             tipoUsuario = datos.trim();
 
             if(tipoUsuario=="profesor"){
-                mostrarNotificacionGlobal("Acceso restringido", "El panel de acceso para el profesor no está disponible.", "info");ç
+                mostrarNotificacionGlobal("Acceso restringido", "El panel de acceso para el profesor no está disponible.", "info");
                 return;
             }
             //si hay sesión, redirigimos a la vista correspondiente. Datos siempre tiene el tipo de usuario por lo que no hay que especificar
@@ -229,7 +229,7 @@ function llegadaDatos1(datos) {
     if (datos.usuario_tipo) {
         tipoUsuario = datos.usuario_tipo.trim();
         if(tipoUsuario=="profesor"){
-                mostrarNotificacionGlobal("Acceso restringido", "El panel de acceso para el profesor no está disponible.", "info");ç
+                mostrarNotificacionGlobal("Acceso restringido", "El panel de acceso para el profesor no está disponible.", "info");
                 return;
             }
         //cargo la vista correspondiente con su onload correspondiente.
