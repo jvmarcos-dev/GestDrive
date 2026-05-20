@@ -365,8 +365,10 @@ function datosClases(datos) {
     } else {
         if (tipoUsuario == "alumno") {
             document.getElementById('info-clases-alumno').innerHTML = "No hay clases disponibles";
+            document.getElementById('tabla_clases').innerHTML = "";
         } else {
             document.getElementById('no_clases_proximas').innerHTML = "No hay clases disponibles";
+            document.getElementById('tabla_clases').innerHTML = "";
         }
 
         //si no hay clases, vacio el select dejándolo solo en todos
